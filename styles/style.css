@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body,
 h1,
 h2,
@@ -12,7 +16,7 @@ p {
 body {
   min-width: 850px;
   font-family: 'Open Sans', Arial, sans-serif;
-  }
+}
 
 header {
   height: 100vh;
@@ -37,13 +41,29 @@ h1 {
   background-color: rgb(95 13 238 / 0.5);
 }
 
+.content {
+  width: 770px;
+  margin: 0 auto;
+  font-size: 0;
+  background-color: #8aafcf;
+}
+
 .card {
+  display: inline-block;
   width: 360px;
+  margin-right: 50px;
   margin-bottom: 50px;
+  border: 1px solid rgb(250 50 50 / 0.4);
+  padding: 25px 25px 30px;
   background-color: #e3f3ff;
 }
 
+.no-right-margin {
+  margin-right: 0;
+}
+
 .card-title {
+  margin-bottom: 10px;
   font-weight: 800;
   font-size: 31px;
   text-align: center;
@@ -56,6 +76,8 @@ h1 {
 
 .card-image {
   width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid rgb(250 50 50 / 0.4);
 }
 
 
@@ -82,3 +104,15 @@ padding: 10px 20px;
 /* 1 значение */
 /* 10px со всех сторон */
 padding: 10px; */
+
+/* display по-английски «отображение» */
+display: block; /* сделает элемент блочным */
+display: inline; /* сделает элемент строчным */
+display: inline-block; /* сделает элемент блочно-строчным */ 
+
+div {
+  box-shadow: -2px 2px 5px #FD6969;
+/* сдвинута на 2px влево, на 2px вниз */
+/* радиус размытия — 5px */
+  /* цвет красноватый, #FD6969 */
+} 
