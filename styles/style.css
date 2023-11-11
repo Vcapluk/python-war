@@ -1,0 +1,19 @@
+body {
+    min-width: 850px;
+  }
+  
+  body,
+  h1 {
+    margin: 0;
+  }
+  
+  header {
+    height: 100vh;
+    background-color: #eee;
+    background-image: url(https://code.s3.yandex.net/web-code/images/freetrack/03/cover.png);
+  }
+  
+  h1 {
+    color: white;
+    font-size: 74px;
+  }
