@@ -3,6 +3,12 @@
 #  git clone https://github.com/Vcapluk/python-war.git
 
 
+//запускаем гит в консоли
+$ cd python-war //переходим в папку проекта
+$ git pull https://github.com/Vcapluk/python-war.git //говорим, что надо обновиться с сайта, скачать все что изменилось
+
+
+
 # https://habr.com/ru/companies/ruvds/articles/429552/
 
 https://practicum.yandex.ru/trainer/fullstack-developer/lesson/2cdb85ff-6b6b-4a51-8ce0-dba5b6a2fba7/
