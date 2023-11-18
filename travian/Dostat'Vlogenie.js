@@ -27,7 +27,9 @@ var el = document.querySelectorAll(".production .value"); // 3 вариант. �
 console.log(el)
 
 NodeList(4) [div.value, div.value, div.value, div.value] //именно это он и вернул...
-0:div.value
+0:div.value   innerText
+: 
+"+8"
 1:div.value
 2:div.value
 3:div.value
@@ -41,3 +43,14 @@ NodeList
 //stockContainer wood
 //stockContainer clay
 
+ a = '<div class="value">  +168 </div>';
+
+function f(str) {
+	let x = parseInt(str.replace(/[^\d]/g, ''));
+  console.log(x);
+}
+
+f(a);
+f('abc-6-abc')
+f('7-abc')
+f('zz-4-abc-2-zz')
