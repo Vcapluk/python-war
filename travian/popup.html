@@ -7,9 +7,9 @@
     	/* задаём размеры кнопки и размер текста на кнопке  */
     	button {
 	      font-size: 12px;
-		  height: 20px;
-		  width: 100px;
-		}
+		    height: 20px;
+		    width: 100px;
+	  	}
     </style>
   </head>
   <body>
@@ -27,16 +27,11 @@
     <button type="submit" id="submit" onclick="createTable(elem,3,3);">таблица</button>
 	    <div id="elem"></div>
 	    <script src="TKtablet.js"></script>
-
-    <!--<button type="submit" id="submit" onclick="1321">Создать файл</button>.
-      <script>
-        //функция для вывода какого то сообщения. проверка.
-        var message123  = "hello boy"
-        document.getElementById("hl").innerHTML = message123;
-      </script>-->
-
-
-
+      <script >alert("жамкнул на кнопочку")</script>
+    
+    <!--<button onclick="connect('ws://149.202.87.57:901')" style="position: fixed; top: 0; left: 0;">подключится</button>
+    document.body.innerHTML+='<button style="width: 150px; position: absolute; z-index: 1000; top: 100px; left: 0px;" onclick="connect(\'ws://149.202.87.57:901\')" class="btn btn-primary">Special</button>';-->
+      
       <!--функция для вывода какого то сообщения. проверка.-->
     <script>
       console.log("вошли в скрипт выдачи сообщений");
@@ -50,27 +45,5 @@
       document.writeln(message123);
       console.log("третий вариант уже отработал?");
     </script>
-	    <!--<script>
-        var fs = require("fs");
- 
- console.log("Going to write into existing file");
-     fs.writeFile('input.txt', 'Simply Easy Learning!',  function(err) {
-         if (err) {
-         return console.error(err);
-     }
-    
-     console.log("Data written successfully!");
-     console.log("Let's read newly written data");
-     fs.readFile('input.txt', function (err, data) {
-       if (err) {
-          return console.error(err);
-       }
-       console.log("Asynchronous read: " + data.toString());
-     });
- });
-
-      </script>-->
-    
-
-  </body>
+	</body>
 </html>

@@ -1,56 +1,21 @@
-<div class="card__overlay-wrapper">
-  <a href="" class="card-do__btn view-btn">...</a>
-</div>
-
-
-const parent = document.querySelector(".card__overlay-wrapper .card-do__btn"); // 1 вариант - не прошел...
-const childText = parent.textContent;
-console.log(childText + "что то");
-
-var el = document.querySelector("div.card__owerlay-wrapper a.card-do__btn.print__btn");//2 вариант - что то похожее, но выводит первый вариант, а там их много
-
-var el = document.querySelector( "#main, #basic, #exclamation" );//3 вариант - надо бы попробовать...
-
-
-
-//stockContainer wood
-production
-value
-
-const parent = document.querySelector(".stockContainer clay .production .value"); // 1 вариант
-const childTextWood = parent.textContent;
-console.log(childText + "что то");
-
-var el = document.querySelector("div.stockContainer clay div.production div.value"); //2 вариант
-
-var el = document.querySelectorAll(".production .value"); // 3 вариант. вернул 4 значения 
-console.log(el)
-
-NodeList(4) [div.value, div.value, div.value, div.value] //именно это он и вернул...
-0:div.value   innerText
-: 
-"+8"
-1:div.value
-2:div.value
-3:div.value
-length
-: 
-4
-[[Prototype]]
-: 
-NodeList
-
-//stockContainer wood
-//stockContainer clay
-
- a = '<div class="value">  +168 </div>';
-
-function f(str) {
-	let x = parseInt(str.replace(/[^\d]/g, ''));
-  console.log(x);
-}
-
-f(a);
-f('abc-6-abc')
-f('7-abc')
-f('zz-4-abc-2-zz')
+//этот кусок кода достает значения текущей выработки ресурсов, и выводит в консоль
+//можно все выделить, вставить в консоль, и он выдаст ЧВР
+var elW = document.querySelector(".stockContainer.wood .production .value"); //вытащили строку выработки глины
+const contentW = elW.innerText;// достаем текст из дива
+var xW = parseInt(contentW, 10);// из текста достаем число
+//console.log(xW);//вывели в консоль
+var elC = document.querySelector(".stockContainer.clay .production .value"); //вытащили строку выработки глины
+const contentC = elC.innerText;// достаем текст из дива
+var xC = parseInt(contentC, 10);// из текста достаем число
+//console.log(xC);//вывели в консоль
+var elI = document.querySelector(".stockContainer.iron .production .value");//вытащили строку выработки железа
+const contentI = elI.innerText;// достаем текст из дива
+var xI = parseInt(contentI, 10);// из текста достаем число
+//console.log(xI);//вывели в консоль
+var elCr = document.querySelector(".stockContainer.crop .production .value");//вытащили строку выработки кропа (с учетом потребления) а надо полностью? а еще надо знак учесть потом...
+//console.log(elCr);
+const contentCr = elCr.innerText;// достаем текст из дива
+var xCr = parseInt(contentCr, 10);// из текста достаем число
+//console.log(xCr);//вывели в консоль
+var itogCHVR = xW + xC +xI + xCr;
+console.log("ЧВР на сейчас равно: " + itogCHVR); // получаем ЧВР в консоль

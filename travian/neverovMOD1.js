@@ -134,25 +134,25 @@ var letter;        //Сообщение в телегу
               letter = '\ud83c\udfd7 ' + village.name + ', постройка "'+type+'" .'
             Never_Telegram(letter);
 	        console.log("сообщение ушло...");
-	        var elW = document.querySelector(".stockContainer.wood .production .value"); //вытащили строку со значением выработки дерева
+	        var elW = document.querySelector.inner.text(".stockContainer.wood .production .value"); //вытащили строку со значением выработки дерева
 	        console.log(elW);//вывели в консоль
 	        //let strW = string(elW);
 	        
-		    //alert(`hint: ${elW}`); //выделить число из htmldivelement
+  		    //alert(`hint: ${elW}`); //выделить число из htmldivelement
 	        
 	        a = '<div class="value">  +168 </div>';
 
-			function f(str) {
-				let x = parseInt(str.replace(/[^\d]/g, ''));
-				console.log(x);
-			}
+	    		function f(str) {
+			    	let x = parseInt(str.replace(/[^\d]/g, ''));
+				    console.log(x);
+			    }
 
-			f(a);
-			//f(elW);
-			//f(strW);
-			f('abc-6-abc');
-			f('7-abc');
-			f('zz-4-abc-2-zz');
+			    f(a);
+    			//f(elW);
+    			//f(strW);
+		    	f('abc-6-abc');
+    			f('7-abc');
+    			f('zz-4-abc-2-zz');
 	        //var numberW =  number_pull_out(elW);
 	        //console.log(parseInt(numberW));
 	        //var round = Math.round;
@@ -182,6 +182,7 @@ var letter;        //Сообщение в телегу
 	        console.log(elI);//вывели в консоль
 	        var elCr = document.querySelector(".stockContainer.crop .production .value");//вытащили строку выработки кропа (с учетом потребления) а надо полностью? а еще надо знак учесть потом...
 	        console.log(elCr);//вывели в консоль
+          var elC = document.getElementById(elC).innerHTML;
             }
         });
         
