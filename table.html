@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+  	<meta charset="UTF-8">
+    <style type="text/css">
+    	/* задаём размеры кнопки и размер текста на кнопке  */
+    	button {
+	      font-size: 12px;
+		    height: 20px;
+		    width: 100px;
+	  	}
+    </style>
+  </head>
+  <body>
+    <style>
+        table td {
+            padding: 20px;
+            border: 1px solid black;
+        }
+    </style>
+    <button type="submit" id="submit" onclick="randomInteger(1000, 9999);">Нажми меня</button>
+	    <div class="sum">  </div>
+      <div class="sumx"></div>
+      <div class="sumy"></div>
+	    <script src="TKtablet.js"></script>
+    <button type="submit" id="submit" onclick="createTable(elem,3,3);">таблица</button>
+	    <div id="elem"></div>
+	    <script src="TKtablet.js"></script>
+        <script >alert("жамкнул на кнопочку")</script>
+	
+        <dialog>
+            <p>
+                <button id="close222" class="bidButtonCol">Закрыть окно</button>
+            </p>
+            <p>Закрыть окно</p>
+        </dialog>    
+    </body>
+</html>
