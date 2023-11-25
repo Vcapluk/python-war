@@ -11,17 +11,30 @@ let phrases = [
     { text: 'проверить непрочитанное в Telegram-каналах', image: 'https://code.s3.yandex.net/web-code/procrastinate/10.png' }
   ];
   
-  function getRandomElement(arr) {
+  function getRandomElement(arr) {//дает рандомное число
     let randIndex = Math.floor(Math.random() * arr.length);
     return arr[randIndex];
   }
   
   let button = document.querySelector('.button');
+  let button1 = document.querySelector('.button1');
   let phrase = document.querySelector('.phrase');
   let advice = document.querySelector('.advice');
   let image = document.querySelector('.image');
   
 button.addEventListener('click', function () {
+    let randomElement = getRandomElement(phrases);
+    smoothly(phrase, 'textContent', randomElement.text);
+    smoothly(image, 'src', randomElement.image);
+  
+    if (randomElement.text.length > 40) {
+      advice.style.fontSize = '33px';
+    } else {
+      advice.style.fontSize = '42px';
+    }
+  });
+
+button1.addEventListener('click', function () {
     let randomElement = getRandomElement(phrases);
     smoothly(phrase, 'textContent', randomElement.text);
     smoothly(image, 'src', randomElement.image);
