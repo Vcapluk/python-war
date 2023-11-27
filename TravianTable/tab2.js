@@ -2,20 +2,6 @@
 
 console.log("start ЧВР");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Запуск каждую 1 сек.
 var never_IntervalID = window.setInterval(Never_MainScript, 5000);
 
@@ -107,12 +93,12 @@ function Never_MainScript() {
 		console.log("добавляем тег диалог");
 		var dialog = document.createElement('dialog');//записано будет в селектор "dialog"
 		console.log("определили функцию")
-		dialog.innerHTML = ' <!-- Общий контейнер для табов --><div class="tabs">   <!--  Контейнер с вкладками   -->   <ul class="tab-header">      <li class="tab-header__item js-tab-trigger active" data-tab="1">Первая</li>      <li class="tab-header__item js-tab-trigger" data-tab="2">Вторая</li>      <li class="tab-header__item js-tab-trigger" data-tab="3">Третья</li>   </ul>   <!--  Контейнер с блоками, которые содержат контент вкладок   -->   <ul class="tab-content">      <li class="tab-content__item js-tab-content active" data-tab="1">         Далеко-далеко за словесными, горами в стране гласных и согласных живут рыбные тексты.      </li>      <li class="tab-content__item js-tab-content" data-tab="2">         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum rem laboriosam cum repudiandae natus corrupti?      </li>      <li class="tab-content__item js-tab-content" data-tab="3">         Далеко-далеко за словесными горами.      </li>   </ul></div>   <div>                   <span>ЧВР сейчас равно:</span><p id="testData"></p><p><button id="close222" class="bidButtonCol">Закрыть окно</button></p>            </div>';//содержимое селектора диалог
+		dialog.innerHTML = '<div>Табличка - зверь</div><!-- Общий контейнер для табов --><div class="tabs"><!--  Контейнер с вкладками   --><ul class="tab-header"><li class="tab-header__item js-tab-trigger active" data-tab="1">ЧВР</li><li class="tab-header__item js-tab-trigger" data-tab="2">ЕК</li><li class="tab-header__item js-tab-trigger" data-tab="3">Палатки</li><span><button id="close222" class="innerText">ХXX</button></span></ul>   <!--  Контейнер с блоками, которые содержат контент вкладок   --><ul class="tab-content"><li class="tab-content__item js-tab-content active" data-tab="1">ЧВР сейчас равно:<span id="testData"></span></li><li class="tab-content__item js-tab-content" data-tab="2">Здесь нужен контент по ЕК</li><li class="tab-content__item js-tab-content" data-tab="3">Здесь нужен контент по палаткам, наполнение, может даже получится отследить, что идут в палатку, сколько, и нужен ли апгрейд палатке.</li></ul>';//содержимое селектора диалог
 		console.log("придали ей содержимое");
 		document.body.appendChild(dialog);//занесли селектор диалог в конец HTML кода.
 		
 		
-		var jsTriggers = document.querySelectorAll('.js-tab-trigger'),
+var jsTriggers = document.querySelectorAll('.js-tab-trigger'),
     jsContents = document.querySelectorAll('.js-tab-content');
 
 jsTriggers.forEach(function(trigger) {
@@ -129,10 +115,7 @@ jsTriggers.forEach(function(trigger) {
       content.classList.add('active');
    });
 });
-   
-		
-		
-		
+   		
 	}
 	
 	NavBar();//без вызова этой функции не добавится кнопка
