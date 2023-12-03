@@ -1,5 +1,10 @@
 //вывод сообщений. тест
 
+//	qwert1 = window.player.data.villages[1].production[1];
+//	console.log (qwert1); - выдал как надо продукцию определенной деревни (по списку)
+
+//window.MapDetails.get(538132442).data.isOasis - в консоли выдал тру(как надо)
+
 console.log("start ЧВР");
 
 //Запуск каждую 1 сек.
