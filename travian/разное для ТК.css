@@ -1,0 +1,138 @@
+#NeverovButton {
+	width: auto;
+	padding: initial;
+	padding: 0 30px;
+	color: rgba(79, 224, 11, 0.534);
+}
+
+#nev_MarketHeader {
+	padding: 10px;
+}
+
+#nev_MarketBody {
+	position: relative;
+	padding: 10px;
+	width: 710px;
+}
+
+#nev_MarketBody table {
+	/*dth: calc (100% - 5px);*/
+}
+
+#nev_marketFooter {
+	padding: 10px;
+}
+
+#nev_MarketButton {
+	
+}
+
+/654"#popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  background-color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 1.5;
+  border-radius: 5px;
+}
+
+
+.++dialog {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 400px;
+	background-color: #fff;
+	padding: 20px;
+	box-sizing: border-box;
+	font-size: 16px;
+	line-height: 1.5;
+	border-radius: 5px;
+}
+
+dialog {
+	position: relative;
+	overflow: auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 120px;
+	min-height: calc(300px);
+	max-height: calc(100% - 210px);
+	width: 500px;
+	z-index: 1060;
+	background-color: white;
+	border: 2px solid black;
+	}
+	
+#close222 {
+	content : inherit;
+  cursor: pointer;
+  position: relative;
+  padding: 10px;
+  color: white;
+
+}
+
+button:::before {
+    content : initial;
+}
+
+
+.tabs {
+   width: 100%;
+   max-width: 500px;
+}
+
+/* Стили для списка вкладок */
+.tab-header {
+   list-style: none;
+   padding-left: 0;
+   display: flex;
+   align-items: center;
+   just
+   ify-content: flex-start;
+   justify-content: space-between;
+   margin: 0;
+}
+
+/* Стили для вкладки */
+.tab-header__item {
+   padding: 10px 20px;
+   margin-right: 5px;
+   cursor: pointer;
+   border: 1px solid #ddd;
+}
+
+/* Стили для активной вкладки */
+.tab-header__item.active {
+   color: red;
+   border-bottom: none;
+   position: relative;
+   background-color: #fff;
+}
+
+/* Стиль для списка контейнеров с содержимым вкладок */
+.tab-content {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+}
+
+/* Стили для контейнера с содержимым вкладки. По умолчанию скрыт. */
+.tab-content__item {
+   display: none;
+   padding: 20px;
+   border: 1px solid #ddd;
+   margin-top: -1px;
+}
+
+/* Стили для активного контейнера вкладки */
+.tab-content__item.active {
+   display: block;
+}
