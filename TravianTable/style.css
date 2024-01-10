@@ -1,95 +1,81 @@
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 100000; /* Sit on top */
-    padding-top: 172px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+#NeverovButton {
+	width: 30px;
+	padding: initial;
+	padding: 0 5px;
+	color: rgba(79, 224, 11, 0.534);
 }
 
-/* Modal Content */
-.modal-content {
-    position: relative;
-    /* background-color: #fefefe; */
-    margin: auto;
-    padding: 0;
-    /* border: 1px solid #888; */
-    width: 684px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s;
+dialog {
+	position: relative;
+	overflow: auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 200px;
+	min-height: calc(300px);
+	max-height: calc(100% - 210px);
+	width: 500px;
+	z-index: 1060;
+	background-color: white;
+	border: 2px solid black;
+	}
+	
+#close222 {
+	content : inherit;
+  cursor: pointer;
+  position: relative;
+  padding: 10px;
+  color: white;
+
 }
 
-/* Add Animation */
-@-webkit-keyframes animatetop {
-    from {top:-300px; opacity:0} 
-    to {top:0; opacity:1}
+.tabs {
+   width: 100%;
+   max-width: 500px;
 }
 
-@keyframes animatetop {
-    from {top:-300px; opacity:0}
-    to {top:0; opacity:1}
+/* Стили для списка вкладок */
+.tab-header {
+   list-style: none;
+   padding-left: 0;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin: 0;
 }
 
-/* The Close Button */
-.close {
-    margin-top: -11px;
-    color: white;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+/* Стили для вкладки */
+.tab-header__item {
+   padding: 10px 14px;
+   margin-right: 5px;
+   cursor: pointer;
+   border: 1px solid #ddd;
 }
 
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+/* Стили для активной вкладки */
+.tab-header__item.active {
+   color: red;
+   border-bottom: none;
+   position: relative;
+   background-color: #fff;
 }
 
-
-table td {
-    padding: 20px;
-    border: 1px solid black;
+/* Стиль для списка контейнеров с содержимым вкладок */
+.tab-content {
+   list-style: none;
+   padding: 0;
+   margin: 0;
 }
 
+/* Стили для контейнера с содержимым вкладки. По умолчанию скрыт. */
+.tab-content__item {
+   display: none;
+   padding: 20px;
+   border: 1px solid #ddd;
+   margin-top: -1px;
+   text-align : center;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.VCBut {
-    width: 70px; /*ширина*/
-    height: 70px;/* высота*/
-    /*padding-top: 10px;*/
-    /*box-sizing: border-box;*/
-    /*border: 1px solid rgb(1, 25, 243);*/
-    /*text-align: center;*/
-    /*font-size: 14px;*/
-    /*cursor: pointer;*/
-    /*transition: opacity 0.2s;*/
-  }
+/* Стили для активного контейнера вкладки */
+.tab-content__item.active {
+   display: block;
+}
