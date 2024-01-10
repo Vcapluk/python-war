@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+  	<meta charset="UTF-8">
+    <style type="text/css">
+
+    	/* задаём размеры кнопки и размер текста на кнопке  */
+    	button {
+	      font-size: 12px;
+		    height: 20px;
+		    width: 100px;
+	  	}
+    </style>
+  </head>
+  <body>
+    <style>
+        #NeverovButton {
+            width: 30px;
+            padding: initial;
+            padding: 0 5px;
+            color: rgba(79, 224, 11, 0.534);
+        }
+
+        dialog {
+            position: relative;
+            overflow: auto;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 200px;
+            min-height: calc(300px);
+            max-height: calc(100% - 210px);
+            width: 500px;
+            z-index: 1060;
+            background-color: white;
+            border: 2px solid black;
+            }
+            
+        #close222 {
+            content : inherit;
+        cursor: pointer;
+        position: relative;
+        padding: 10px;
+        color: white;
+
+        }
+
+        .tabs {
+        width: 100%;
+        max-width: 500px;
+        }
+
+        /* Стили для списка вкладок */
+        .tab-header {
+        list-style: none;
+        padding-left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0;
+        }
+
+        /* Стили для вкладки */
+        .tab-header__item {
+        padding: 10px 14px;
+        margin-right: 5px;
+        cursor: pointer;
+        border: 1px solid #ddd;
+        }
+
+        /* Стили для активной вкладки */
+        .tab-header__item.active {
+        color: red;
+        border-bottom: none;
+        position: relative;
+        background-color: #fff;
+        }
+
+        /* Стиль для списка контейнеров с содержимым вкладок */
+        .tab-content {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        }
+
+        /* Стили для контейнера с содержимым вкладки. По умолчанию скрыт. */
+        .tab-content__item {
+        display: none;
+        padding: 20px;
+        border: 1px solid #ddd;
+        margin-top: -1px;
+        text-align : center;
+        }
+
+        /* Стили для активного контейнера вкладки */
+        .tab-content__item.active {
+        display: block;
+        }
+    </style>
+    </body>
+</html>
