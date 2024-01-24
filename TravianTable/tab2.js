@@ -103,8 +103,16 @@ function Never_MainScript() {
 		let countVillageInTableBuilding = '';//переменная для добавления в HTML 
 		countVillageInTableBuilding = '<tr><td>Деревня</td>																<td>тип постройки</td>																		<td>Уровень</td>																				<td><i class="unit_wood_small_illu"></i></td>												<td><i class="unit_clay_small_illu"></i></td>													<td><i class="unit_iron_small_illu"></i></td>												<td><i class="unit_crop_small_illu"></i></td>													<td><i class="symbol_clock_small_flat_black duration"></i></td>													</tr>';//переменная для добавления в HTML заголовка
 		//наполнение таблицы построек
+		
+		function localTimeZ(timez){//функция для перевода секунд в минуты. ответ в текст
+			let zm =Math.ceil((timez/3600 - Math.floor(timez/3600))*60);
+			let zch = Math.floor(timez/3600);
+			let litleTime = zch + ':'+ zm;
+			return litleTime;
+		}
+		
 		for (let i = 0; i < spisokBuilding.length; i++) {
-			countVillageInTableBuilding += '<tr><td>' +spisokBuilding1[i].name111 +'</td>					<td>' + never_building[spisokBuilding[i].data.buildingType] +'</td>						<td>' + spisokBuilding[i].data.lvl +'</td>													<td>' + spisokBuilding[i].data.upgradeCosts[1] +'</td>									<td>' + spisokBuilding[i].data.upgradeCosts[2] +'</td>										<td>' + spisokBuilding[i].data.upgradeCosts[3] +'</td>									<td>' + spisokBuilding[i].data.upgradeCosts[4] +'</td>										<td>' + spisokBuilding[i].data.upgradeTime +'</td>										</tr>';//записывает строчку для каждого оазиса
+			countVillageInTableBuilding += '<tr><td>' +spisokBuilding1[i].name111 +'</td>					<td>' + never_building[spisokBuilding[i].data.buildingType] +'</td>						<td>' + spisokBuilding[i].data.lvl +'</td>													<td>' + spisokBuilding[i].data.upgradeCosts[1] +'</td>									<td>' + spisokBuilding[i].data.upgradeCosts[2] +'</td>										<td>' + spisokBuilding[i].data.upgradeCosts[3] +'</td>									<td>' + spisokBuilding[i].data.upgradeCosts[4] +'</td>										<td>' + localTimeZ(spisokBuilding[i].data.upgradeTime) +'</td>										</tr>';//записывает строчку для каждого оазиса
 			
 		}
 		
@@ -116,6 +124,7 @@ function Never_MainScript() {
 		let sumRes1 = 0;//переменная для подсчета дерева
 		let sumRes2 = 0;//переменная для подсчета глины
 		let sumRes3 = 0;//переменная для подсчета железа
+		let sumRes4 = 0;//для кропа
 		
 		
 		window.player.data.villages.forEach(village => {
@@ -131,9 +140,10 @@ function Never_MainScript() {
 			sumRes1 += x1;//всего дерева
 			sumRes2 += x2;//всего глины
 			sumRes3 += x3;// всего железа
+			sumRes4 += x4;//всего кропа(баланс)
 		});
 		
-				let countVillageInTable2 = '<tr><td>ЧВР</td><td>' + sumCHVR + '</td></tr><tr><td>Сундук ресурсов</td><td>Дерево</td><td>Глина</td><td>Железо</td><td>Всего</td></tr>' + '<tr><td>3%</td><td>' + Math.ceil(sumRes1*24*0.03) + '</td><td>' + Math.ceil(sumRes2*24*0.03) + '</td><td>' + Math.ceil(sumRes3*24*0.04) + '</td><td>' + Math.ceil(sumCHVRRes*24*0.03) + '</td></tr>' + '<tr><td>4%</td><td>' + Math.ceil(sumRes1*24*0.04) + '</td><td>' + Math.ceil(sumRes2*24*0.04) + '</td><td>' + Math.ceil(sumRes3*24*0.04) + '</td><td>' + Math.ceil(sumCHVRRes*24*0.04) + '</td></tr>' + '<tr><td>5%</td><td>' + Math.ceil(sumRes1*24*0.05) + '</td><td>' + Math.ceil(sumRes2*24*0.05) + '</td><td>' + Math.ceil(sumRes3*24*0.05) + '</td><td>' + Math.ceil(sumCHVRRes*24*0.05) + '</td></tr>';//Записываем в табличку ЧВР и сундук ресурсов
+				let countVillageInTable2 = '<tr><td>ЧВР</td><td>' + sumCHVR + '</td><td>Баланс</td><td>кропа</td><td>' + sumRes4 + '</td></tr><tr><td>Сундук ресурсов</td><td>Дерево</td><td>Глина</td><td>Железо</td><td>Всего</td></tr>' + '<tr><td>3%</td><td>' + Math.ceil(sumRes1*24*0.03) + '</td><td>' + Math.ceil(sumRes2*24*0.03) + '</td><td>' + Math.ceil(sumRes3*24*0.03) + '</td><td>' + Math.ceil(sumCHVRRes*24*0.03) + '</td></tr>' + '<tr><td>4%</td><td>' + Math.ceil(sumRes1*24*0.04) + '</td><td>' + Math.ceil(sumRes2*24*0.04) + '</td><td>' + Math.ceil(sumRes3*24*0.04) + '</td><td>' + Math.ceil(sumCHVRRes*24*0.04) + '</td></tr>' + '<tr><td>5%</td><td>' + Math.ceil(sumRes1*24*0.05) + '</td><td>' + Math.ceil(sumRes2*24*0.05) + '</td><td>' + Math.ceil(sumRes3*24*0.05) + '</td><td>' + Math.ceil(sumCHVRRes*24*0.05) + '</td></tr>';//Записываем в табличку ЧВР и сундук ресурсов
 	
 	
 	
