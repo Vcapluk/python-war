@@ -32,6 +32,7 @@ function Never_MainScript() {
 
 		//для вкладки с постройками
 		const never_building  = {
+			0:  '---------------',
 			1:  'Лесопилка',
 			2:  'Глиняный карьер',
 			3:  'Железный рудник',
@@ -82,27 +83,7 @@ function Never_MainScript() {
 			48: 'ID = 48',
 			49: 'ID = 49'
 		};
-
-
-		const spisokBuilding = [];
-		const spisokBuilding1 = [];
-		window.player.data.villages.forEach(village => {
-			qwer = window.Building.getCollection(village.villageId).data;
-			for (let n = 0; n < qwer.length; n++) {
-				let qwer1 = [];
-				qwer1 = qwer[n];
-				spisokBuilding.push(qwer1);
-				name1 = window.Village.get(village.villageId).data.name;
-				spisokBuilding1.push({name111: name1});
-				//console.log(spisokBuilding.name111);
-				//console.log(spisokBuilding);
-			}
-		});
 		
-		//шапка таблицы построек
-		let countVillageInTableBuilding = '';//переменная для добавления в HTML 
-		countVillageInTableBuilding = '<tr><td>Деревня</td>																<td>тип постройки</td>																		<td>Уровень</td>																				<td><i class="unit_wood_small_illu"></i></td>												<td><i class="unit_clay_small_illu"></i></td>													<td><i class="unit_iron_small_illu"></i></td>												<td><i class="unit_crop_small_illu"></i></td>													<td><i class="symbol_clock_small_flat_black duration"></i></td>													</tr>';//переменная для добавления в HTML заголовка
-		//наполнение таблицы построек
 		
 		function localTimeZ(timez){//функция для перевода секунд в минуты. ответ в текст
 			let zm =Math.ceil((timez/3600 - Math.floor(timez/3600))*60);
@@ -111,10 +92,33 @@ function Never_MainScript() {
 			return litleTime;
 		}
 		
-		for (let i = 0; i < spisokBuilding.length; i++) {
-			countVillageInTableBuilding += '<tr><td>' +spisokBuilding1[i].name111 +'</td>					<td>' + never_building[spisokBuilding[i].data.buildingType] +'</td>						<td>' + spisokBuilding[i].data.lvl +'</td>													<td>' + spisokBuilding[i].data.upgradeCosts[1] +'</td>									<td>' + spisokBuilding[i].data.upgradeCosts[2] +'</td>										<td>' + spisokBuilding[i].data.upgradeCosts[3] +'</td>									<td>' + spisokBuilding[i].data.upgradeCosts[4] +'</td>										<td>' + localTimeZ(spisokBuilding[i].data.upgradeTime) +'</td>										</tr>';//записывает строчку для каждого оазиса
+		let countVillageInTableBuilding1111 = '';//пустая строка для добавления в таблицу
+		
+		window.player.data.villages.forEach(village => {
+			let x = village.name;
+			let xx = village.villageId;
+			qwer = window.Building.getCollection(village.villageId).data;
+			let name1 = window.Village.get(village.villageId).data.name;
+			countVillageInTableBuilding1111 += '<details><summary><a href="https://ru1.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></summary><p>';
+			countVillageInTableBuilding1111 += '<details><summary>--Ресурсы</a></summary><p><table>';
+			countVillageInTableBuilding1111 += '<tr>																		<td>тип постройки</td>																	<td>Уровень</td>																			<td><i class="unit_wood_small_illu"></i></td>											<td><i class="unit_clay_small_illu"></i></td>												<td><i class="unit_iron_small_illu"></i></td>											<td><i class="unit_crop_small_illu"></i></td>												<td><i class="symbol_clock_small_flat_black duration"></i></td>													</tr>';//заголовок
+			for (let n = 0; n < 18; n++) {
+				let qwer1 = qwer[n];
+				countVillageInTableBuilding1111 += '<tr>													<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>' + qwer1.data.lvl +'</td>															<td>' + qwer1.data.upgradeCosts[1] +'</td>											<td>' + qwer1.data.upgradeCosts[2] +'</td>												<td>' + qwer1.data.upgradeCosts[3] +'</td>											<td>' + qwer1.data.upgradeCosts[4] +'</td>												<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>										</tr>';//записывает строчку для каждой постройки
+			}
+			countVillageInTableBuilding1111 += '</table></p></details>'
 			
-		}
+			countVillageInTableBuilding1111 += '<details><summary>--Центр</a></summary><p><table>';
+			countVillageInTableBuilding1111 += '<tr>																	<td>тип постройки</td>																	<td>Уровень</td>																			<td><i class="unit_wood_small_illu"></i></td>											<td><i class="unit_clay_small_illu"></i></td>												<td><i class="unit_iron_small_illu"></i></td>											<td><i class="unit_crop_small_illu"></i></td>												<td><i class="symbol_clock_small_flat_black duration"></i></td>													</tr>';//заголовок
+				for (let n = 18; n < qwer.length; n++) {
+					let qwer1 = qwer[n];
+					countVillageInTableBuilding1111 += '<tr>														<td>' + never_building[qwer1.data.buildingType] +'</td>							<td>' + qwer1.data.lvl +'</td>														<td>' + qwer1.data.upgradeCosts[1] +'</td>										<td>' + qwer1.data.upgradeCosts[2] +'</td>											<td>' + qwer1.data.upgradeCosts[3] +'</td>										<td>' + qwer1.data.upgradeCosts[4] +'</td>											<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>										</tr>';//записывает строчку для каждой постройки
+				}
+				countVillageInTableBuilding1111 += '</table></p></details>'
+			countVillageInTableBuilding1111 += '</p></details>';
+		});
+
+		//конец вкладки постройки
 		
 		
 		//для вкладки ЧВР
@@ -126,15 +130,15 @@ function Never_MainScript() {
 		let sumRes3 = 0;//переменная для подсчета железа
 		let sumRes4 = 0;//для кропа
 		
-		
+		countVillageInTable +='<td>Деревня</td>																			<td><i class="unit_wood_small_illu"></i></td>												<td><i class="unit_clay_small_illu"></i></td>													<td><i class="unit_iron_small_illu"></i></td>												<td><i class="unit_crop_small_illu"></i></td>';
 		window.player.data.villages.forEach(village => {
 			let x = village.name;
+			let xx = village.villageId;
 			let x1 = parseInt(village.production[1], 10);//ищет выработку дерева
 			let x2 = parseInt(village.production[2], 10);//ищет выработку глины
 			let x3 = parseInt(village.production[3], 10);//ищет выработку железа
 			let x4 = parseInt(village.production[4], 10);//ищет выработку кропа
-			
-			countVillageInTable += '<tr><td>'+ '<a clickable="setVillage(village.villageId)" class="truncated clickable">'+ x +'</a>'+ '</td><td>' + x1 +'</td><td>' + x2 +'</td><td>' + x3 +'</td><td>' + x4 +'</td></tr>'//записывает строчку для каждой деревни
+			countVillageInTable += '<tr><td><a href="https://ru1.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></td>																		<td>' + x1 +'</td>																			<td>' + x2 +'</td>																		<td>' + x3 +'</td>																			<td>' + x4 +'</td>																		</tr>'//записывает строчку для каждой деревни
 			sumCHVR += x1 + x2 + x3 + x4;//считает выработку ЧВР для каждой деревни
 			sumCHVRRes += x1 + x2 + x3;//считает выработку РЕСУРСОВ ВСЕХ для каждой деревни
 			sumRes1 += x1;//всего дерева
@@ -142,12 +146,13 @@ function Never_MainScript() {
 			sumRes3 += x3;// всего железа
 			sumRes4 += x4;//всего кропа(баланс)
 		});
+		countVillageInTable += '<tr><td>Всего</td>																		<td>' + sumRes1 +'</td>																		<td>' + sumRes2 +'</td>																			<td>' + sumRes3 +'</td>																		<td>' + sumRes4 +'</td>																		</tr></table>Что дает сундук ресурсов?<table>';
 		
-				let countVillageInTable2 = '<tr><td>ЧВР</td><td>' + sumCHVR + '</td><td>Баланс</td><td>кропа</td><td>' + sumRes4 + '</td></tr><tr><td>Сундук ресурсов</td><td>Дерево</td><td>Глина</td><td>Железо</td><td>Всего</td></tr>' + '<tr><td>3%</td><td>' + Math.ceil(sumRes1*24*0.03) + '</td><td>' + Math.ceil(sumRes2*24*0.03) + '</td><td>' + Math.ceil(sumRes3*24*0.03) + '</td><td>' + Math.ceil(sumCHVRRes*24*0.03) + '</td></tr>' + '<tr><td>4%</td><td>' + Math.ceil(sumRes1*24*0.04) + '</td><td>' + Math.ceil(sumRes2*24*0.04) + '</td><td>' + Math.ceil(sumRes3*24*0.04) + '</td><td>' + Math.ceil(sumCHVRRes*24*0.04) + '</td></tr>' + '<tr><td>5%</td><td>' + Math.ceil(sumRes1*24*0.05) + '</td><td>' + Math.ceil(sumRes2*24*0.05) + '</td><td>' + Math.ceil(sumRes3*24*0.05) + '</td><td>' + Math.ceil(sumCHVRRes*24*0.05) + '</td></tr>';//Записываем в табличку ЧВР и сундук ресурсов
+		let countVillageInTable2 = '<tr><td>ЧВР</td><td>' + sumCHVR + '</td></tr><tr><td>Сундук ресурсов</td><td><i class="unit_wood_small_illu"></i></td>												<td><i class="unit_clay_small_illu"></i></td>													<td><i class="unit_iron_small_illu"></i></td><td>Всего</td></tr>' + '<tr><td>3%</td><td>' + Math.ceil(sumRes1*24*0.03) + '</td><td>' + Math.ceil(sumRes2*24*0.03) + '</td><td>' + Math.ceil(sumRes3*24*0.03) + '</td><td>' + Math.ceil(sumCHVRRes*24*0.03) + '</td></tr>' + '<tr><td>4%</td><td>' + Math.ceil(sumRes1*24*0.04) + '</td><td>' + Math.ceil(sumRes2*24*0.04) + '</td><td>' + Math.ceil(sumRes3*24*0.04) + '</td><td>' + Math.ceil(sumCHVRRes*24*0.04) + '</td></tr>' + '<tr><td>5%</td><td>' + Math.ceil(sumRes1*24*0.05) + '</td><td>' + Math.ceil(sumRes2*24*0.05) + '</td><td>' + Math.ceil(sumRes3*24*0.05) + '</td><td>' + Math.ceil(sumCHVRRes*24*0.05) + '</td></tr>';//Записываем в табличку ЧВР и сундук ресурсов
 	
 	
 	
-		// делаем подобно чвр список для оазисов
+		// делаем список для оазисов
 		
 		/*---- расчеты для оазисов! ----*/
 	
@@ -161,7 +166,7 @@ function Never_MainScript() {
 		let coord1 = 538132443; //536887296;// ID нашей деревни 
 		let coord0 = 536887296; //[0/0 для всего мира]
 		let coordz = 60; //условный радиус(половина стороны квадрата) [60 - если для всего мира]
-		let coordz1 = 16;//радиус поиска вокруг нужной дерки
+		let coordz1 = 13;//радиус поиска вокруг нужной дерки
 		let coord1x = window.Village.get(coord1).data.coordinates.x;
 		let coord1y = window.Village.get(coord1).data.coordinates.y;
 		
@@ -288,14 +293,14 @@ function Never_MainScript() {
 		    }
 		}
 			
-		spisokOasisUnits = spisokOasisUnitsPr.sort((a, b) => a.dist - b.dist);
+		spisokOasisUnits = spisokOasisUnitsPr.sort((a, b) => a.dist - b.dist);//сортировка по расстоянию
 		
 		let countVillageInTableOasis = '';//переменная для добавления в HTML 
 		countVillageInTableOasis = '<tr><td>Оазис</td>																					<td>Дист</td>																				<td>Всего</td>																					<td>Тип</td>																				<td><i class="unitSmall nature unitType1"></i></td>												<td><i class="unitSmall nature unitType2"></i></td>											<td><i class="unitSmall nature unitType3"></i></td>												<td><i class="unitSmall nature unitType4"></i></td>											<td><i class="unitSmall nature unitType5"></i></td>												<td><i class="unitSmall nature unitType6"></i></td>											<td><i class="unitSmall nature unitType7"></i></td>												<td><i class="unitSmall nature unitType8"></i></td>											<td><i class="unitSmall nature unitType9"></i></td>												<td><i class="unitSmall nature unitType10"></i></td>										</tr>';//переменная для добавления в HTML заголовка
 	
 		
 		for (let i = 0; i < spisokOasisUnits.length; i++) {
-			countVillageInTableOasis += '<tr><td><a href="https://ru1.kingdoms.com/#/page:map/villId:'+ coord1 + '/subtab:Outgoing/cellId:' + spisokOasisUnits[i].ID + '/window:mapCellDetails">('+ spisokOasisUnits[i].coordx + '|' +spisokOasisUnits[i].coordy +')</a></td>							<td>' + spisokOasisUnits[i].dist +'</td>													<td>' + spisokOasisUnits[i].unitsTotal +'</td>											<td>' + spisokOasisUnits[i].bonus +'</td>													<td>' + spisokOasisUnits[i].units[1] +'</td>												<td>' + spisokOasisUnits[i].units[2] +'</td>											<td>' + spisokOasisUnits[i].units[3] +'</td>												<td>' + spisokOasisUnits[i].units[4] +'</td>											<td>' + spisokOasisUnits[i].units[5] +'</td>												<td>' + spisokOasisUnits[i].units[6] +'</td>											<td>' + spisokOasisUnits[i].units[7] +'</td>												<td>' + spisokOasisUnits[i].units[8] +'</td>											<td>' + spisokOasisUnits[i].units[9] +'</td>												<td>' + spisokOasisUnits[i].units[10] +'</td>												</tr>'//записывает строчку для каждого оазиса
+			countVillageInTableOasis += '<tr><td><a href="https://ru1.kingdoms.com/#/page:map/villId:'+ coord1 + '/subtab:Outgoing/cellId:' + spisokOasisUnits[i].ID + '/window:mapCellDetails">('+ spisokOasisUnits[i].coordx + '|' +spisokOasisUnits[i].coordy +')</a></td>							<td>' + spisokOasisUnits[i].dist +'</td>													<td>' + spisokOasisUnits[i].unitsTotal +'</td>											<td>' + spisokOasisUnits[i].bonus +'</td>													<td>' + spisokOasisUnits[i].units[1] +'</td>											<td>' + spisokOasisUnits[i].units[2] +'</td>												<td>' + spisokOasisUnits[i].units[3] +'</td>											<td>' + spisokOasisUnits[i].units[4] +'</td>												<td>' + spisokOasisUnits[i].units[5] +'</td>											<td>' + spisokOasisUnits[i].units[6] +'</td>												<td>' + spisokOasisUnits[i].units[7] +'</td>											<td>' + spisokOasisUnits[i].units[8] +'</td>												<td>' + spisokOasisUnits[i].units[9] +'</td>											<td>' + spisokOasisUnits[i].units[10] +'</td>												</tr>'//записывает строчку для каждого оазиса
 		}
 		
 		
@@ -303,17 +308,28 @@ function Never_MainScript() {
 		//делаем вкладку с ЕК
 		
 		let countVillageInTableEK = '';//переменная для добавления в HTML выработки ЕК деревень
-		let sumEKZ = 0;//переменная для подсчета ЧВР
-			
+		let sumEKZ = 0;//переменная для подсчета добываемого ЕК
+		let sumEKZF = 0;//переменная для подсчета ЕК произведенного
+		countVillageInTableEK += '<tr><td>Деревня</td><td>ЕК/День</td></tr>';
+		
 		window.player.data.villages.forEach(village => {
 			let x = village.name;
 			let x1 = parseInt(village.culturePointProduction, 10);//ищет выработку ЕК
-			
+			let x2 = parseInt(village.culturePoints, 10);
+			console.log(x2);
+			sumEKZF += x2;
 			countVillageInTableEK += '<tr><td>'+ x +'</td><td>' + x1 +'</td></tr>'//записывает строчку для каждой деревни
 			sumEKZ += x1;//всего ЕК
 		});
 		
-		countVillageInTableEK += '<tr><td>Всего ЕК</td><td>' + sumEKZ +'</td></tr>'
+		countVillageInTableEK += '<tr><td>Всего ЕК</td><td>' + sumEKZ +'</td></tr>';
+		countVillageInTableEK += '<tr><td>Всего добыли ЕК</td><td>' + sumEKZF +'</td></tr>';
+		
+		
+		
+		
+		
+		
 		
 		//console.log("добавляем тег диалог");
 		var dialog = document.createElement('dialog');//записано будет в селектор "dialog"
@@ -349,10 +365,9 @@ function Never_MainScript() {
 		
 		str +=			'</li>';
 		str +=			 '<li class="tab-content__item js-tab-content" data-tab="4">Здесь контент про Палатки. хз как к ним подступиться...'
-
 		str +=			'</li>';
 		str +=			 '<li class="tab-content__item js-tab-content" data-tab="5">Здесь контент про Деревни'
-		str += '<table>' + countVillageInTableBuilding + '</table>';
+		str += countVillageInTableBuilding1111;
 		str +=			'</li>';
 		str +=		'</ul>';
 		str += '</div>';
