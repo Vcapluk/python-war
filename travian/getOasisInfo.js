@@ -102,8 +102,6 @@ https://testx5.kingdoms.com/api/?c=cache&a=get&p239&t1682583332756
 */
 
 class NeverovOasisInfo {
-
-
     myObject = {
         "controller": "cache",
         "action": "get",
@@ -118,10 +116,6 @@ class NeverovOasisInfo {
         //getClientId(1)    '65b8bf4077bef'
         "session": "0a2a2bb8381796d61934"
         };
-
-
-
-
 
     // https://testx5.kingdoms.com/api/?c=cache&a=get&p239&t1682583332756
 
