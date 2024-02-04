@@ -3,9 +3,6 @@ console.log("start ЧВР + Оазисы");
 //Запуск каждую 1 сек.
 var never_IntervalID = window.setInterval(Never_MainScript, 1000);
 
-//let coord0 = 538132443; //536887296;//воображаемый центр(или ID нашей деревни) [0/0 если для всего мира]
-//let z = 10; //условный радиус(половина стороны квадрата) [60 - если для всего мира]
-
 /*----- Never_MainScript(): Главный скрипт. -----*/
 function Never_MainScript() {
 	
@@ -88,11 +85,21 @@ function Never_MainScript() {
 			let zch = Math.floor(timez/3600);//количество часов
 			let zm = Math.floor((timez - (zch*3600))/60)// количество минут
 			let zs = Math.floor(timez - (zch*3600+zm*60)); // количество секунд
+			if (zch < 10) {
+		    	zch = "0" + zch;
+		    }
+		    if (zm < 10) {
+		    	zm = "0" + zm;
+		    }
+		    if (zs < 10) {
+		    	zs = "0" + zs;
+		    }
 			let litleTime = zch + ':'+ zm + ':'+ zs;
 			return litleTime;
 		}
 		
 		
+	
 		//добавляем постройки в таблицу
 		let countVillageInTableBuilding1111 = '';//пустая строка для добавления в таблицу
 		
@@ -102,13 +109,22 @@ function Never_MainScript() {
 			qwer = window.Building.getCollection(village.villageId).data;
 			let name1 = window.Village.get(village.villageId).data.name;
 			let zagolovokTable = '<tr>																		<td>тип постройки</td>																	<td>Уровень</td>																			<td><i class="unit_wood_small_illu"></i></td>											<td><i class="unit_clay_small_illu"></i></td>												<td><i class="unit_iron_small_illu"></i></td>											<td><i class="unit_crop_small_illu"></i></td>												<td><i class="symbol_clock_small_flat_black duration"></i></td>							<td><i class="symbol_clock_small_flat_black duration"></i>/нас</td>							</tr>';
+			//let napolnenieTable = '<tr>													<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>' + qwer1.data.lvl +'</td>															<td>' + qwer1.data.upgradeCosts[1] +'</td>											<td>' + qwer1.data.upgradeCosts[2] +'</td>												<td>' + qwer1.data.upgradeCosts[3] +'</td>											<td>' + qwer1.data.upgradeCosts[4] +'</td>												<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>									<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>		</tr>';
 			countVillageInTableBuilding1111 += '<details><summary><a href="https://ru1.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></summary><p>';
 			countVillageInTableBuilding1111 += '<details><summary>--Ресурсы</a></summary><p><table>';
 			countVillageInTableBuilding1111 += zagolovokTable;
 			for (let n = 0; n < 18; n++) {
 				let qwer1 = qwer[n];
-			//	console.log(qwer1);
-				countVillageInTableBuilding1111 += '<tr>													<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>' + qwer1.data.lvl +'</td>															<td>' + qwer1.data.upgradeCosts[1] +'</td>											<td>' + qwer1.data.upgradeCosts[2] +'</td>												<td>' + qwer1.data.upgradeCosts[3] +'</td>											<td>' + qwer1.data.upgradeCosts[4] +'</td>												<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>									<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>		</tr>';//записывает строчку для каждой постройки
+				let buildingCrace = qwer1.data.buildingType;
+				if (buildingCrace === 0) {
+				} else {
+					let lvlNow = qwer1.data.isMaxLvl;
+					if (lvlNow === true) {
+						countVillageInTableBuilding1111 += '<tr>													<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>Максимум</td>';
+					} else {
+					  countVillageInTableBuilding1111 += '<tr>													<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>' + qwer1.data.lvl +'</td>															<td>' + qwer1.data.upgradeCosts[1] +'</td>											<td>' + qwer1.data.upgradeCosts[2] +'</td>												<td>' + qwer1.data.upgradeCosts[3] +'</td>											<td>' + qwer1.data.upgradeCosts[4] +'</td>												<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>									<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>		</tr>';;
+					}
+				}
 			}
 			
 			//upgradeSupplyUsage - дельта наса.
@@ -118,9 +134,18 @@ function Never_MainScript() {
 			countVillageInTableBuilding1111 += zagolovokTable;
 			for (let n = 18; n < qwer.length; n++) {
 				let qwer1 = qwer[n];
-				countVillageInTableBuilding1111 += '<tr>												<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>' + qwer1.data.lvl +'</td>														<td>' + qwer1.data.upgradeCosts[1] +'</td>											<td>' + qwer1.data.upgradeCosts[2] +'</td>											<td>' + qwer1.data.upgradeCosts[3] +'</td>											<td>' + qwer1.data.upgradeCosts[4] +'</td>											<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>									<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>		</tr>';//записывает строчку для каждой постройки
+				let buildingCrace = qwer1.data.buildingType;
+				if (buildingCrace === 0) {
+				} else {
+					let lvlNow = qwer1.data.isMaxLvl;
+					if (lvlNow === true) {
+						countVillageInTableBuilding1111 += '<tr>													<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>Максимум</td>';
+					} else {
+					  countVillageInTableBuilding1111 += '<tr>													<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>' + qwer1.data.lvl +'</td>															<td>' + qwer1.data.upgradeCosts[1] +'</td>											<td>' + qwer1.data.upgradeCosts[2] +'</td>												<td>' + qwer1.data.upgradeCosts[3] +'</td>											<td>' + qwer1.data.upgradeCosts[4] +'</td>												<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>									<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>		</tr>';;
+					}
 				}
-				countVillageInTableBuilding1111 += '</table></p></details>'
+			}
+			countVillageInTableBuilding1111 += '</table></p></details>'
 			countVillageInTableBuilding1111 += '</p></details>';
 		});
 
@@ -316,11 +341,11 @@ function Never_MainScript() {
 		//делаем вкладку с ЕК
 		
 		//для запроса JSON
-		let spisokEK = [11212];//пробуем создать объект для записи
+		let spisokEK = [];//пробуем создать объект для записи
 		//let spisokEK999;
 		//let zaprosEK;
 		//spisokEK.push(333000333);
-		console.log(typeof(spisokEK));
+		//console.log(typeof(spisokEK));
 		const contr = 'building';//"controller"
 		const acti = 'getCpData';//"action"
 		const villageId1 = coord1;//надо как то уйти от принудительной привязки, чтоб работало автономно
@@ -338,85 +363,43 @@ function Never_MainScript() {
 			mode: "cors",
 			credentials: "include",
 		});
-		
-		
-		
-			console.log('запуск новой функции');
-
-
-			//let zaprosEK;
-			fetch(request).then((response) =>{
-				return response.text();
-			})
-			.then((asdfgh) => {
-				console.log(asdfgh);
-				return asdfgh;
-			});
+		console.log(request)
 
 
 
-			console.log('конец функции');
-			console.log(asdfgh);
-			//console.log(jsonData);
-			
+
+
+
+
 		
-		
-/*		//пошел запрос. магия какая то
-		fetch(request).then((response) => {
-			// Проверяем, что запрос был успешным
-			if (response.ok) {
-				return response.text();
-			} else {
-				console.error('Ошибка при запросе!');
-			}
+/*		asdfgh = fetch(request).then((response) =>{
+			return response.text();
 		})
-		.then((jsonData) => {
-			//здесь у нас прилетает ответ(как он это делает - непонятно). в качестве ответа прилетает объект. Сейчас я его расковыряю и сделаю новый. Потому что этот объект остается внутри, наружу он не хочет выходить.
-			console.log('запрос прошелЁ!!!');
-			let zaprosEK1 = jsonData.response.expansionSlots.nextVillagePossible;//следующий слот
-			let zaprosEK = jsonData.response.expansionSlots.producedCulturePoints;//текщее значение добытого ЕК
-			console.log(jsonData); // Здесь переменная jsonData содержит ответ
-			let slot1 = jsonData.response.expansionSlots.slots[1].culturePoints;
-			let slot2 = jsonData.response.expansionSlots.slots[2].culturePoints;
-			let slot3 = jsonData.response.expansionSlots.slots[3].culturePoints;
-			let slot4 = jsonData.response.expansionSlots.slots[4].culturePoints;
-			let slot5 = jsonData.response.expansionSlots.slots[5].culturePoints;
-			let slot6 = jsonData.response.expansionSlots.slots[6].culturePoints;
-			spisokEK.push(9898989898);
-			spisokEK999 = 465464;
-			console.log(spisokEK999);
-			spisokEK.push({//вытягиваем все, что надо и пишем в объект.
-				zaprosEK,
-				zaprosEK1,
-				slot1,
-				slot2,
-				slot3,
-				slot4,
-				slot5,
-				slot6,
-			});
-			//spisokEK = jsonData;
-			//console.log(spisokEK);
-			//console.log(typeof(spisokEK));
-			spisokEK999 = jsonData;
-			return spisokEK999;
-			
+		.then((asdfgh) => {
+			console.log(asdfgh);
+			console.log(typeof(asdfgh));
+			return asdfgh;
+			//setTimeout(() => resolve("done"), 1000);
 		});
-	//	console.log('spisokEK');
-	//	console.log(spisokEK);
-	//	console.log(typeof(spisokEK));
-		//zaprosEK = zaprosEK1;
-	//	console.log(JSON.stringify(spisokEK));
-	//	console.log(typeof(spisokEK[1]));
-	//	console.log(spisokEK[1]);
-	//	console.log(spisokEK[0]);
-		console.log(spisokEK999);
-		//console.log(typeof(spisokIDD[0]));
-		//console.log(spisokIDD[1]);
 		
 		
-//		console.log(spisokEK[0]);
-	*/	//закончили с запросом.
+		console.log('конец функции');
+		console.log(asdfgh);
+		console.log(typeof(asdfgh));
+		asdfgh1 = JSON.parse(asdfgh);
+		console.log(asdfgh1);
+		
+		//setTimeout(1000)
+		//console.log(jsonData);
+		
+		
+		*/
+		
+		
+		
+		// вызываем функцию
+	//	let zaprosEK = zapros(request);
+		
 		
 		let countVillageInTableEK = '';//переменная для добавления в HTML выработки ЕК деревень
 		let sumEKZ = 0;//переменная для подсчета добываемого ЕК
