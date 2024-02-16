@@ -3,6 +3,8 @@ console.log("start ЧВР + Оазисы");
 //Запуск каждую 1 сек.
 var never_IntervalID = window.setInterval(Never_MainScript, 1000);
 
+let asdfgh = [];//для того, чтоб работал JSON запрос на ЕК и возвращал значения для добавления в табличку
+
 /*----- Never_MainScript(): Главный скрипт. -----*/
 function Never_MainScript() {
 	
@@ -21,7 +23,7 @@ function Never_MainScript() {
 	
 		// Добавляем кнопку
 		var newElem = document.createElement("a"); //записано будет в селектор "а"
-			newElem.setAttribute('id', 'NeverovButton'); // добавляет атрибут со значением кнопка. надо описать кнопку, чтоб она вставилась
+		newElem.setAttribute('id', 'NeverovButton'); // добавляет атрибут со значением кнопка. надо описать кнопку, чтоб она вставилась
 		newElem.setAttribute('class', 'headerButton clickable'); // добавляет атрибут со значением. такое же, как на сайте
 		newElem.setAttribute('onclick', 'buttonOpen()'); // добавляет атрибут со значением
 		newElem.innerHTML = '<span class = "text"> &#8801 </span>'//название кнопки на экране
@@ -109,7 +111,7 @@ function Never_MainScript() {
 			qwer = window.Building.getCollection(village.villageId).data;
 			let name1 = window.Village.get(village.villageId).data.name;
 			let zagolovokTable = '<tr>																		<td>тип постройки</td>																	<td>Уровень</td>																			<td><i class="unit_wood_small_illu"></i></td>											<td><i class="unit_clay_small_illu"></i></td>												<td><i class="unit_iron_small_illu"></i></td>											<td><i class="unit_crop_small_illu"></i></td>												<td><i class="symbol_clock_small_flat_black duration"></i></td>							<td><i class="symbol_clock_small_flat_black duration"></i>/нас</td>							</tr>';
-			//let napolnenieTable = '<tr>													<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>' + qwer1.data.lvl +'</td>															<td>' + qwer1.data.upgradeCosts[1] +'</td>											<td>' + qwer1.data.upgradeCosts[2] +'</td>												<td>' + qwer1.data.upgradeCosts[3] +'</td>											<td>' + qwer1.data.upgradeCosts[4] +'</td>												<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>									<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>		</tr>';
+
 			countVillageInTableBuilding1111 += '<details><summary><a href="https://ru1.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></summary><p>';
 			countVillageInTableBuilding1111 += '<details><summary>--Ресурсы</a></summary><p><table>';
 			countVillageInTableBuilding1111 += zagolovokTable;
@@ -197,7 +199,7 @@ function Never_MainScript() {
 		let coord1 = 538132443; //536887296;// ID нашей деревни 
 		let coord0 = 536887296; //[0/0 для всего мира]
 		let coordz = 60; //условный радиус(половина стороны квадрата) [60 - если для всего мира]
-		let coordz1 = 13;//радиус поиска вокруг нужной дерки
+		let coordz1 = 25;//радиус поиска вокруг нужной дерки
 		let coord1x = window.Village.get(coord1).data.coordinates.x;
 		let coord1y = window.Village.get(coord1).data.coordinates.y;
 		
@@ -303,15 +305,16 @@ function Never_MainScript() {
 					//bonus = bonusz;
 					
 					let units = [];//объявим список для добавления
+					let unitsTotal = 0;
 					for (let n = 1; n < 11; n++){//проверка наличия каждого зверя в оазисе
 						qwer = window.MapDetails.get(spisokIDD[i].ID).data.troops.units[n];
 						if (qwer !== undefined) {
 							units[n] = Number(qwer);//если зверь есть, то добавим его, запишем числом
+							unitsTotal += units[n];
 						} else {
-							units[n] = 0;//если зверя нет, то ставим 0
+							units[n] = " ";//если зверя нет, то ставим 0
 						}
 					}
-					const unitsTotal = units.reduce((partialSum, a) => partialSum + a, 0);
 					spisokOasisUnitsPr.push({
 						ID,
 		            	coordx,
@@ -326,10 +329,11 @@ function Never_MainScript() {
 		    }
 		}
 			
-		spisokOasisUnits = spisokOasisUnitsPr.sort((a, b) => a.dist - b.dist);//сортировка по расстоянию
+		//spisokOasisUnits = spisokOasisUnitsPr.sort((a, b) => a.dist - b.dist);//сортировка по расстоянию
+		spisokOasisUnits = spisokOasisUnitsPr.sort((a, b) => b.unitsTotal - a.unitsTotal);//сортировка по количеству
 		
 		let countVillageInTableOasis = '';//переменная для добавления в HTML 
-		countVillageInTableOasis = '<tr><td>Оазис</td>																					<td>Дист</td>																				<td>Всего</td>																					<td>Тип</td>																				<td><i class="unitSmall nature unitType1"></i></td>												<td><i class="unitSmall nature unitType2"></i></td>											<td><i class="unitSmall nature unitType3"></i></td>												<td><i class="unitSmall nature unitType4"></i></td>											<td><i class="unitSmall nature unitType5"></i></td>												<td><i class="unitSmall nature unitType6"></i></td>											<td><i class="unitSmall nature unitType7"></i></td>												<td><i class="unitSmall nature unitType8"></i></td>											<td><i class="unitSmall nature unitType9"></i></td>												<td><i class="unitSmall nature unitType10"></i></td>										</tr>';//переменная для добавления в HTML заголовка
+		countVillageInTableOasis = '<thead><tr><td>Оазис</td>																					<td>Дист</td>																				<td>Всего</td>																					<td>Тип</td>																				<td><i class="unitSmall nature unitType1"></i></td>												<td><i class="unitSmall nature unitType2"></i></td>											<td><i class="unitSmall nature unitType3"></i></td>												<td><i class="unitSmall nature unitType4"></i></td>											<td><i class="unitSmall nature unitType5"></i></td>												<td><i class="unitSmall nature unitType6"></i></td>											<td><i class="unitSmall nature unitType7"></i></td>												<td><i class="unitSmall nature unitType8"></i></td>											<td><i class="unitSmall nature unitType9"></i></td>												<td><i class="unitSmall nature unitType10"></i></td>										</tr></thead>';//переменная для добавления в HTML заголовка
 	
 		
 		for (let i = 0; i < spisokOasisUnits.length; i++) {
@@ -340,70 +344,37 @@ function Never_MainScript() {
 		
 		//делаем вкладку с ЕК
 		
-		//для запроса JSON
-		let spisokEK = [];//пробуем создать объект для записи
-		//let spisokEK999;
-		//let zaprosEK;
-		//spisokEK.push(333000333);
-		//console.log(typeof(spisokEK));
+		// запрос на ЕК
 		const contr = 'building';//"controller"
 		const acti = 'getCpData';//"action"
 		const villageId1 = coord1;//надо как то уйти от принудительной привязки, чтоб работало автономно
-		//let villageId1 = window.player.data.villages[1].village.villageId;
-		//console.log(villageId1);
 		let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки
 		const playerId = player.data.playerId;//достает ID для запроса
 		const time = new Date().getTime().toString(); //делает время для запроса
 		const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
 		const message = '{"controller":"' + contr + '","action":"' + acti +'","params":{"villageId":"'+ villageId1 + '"},"clientId":"' + getClientId() + '","session":"' + session + '"}';//делает строчку для запроса. До этого была функция, но она не успевала сделать строчку корректно
-		//console.log(message);
 		const request = new Request(url, {
 			method: "POST",
 			body: message,
 			mode: "cors",
 			credentials: "include",
 		});
-		console.log(request)
-
-
-
-
-
-
-
 		
-/*		asdfgh = fetch(request).then((response) =>{
-			return response.text();
+		//console.log(request);
+		
+		//сам запрос на сервер
+		fetch(request).then((response) =>{
+			return response.json();
 		})
-		.then((asdfgh) => {
-			console.log(asdfgh);
-			console.log(typeof(asdfgh));
-			return asdfgh;
-			//setTimeout(() => resolve("done"), 1000);
+		.then((jsonData) => {
+			//console.log(jsonData);
+			asdfgh.push(jsonData);
 		});
 		
 		
-		console.log('конец функции');
-		console.log(asdfgh);
-		console.log(typeof(asdfgh));
-		asdfgh1 = JSON.parse(asdfgh);
-		console.log(asdfgh1);
-		
-		//setTimeout(1000)
-		//console.log(jsonData);
-		
-		
-		*/
-		
-		
-		
-		// вызываем функцию
-	//	let zaprosEK = zapros(request);
-		
-		
+		//обработка для добавления в таблицу
 		let countVillageInTableEK = '';//переменная для добавления в HTML выработки ЕК деревень
 		let sumEKZ = 0;//переменная для подсчета добываемого ЕК
-		let sumEKZF = 3194;//переменная для подсчета ЕК произведенного
 		countVillageInTableEK += '<tr><td>Деревня</td><td>ЕК/День</td></tr>';
 		
 		window.player.data.villages.forEach(village => {
@@ -411,30 +382,27 @@ function Never_MainScript() {
 			let x = village.name;
 			let x1 = parseInt(village.culturePointProduction, 10);//ищет выработку ЕК
 			let x2 = parseInt(village.culturePoints, 10);
-			sumEKZF += x2;
 			countVillageInTableEK += '<tr><td>'+ x +'</td><td>' + x1 +'</td></tr>'//записывает строчку для каждой деревни
 			sumEKZ += x1;//всего ЕК
 		});
 		
-		countVillageInTableEK += '<tr><td>Всего ЕК</td><td>' + sumEKZ +'</td></tr>';
-		countVillageInTableEK += '<tr><td>Всего добыли ЕК</td><td>' + sumEKZF +'</td></tr>';
+		countVillageInTableEK += '<tr><td>Всего добывается ЕК</td><td>' + sumEKZ +'</td></tr>';
 		
-		let timeEKfull = ((270000 - sumEKZF)/sumEKZ)*24*60*60;
-		countVillageInTableEK += '<tr><td>Времени осталось:</td><td>' + localTimeZ(timeEKfull) +'</td></tr>';
+		let nZapros = asdfgh.length - 1;//длинну списка уменьшаем на 1 для корректного обновления содержимого
+		if (asdfgh[nZapros] != undefined) {
+			let sumEK = asdfgh[nZapros].response.expansionSlots.producedCulturePoints;//в запросе ищем последнюю актуальную запись, чтоб в табличке данные обновлялись
+			countVillageInTableEK += '<tr><td>Всего добыли ЕК</td><td>' + sumEK +'</td></tr>';
+			let slotEK = asdfgh[nZapros].response.expansionSlots.slots[0].culturePoints;
+			let timeEKfull = ((slotEK - sumEK)/sumEKZ)*24*60*60;
+			countVillageInTableEK += '<tr><td>Следующий слот:</td><td>' + localTimeZ(timeEKfull) +'</td></tr>';
+			let slotEK1 = asdfgh[nZapros].response.expansionSlots.slots[1].culturePoints;
+			let timeEKfull1 = ((slotEK1 - sumEK)/sumEKZ)*24*60*60;
+			countVillageInTableEK += '<tr><td>Последующий слот:</td><td>' + localTimeZ(timeEKfull1) +'</td></tr>';
+		};
 		
-		//здесь будем считать время до следующего слота в формате (чч:мм)
-		//let timeEKapp = 354654541654;//spisokEK[0].zaprosEK;
-		//console.log(timeEKapp);
-		
-		//конец вкладки с ЕК
 		
 		
-		
-		
-		
-		//console.log("добавляем тег диалог");
 		const dialog = document.createElement('dialog');//записано будет в селектор "dialog"
-		//console.log("определили функцию");
 		str = '';
 		str = '<div>Табличка - зверь</div>';
 		str += '<!-- Общий контейнер для табов -->';

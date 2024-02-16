@@ -4,6 +4,7 @@ console.log('Never: Инициализация');
 //Telegramm данные
 var telegram_token = '1420192729:AAHNh54SzcwqX7mVp6bH97_RNECdsN2NnlQ';
 var telegram_chat  = '142824554';
+let finishNow = true;//false для автоматического завершения построек
 
 var never_message = {
 	buildingQueue : true, //(true/false) - Отправлять сообщения о завершении постройки ??? 
@@ -108,48 +109,57 @@ function Never_BuildingQueue() {
 	            if (building.buildingType === '45') { continue; }
 			
 	            //Осталось больше 5 минут
-			    time = parseInt(Date.now().toString().slice(0,10));
-	            if (building.finished > 305 + time) { continue; }
-	
-	            //Общее время постройки меньше 5 минут (зачем уведомление ???) переделал на 20 секунд, иногда все таки надо
-	            time = parseInt(building.finished) - parseInt(building.timeStart);
-	            if (time < 10) { continue; }
-	
-	            //Проверяем есть ли отправленное сообщение
-	            storage = localStorage.getItem(village.villageId+'-'+i);
-	            if (storage === building.buildingType+'/'+i+'/'+building.timeStart+'/'+'true'){ continue; }
-			    
-	            //Запоминаем отправку сообщения
-	            localStorage.setItem(village.villageId+'-'+i, building.buildingType+'/'+i+'/'+building.timeStart+'/'+'true');
-				
-	            //Отправляем в Telegram
-	            type = never_building[building.buildingType];
-	            letter = '\ud83c\udfd7 ' + village.name + ', постройка "'+type+'" .'
-	        	Never_Telegram(letter);
-	        	console.log("Считаем ЧВР...");
-	        	var elW = document.querySelector(".stockContainer.wood .production .value");//вытащили строку выработки дерева
-	        	const contentW = elW.innerText;// достаем текст из дива
-	    	    var xW = parseInt(contentW, 10);// из текста достаем число
-	        	//console.log(xW);
+				time = parseInt(Date.now().toString().slice(0,10));
+				if (building.finished > 299 + time) { continue; }
+				//console.log('старт отправки сообщения?')
+				let a = building.finished - time;
+				if (a<300){//если меньше 5 минут осталось
+					if (finishNow = true) {
+						let queueType;//для определения типа постройки
+						let qwer = Number(building.buildingType);//тип постройки переводим в число
+						if (qwer <= 4) {//если ресурсные поля (1-4), то 2 тип, центр - 1 тип
+							queueType = 2;
+						} else { 
+							queueType = 1;
+						};
+						const contr = 'premiumFeature';//"controller"
+						const acti = 'bookFeature';//"action"
+						const villageId1 = village.villageId;
+						let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
+						const playerId = player.data.playerId;//достает ID для запроса
+						const time = new Date().getTime().toString(); //делает время для запроса
+						const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
+						const prise = 0;
+						const message = '{"controller": "' + contr + '","action": "' + acti +'","params": {"featureName":"finishNow","params": {"prise": ' + prise +',"queueType": "' + queueType + '","villageId": '+ villageId1 + '}},"clientId": "' + getClientId() + '","session": "' + session + '"}';//делает строчку для запроса. До этого была функция, но она не успевала сделать строчку корректно
+						const request = new Request(url, {
+							method: "POST",
+							body: message,
+							mode: "cors",
+							credentials: "include",
+						});
+						//сам запрос на сервер
+						fetch(request).then((response) =>{
+							return response.json();
+						})
+						.then((jsonData) => {
+							сonsole.log('запрос прошел, должно автозавершиться');
+						});
+	           		}
+		       	}
+		
+				//Общее время постройки меньше 5 минут (зачем уведомление ???) переделал на 20 секунд, иногда все таки надо
+				time = parseInt(building.finished) - parseInt(building.timeStart);
+				if (time < 10) { continue; }
+				//Проверяем есть ли отправленное сообщение
+				storage = localStorage.getItem(village.villageId+'-'+i);
+				if (storage === building.buildingType+'/'+i+'/'+building.timeStart+'/'+'true'){ continue; }
+				//Запоминаем отправку сообщения
+				localStorage.setItem(village.villageId+'-'+i, building.buildingType+'/'+i+'/'+building.timeStart+'/'+'true');
+				//Отправляем в Telegram
+				type = never_building[building.buildingType];
+				letter = '\ud83c\udfd7 ' + village.name + ', постройка "'+type+'" .'
+				Never_Telegram(letter);
 	        	
-	        	var elC = document.querySelector(".stockContainer.clay .production .value"); //вытащили строку выработки глины
-	        	const contentC = elC.innerText;// достаем текст из дива
-	    	    var xC = parseInt(contentC, 10);// из текста достаем число
-	        	//console.log(xC);//вывели в консоль
-	        	
-	        	var elI = document.querySelector(".stockContainer.iron .production .value");//вытащили строку выработки железа
-	        	const contentI = elI.innerText;// достаем текст из дива
-	    	    var xI = parseInt(contentI, 10);// из текста достаем число
-	        	//console.log(xI);//вывели в консоль
-	        	
-		        var elCr = document.querySelector(".stockContainer.crop .production .value");//вытащили строку выработки кропа (с учетом потребления) а надо полностью? а еще надо знак учесть потом...
-		        //console.log(elCr);
-		        const contentCr = elCr.innerText;// достаем текст из дива
-	    	    var xCr = parseInt(contentCr, 10);// из текста достаем число
-	        	//console.log(xCr);//вывели в консоль
-	        	
-	        	var itogCHVR = xW + xC +xI + xCr;
-	        	console.log("ЧВР на сейчас равно: " + itogCHVR); // получаем ЧВР в консоль
 	        	}
         });
         
@@ -235,7 +245,7 @@ function Never_AttackVillage(message) {
 	
 	//Отсееваем мусор
 	if (message.data.operation === undefined) { return; }
-	
+	console.log(message);
 	//Есл не прибывающие (пропускаем)
 	message.operation = message.data.operation;
 	if (message.operation !== 2) { return; }
