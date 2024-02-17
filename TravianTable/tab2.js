@@ -4,6 +4,7 @@ console.log("start ЧВР + Оазисы");
 var never_IntervalID = window.setInterval(Never_MainScript, 1000);
 
 let asdfgh = [];//для того, чтоб работал JSON запрос на ЕК и возвращал значения для добавления в табличку
+let resStartNow = false;
 
 /*----- Never_MainScript(): Главный скрипт. -----*/
 function Never_MainScript() {
@@ -28,7 +29,84 @@ function Never_MainScript() {
 		newElem.setAttribute('onclick', 'buttonOpen()'); // добавляет атрибут со значением
 		newElem.innerHTML = '<span class = "text"> &#8801 </span>'//название кнопки на экране
 		userArea.appendChild(newElem);//добавляет в конец списка элемент, который описали выше.
-
+		
+		//код отправки ресов
+					if (resStartNow === true){
+						console.log(resStartNow)
+						let iD = 538197976;//айди деревни, где будем строить.
+						let iDvillageDonor = 538099676;//айди деревни, откуда пойдут ресурсы на отстройку
+						const contr = 'trade';//"controller"
+						const acti = 'checkTarget';//"action"
+						const destVillageId = 538165211;//деревня куда везем ресы
+						const destVillageName = "02. бббббб";//переделать на автоматическое выдергивание названия
+						const sourceVillageId = 538132443;//деревня откуда везем ресы
+						let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
+						const time = new Date().getTime().toString(); //делает время для запроса
+						const playerId = player.data.playerId;//достает ID для запроса
+						const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
+						let message = '{"controller": "' + contr + '","action": "' + acti + '","params": {"sourceVillageId": ' + sourceVillageId + ',"destVillageId": ' + destVillageId + ',"destVillageName": "' + destVillageName + '"},"session": "' + session + '"}';
+						console.log(message);
+						const request = new Request(url, {
+							method: "POST",
+							body: message,
+							credentials: "include",
+						});
+						console.log(request);
+						fetch(request).then((response) =>{
+							return response.json();
+							//console.log('вошли в первый запрос')
+						})
+						.then((jsonData) => {
+							сonsole.log('первый запрос прошел');
+						});
+						
+						
+						
+						
+						const time1 = new Date().getTime().toString(); //делает время для запроса
+						const contr1 = 'trade';//"controller"
+						const acti1 = 'sendResources';//"action"
+						const url1 = `https://ru1.kingdoms.com/api/?c=${contr1}&a=${acti1}&p${playerId}&t${time1}`;
+						//достаем значения ресурсов...
+						let res1 = 1;//thisIsBuilding.upgradeCosts[1];
+						let res2 = 1;//thisIsBuilding.upgradeCosts[2];
+						let res3 = 1;//thisIsBuilding.upgradeCosts[3];
+						let res4 = 1;//thisIsBuilding.upgradeCosts[4];
+						let message1 = '{"controller": "' + contr1 + '","action": "' + acti1 + '","params": {"sourceVillageId": ' + iD + ',"resources": [0,' + res1 + ',' + res2 + ',' + res3 + ',' + res4 + '],"destVillageId": ' + iDvillageDonor + ',"recurrences" : 1},"clientId": "' + getClientId() + '","session": "' + session + '"}';
+						console.log(message1);
+						
+						
+						
+						
+						const request1 = new Request(url1, {
+							method: "POST",
+							body: message1,
+							credentials: "include",
+						});
+						//console.log('запрос на пересылку ресурсов');
+						
+						console.log(request1);
+						
+						//console.log(spisokBuildingTime);
+						//console.log('конец постройки');
+						//сам запрос на сервер
+							fetch(request1).then((response) =>{
+								return response.json();
+								//console.log('вошли в первый запрос')
+							})
+							.then((jsonData) => {
+								console.log('второй запрос прошел');
+							});
+							
+							
+					}
+				
+		
+		
+		
+		
+		
+		
 		//для вкладки с постройками
 		const never_building  = {
 			0:  '---------------',
@@ -110,7 +188,7 @@ function Never_MainScript() {
 			let xx = village.villageId;
 			qwer = window.Building.getCollection(village.villageId).data;
 			let name1 = window.Village.get(village.villageId).data.name;
-			let zagolovokTable = '<tr>																		<td>тип постройки</td>																	<td>Уровень</td>																			<td><i class="unit_wood_small_illu"></i></td>											<td><i class="unit_clay_small_illu"></i></td>												<td><i class="unit_iron_small_illu"></i></td>											<td><i class="unit_crop_small_illu"></i></td>												<td><i class="symbol_clock_small_flat_black duration"></i></td>							<td><i class="symbol_clock_small_flat_black duration"></i>/нас</td>							</tr>';
+			let zagolovokTable = '<tr>				<td>тип постройки</td>																																				<td>Уровень</td>																																<td><i class="unit_wood_small_illu"></i></td>																									<td><i class="unit_clay_small_illu"></i></td>																									<td><i class="unit_iron_small_illu"></i></td>																									<td><i class="unit_crop_small_illu"></i></td>																									<td><i class="symbol_clock_small_flat_black duration"></i></td>																<td><i class="symbol_clock_small_flat_black duration"></i>/нас</td>														</tr>';
 
 			countVillageInTableBuilding1111 += '<details><summary><a href="https://ru1.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></summary><p>';
 			countVillageInTableBuilding1111 += '<details><summary>--Ресурсы</a></summary><p><table>';
@@ -122,9 +200,9 @@ function Never_MainScript() {
 				} else {
 					let lvlNow = qwer1.data.isMaxLvl;
 					if (lvlNow === true) {
-						countVillageInTableBuilding1111 += '<tr>													<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>Максимум</td>';
+						countVillageInTableBuilding1111 += '<tr>																										<td>' + never_building[qwer1.data.buildingType] +'</td>																	<td>Максимум</td>';
 					} else {
-					  countVillageInTableBuilding1111 += '<tr>													<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>' + qwer1.data.lvl +'</td>															<td>' + qwer1.data.upgradeCosts[1] +'</td>											<td>' + qwer1.data.upgradeCosts[2] +'</td>												<td>' + qwer1.data.upgradeCosts[3] +'</td>											<td>' + qwer1.data.upgradeCosts[4] +'</td>												<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>									<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>		</tr>';;
+					  countVillageInTableBuilding1111 += '<tr>																								<td>' + never_building[qwer1.data.buildingType] +'</td>																<td>' + qwer1.data.lvl +'</td>																												<td>' + qwer1.data.upgradeCosts[1] +'</td>																							<td>' + qwer1.data.upgradeCosts[2] +'</td>																							<td>' + qwer1.data.upgradeCosts[3] +'</td>																						<td>' + qwer1.data.upgradeCosts[4] +'</td>																							<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>																		<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>						</tr>';;
 					}
 				}
 			}
@@ -136,14 +214,15 @@ function Never_MainScript() {
 			countVillageInTableBuilding1111 += zagolovokTable;
 			for (let n = 18; n < qwer.length; n++) {
 				let qwer1 = qwer[n];
+				//console.log(qwer1);
 				let buildingCrace = qwer1.data.buildingType;
 				if (buildingCrace === 0) {
 				} else {
 					let lvlNow = qwer1.data.isMaxLvl;
 					if (lvlNow === true) {
-						countVillageInTableBuilding1111 += '<tr>													<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>Максимум</td>';
+						countVillageInTableBuilding1111 += '<tr>																								<td>' + never_building[qwer1.data.buildingType] +'</td>																	<td>Максимум</td>';
 					} else {
-					  countVillageInTableBuilding1111 += '<tr>													<td>' + never_building[qwer1.data.buildingType] +'</td>								<td>' + qwer1.data.lvl +'</td>															<td>' + qwer1.data.upgradeCosts[1] +'</td>											<td>' + qwer1.data.upgradeCosts[2] +'</td>												<td>' + qwer1.data.upgradeCosts[3] +'</td>											<td>' + qwer1.data.upgradeCosts[4] +'</td>												<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>									<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>		</tr>';;
+					  countVillageInTableBuilding1111 += '<tr>																									<td>' + never_building[qwer1.data.buildingType] +'</td>																	<td>' + qwer1.data.lvl +'</td>																													<td>' + qwer1.data.upgradeCosts[1] +'</td>																						<td>' + qwer1.data.upgradeCosts[2] +'</td>																						<td>' + qwer1.data.upgradeCosts[3] +'</td>																						<td>' + qwer1.data.upgradeCosts[4] +'</td>																							<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>																			<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>			</tr>';;
 					}
 				}
 			}

@@ -5,6 +5,8 @@ console.log('Never: Инициализация');
 var telegram_token = '1420192729:AAHNh54SzcwqX7mVp6bH97_RNECdsN2NnlQ';
 var telegram_chat  = '142824554';
 let finishNow = true;//false для автоматического завершения построек
+let buildingAppNow = true; //false для создания очереди построек...
+//let resStartNow = true;// для автоотправки ресов
 
 var never_message = {
 	buildingQueue : true, //(true/false) - Отправлять сообщения о завершении постройки ??? 
@@ -54,8 +56,8 @@ function Never_MainScript() {
 	
     //Проверка загрузки страницы
     if (Never_Loading() != 'none') { return;}
-	
-		 
+    
+    
 	//Проверка очереди постройки
 	if (never_message.buildingQueue) Never_BuildingQueue();
 }
@@ -112,9 +114,11 @@ function Never_BuildingQueue() {
 				time = parseInt(Date.now().toString().slice(0,10));
 				if (building.finished > 299 + time) { continue; }
 				//console.log('старт отправки сообщения?')
+				
+				//блок кода для автозавершения постройки
 				let a = building.finished - time;
 				if (a<300){//если меньше 5 минут осталось
-					if (finishNow = true) {
+					if (finishNow === true) {//закончить постройку сейчас
 						let queueType;//для определения типа постройки
 						let qwer = Number(building.buildingType);//тип постройки переводим в число
 						if (qwer <= 4) {//если ресурсные поля (1-4), то 2 тип, центр - 1 тип
@@ -144,9 +148,56 @@ function Never_BuildingQueue() {
 						.then((jsonData) => {
 							сonsole.log('запрос прошел, должно автозавершиться');
 						});
-	           		}
-		       	}
-		
+					}
+					
+					
+					//блок кода для заказа следующей постройки
+					if (buildingAppNow === true){//готовим постройку?
+						console.log('готовим запрос на заказ следующей постройки')
+						let iD = 538197976;//айди деревни, где будем строить.
+						let spisokBuilding = [];
+						let qwer = window.Building.getCollection(iD).data;
+						for (let n = 0; n < 18; n++) {//готовим список построек
+							let qwer1 = qwer[n];
+							spisokBuilding.push(qwer1.data);
+						}
+						let spisokBuildingTime = spisokBuilding.sort((a, b) => a.upgradeTime - b.upgradeTime);//сортировка по времени строительства(для выбора самой быстрой)
+						const contr = 'building';//"controller"
+						const acti = 'useMasterBuilder';//"action"
+						const villageId1 = iD;
+						const thisIsBuilding = spisokBuildingTime[0];//создали переменную для доступа к текущей постройке, чтоб удобно было брать данные
+						console.log(thisIsBuilding);
+						const locationId = thisIsBuilding.locationId;
+						const buildingType = thisIsBuilding.buildingType;
+						let reserveResources = true;
+						let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
+						const time = new Date().getTime().toString(); //делает время для запроса
+						const playerId = player.data.playerId;//достает ID для запроса
+						const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
+						const message = '{"controller": "' + contr + '","action": "' + acti +'","params": {"villageId": "' + iD +'","locationId": "' + locationId + '","buildingType": "' + buildingType + '","reserveResources": "' + reserveResources + '"},"clientId": "' + getClientId() + '","session": "' + session + '"}';//делает строчку для запроса. До этого была функция, но она не успевала сделать строчку корректно
+						//console.log(message);
+						const request = new Request(url, {
+							method: "POST",
+							body: message,
+							credentials: "include",
+						});
+						console.log(request);
+						//console.log(spisokBuildingTime);
+						console.log('запрос на заказ готов, отправляем его');
+						//сам запрос на сервер
+						fetch(request).then((response) =>{
+							return response.json();
+						})
+						.then((jsonData) => {
+							сonsole.log('запрос прошел, должно добавиться');
+						});
+					}
+				}
+
+					
+					
+					
+				
 				//Общее время постройки меньше 5 минут (зачем уведомление ???) переделал на 20 секунд, иногда все таки надо
 				time = parseInt(building.finished) - parseInt(building.timeStart);
 				if (time < 10) { continue; }
@@ -161,7 +212,7 @@ function Never_BuildingQueue() {
 				Never_Telegram(letter);
 	        	
 	        	}
-        });
+      });
         
 		//Всё прошло удачно
 		never_travian.status = true;
@@ -245,7 +296,7 @@ function Never_AttackVillage(message) {
 	
 	//Отсееваем мусор
 	if (message.data.operation === undefined) { return; }
-	console.log(message);
+	//console.log(message);
 	//Есл не прибывающие (пропускаем)
 	message.operation = message.data.operation;
 	if (message.operation !== 2) { return; }
