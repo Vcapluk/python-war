@@ -4,7 +4,7 @@ console.log("start ЧВР + Оазисы");
 var never_IntervalID = window.setInterval(Never_MainScript, 1000);
 
 let asdfgh = [];//для того, чтоб работал JSON запрос на ЕК и возвращал значения для добавления в табличку
-let resStartNow = false;
+let resStartNow = true;
 
 /*----- Never_MainScript(): Главный скрипт. -----*/
 function Never_MainScript() {
@@ -31,81 +31,80 @@ function Never_MainScript() {
 		userArea.appendChild(newElem);//добавляет в конец списка элемент, который описали выше.
 		
 		//код отправки ресов
-					if (resStartNow === true){
-						console.log(resStartNow)
-						let iD = 538197976;//айди деревни, где будем строить.
-						let iDvillageDonor = 538099676;//айди деревни, откуда пойдут ресурсы на отстройку
-						const contr = 'trade';//"controller"
-						const acti = 'checkTarget';//"action"
-						const destVillageId = 538165211;//деревня куда везем ресы
-						const destVillageName = "02. бббббб";//переделать на автоматическое выдергивание названия
-						const sourceVillageId = 538132443;//деревня откуда везем ресы
-						let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
-						const time = new Date().getTime().toString(); //делает время для запроса
-						const playerId = player.data.playerId;//достает ID для запроса
-						const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
-						let message = '{"controller": "' + contr + '","action": "' + acti + '","params": {"sourceVillageId": ' + sourceVillageId + ',"destVillageId": ' + destVillageId + ',"destVillageName": "' + destVillageName + '"},"session": "' + session + '"}';
-						console.log(message);
-						const request = new Request(url, {
-							method: "POST",
-							body: message,
-							credentials: "include",
-						});
-						console.log(request);
-						fetch(request).then((response) =>{
-							return response.json();
-							//console.log('вошли в первый запрос')
-						})
-						.then((jsonData) => {
-							сonsole.log('первый запрос прошел');
-						});
+	/*	if (resStartNow === true){
+		  
+		  //подготовка первого запроса
+			console.log(resStartNow)
+			//let iD = 538197976;//айди деревни, где будем строить.
+			//let iDvillageDonor = 538099676;//айди деревни, откуда пойдут ресурсы на отстройку
+			const contr = 'trade';//"controller"
+			const acti = 'checkTarget';//"action"
+			const destVillageId = 538165211;//деревня куда везем ресы02. bbbbbbb
+			const destVillageName = "02. бббббб";//переделать на автоматическое выдергивание названия
+			const sourceVillageId = 538132443;//деревня откуда везем ресы 01.aaaaaa
+			let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
+			const time = new Date().getTime().toString(); //делает время для запроса
+			const playerId = player.data.playerId;//достает ID для запроса
+			const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
+			let message = '{"controller": "' + contr + '","action": "' + acti + '","params": {"sourceVillageId": ' + sourceVillageId + ',"destVillageId": ' + destVillageId + ',"destVillageName": "' + destVillageName + '"},"session": "' + session + '"}';
+			//console.log(message);
+			const request = new Request(url, {
+				method: "POST",
+				body: message,
+				credentials: "include",
+			});
+			//console.log(request);
+			console.log('первый запрос готов');
+			
+			//подготовка второго запроса
+			const time1 = new Date().getTime().toString(); //делает время для запроса
+			const contr1 = 'trade';//"controller"
+			const acti1 = 'sendResources';//"action"
+			const url1 = `https://ru1.kingdoms.com/api/?c=${contr1}&a=${acti1}&p${playerId}&t${time1}`;
+			//достаем значения ресурсов...
+			let res1 = 1;//thisIsBuilding.upgradeCosts[1];
+			let res2 = 1;//thisIsBuilding.upgradeCosts[2];
+			let res3 = 1;//thisIsBuilding.upgradeCosts[3];
+			let res4 = 1;//thisIsBuilding.upgradeCosts[4];
+			let message1 = '{"controller": "' + contr1 + '","action": "' + acti1 + '","params": {"sourceVillageId": ' + sourceVillageId + ',"resources": [0,' + res1 + ',' + res2 + ',' + res3 + ',' + res4 + '],"destVillageId": ' + destVillageId + ',"recurrences" : 1},"clientId": "' + getClientId() + '","session": "' + session + '"}';
+			//console.log(message1);
+			const request1 = new Request(url1, {
+				method: "POST",
+				body: message1,
+				credentials: "include",
+			});
+			console.log('второй запрос готов');
+			console.log(request1);
+			
+			
+			fetch(request).then((response) =>{
+			  console.log('вошли в первый запрос')
+				return response.json();
+			})
+			.then((jsonData) => {
+			  console.log('ответ первого запроса получен');
+				//console.log('конец постройки');
+				//второй запрос
+				fetch(request1).then((response) =>{
+				  console.log('вошли во второй запрос')
+					return response.json();
+				})
+				.then((jsonData) => {
+					console.log('второй запрос прошел');
+				});
+				
+				
+				});
 						
 						
 						
 						
-						const time1 = new Date().getTime().toString(); //делает время для запроса
-						const contr1 = 'trade';//"controller"
-						const acti1 = 'sendResources';//"action"
-						const url1 = `https://ru1.kingdoms.com/api/?c=${contr1}&a=${acti1}&p${playerId}&t${time1}`;
-						//достаем значения ресурсов...
-						let res1 = 1;//thisIsBuilding.upgradeCosts[1];
-						let res2 = 1;//thisIsBuilding.upgradeCosts[2];
-						let res3 = 1;//thisIsBuilding.upgradeCosts[3];
-						let res4 = 1;//thisIsBuilding.upgradeCosts[4];
-						let message1 = '{"controller": "' + contr1 + '","action": "' + acti1 + '","params": {"sourceVillageId": ' + iD + ',"resources": [0,' + res1 + ',' + res2 + ',' + res3 + ',' + res4 + '],"destVillageId": ' + iDvillageDonor + ',"recurrences" : 1},"clientId": "' + getClientId() + '","session": "' + session + '"}';
-						console.log(message1);
-						
-						
-						
-						
-						const request1 = new Request(url1, {
-							method: "POST",
-							body: message1,
-							credentials: "include",
-						});
-						//console.log('запрос на пересылку ресурсов');
-						
-						console.log(request1);
-						
-						//console.log(spisokBuildingTime);
-						//console.log('конец постройки');
-						//сам запрос на сервер
-							fetch(request1).then((response) =>{
-								return response.json();
-								//console.log('вошли в первый запрос')
-							})
-							.then((jsonData) => {
-								console.log('второй запрос прошел');
-							});
+
 							
 							
 					}
-				
-		
-		
-		
-		
-		
+					
+					*/
 		
 		//для вкладки с постройками
 		const never_building  = {

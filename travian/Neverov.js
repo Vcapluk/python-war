@@ -117,15 +117,17 @@ function Never_BuildingQueue() {
 				
 				//блок кода для автозавершения постройки
 				let a = building.finished - time;
-				if (a<300){//если меньше 5 минут осталось
-					if (finishNow === true) {//закончить постройку сейчас
+				if (a<300){
+				  //если меньше 5 минут осталось
+				  //готовим запрос на автозавершение постройки
+				  if (finishNow === true) {//закончить постройку сейчас
 						let queueType;//для определения типа постройки
 						let qwer = Number(building.buildingType);//тип постройки переводим в число
 						if (qwer <= 4) {//если ресурсные поля (1-4), то 2 тип, центр - 1 тип
 							queueType = 2;
 						} else { 
 							queueType = 1;
-						};
+						}
 						const contr = 'premiumFeature';//"controller"
 						const acti = 'bookFeature';//"action"
 						const villageId1 = village.villageId;
@@ -141,63 +143,101 @@ function Never_BuildingQueue() {
 							mode: "cors",
 							credentials: "include",
 						});
-						//сам запрос на сервер
-						fetch(request).then((response) =>{
-							return response.json();
-						})
-						.then((jsonData) => {
-							сonsole.log('запрос прошел, должно автозавершиться');
-						});
-					}
-					
-					
-					//блок кода для заказа следующей постройки
-					if (buildingAppNow === true){//готовим постройку?
-						console.log('готовим запрос на заказ следующей постройки')
-						let iD = 538197976;//айди деревни, где будем строить.
-						let spisokBuilding = [];
-						let qwer = window.Building.getCollection(iD).data;
-						for (let n = 0; n < 18; n++) {//готовим список построек
-							let qwer1 = qwer[n];
-							spisokBuilding.push(qwer1.data);
-						}
-						let spisokBuildingTime = spisokBuilding.sort((a, b) => a.upgradeTime - b.upgradeTime);//сортировка по времени строительства(для выбора самой быстрой)
-						const contr = 'building';//"controller"
-						const acti = 'useMasterBuilder';//"action"
-						const villageId1 = iD;
-						const thisIsBuilding = spisokBuildingTime[0];//создали переменную для доступа к текущей постройке, чтоб удобно было брать данные
-						console.log(thisIsBuilding);
-						const locationId = thisIsBuilding.locationId;
-						const buildingType = thisIsBuilding.buildingType;
-						let reserveResources = true;
-						let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
-						const time = new Date().getTime().toString(); //делает время для запроса
-						const playerId = player.data.playerId;//достает ID для запроса
-						const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
-						const message = '{"controller": "' + contr + '","action": "' + acti +'","params": {"villageId": "' + iD +'","locationId": "' + locationId + '","buildingType": "' + buildingType + '","reserveResources": "' + reserveResources + '"},"clientId": "' + getClientId() + '","session": "' + session + '"}';//делает строчку для запроса. До этого была функция, но она не успевала сделать строчку корректно
-						//console.log(message);
-						const request = new Request(url, {
-							method: "POST",
-							body: message,
-							credentials: "include",
-						});
-						console.log(request);
-						//console.log(spisokBuildingTime);
-						console.log('запрос на заказ готов, отправляем его');
-						//сам запрос на сервер
-						fetch(request).then((response) =>{
-							return response.json();
-						})
-						.then((jsonData) => {
-							сonsole.log('запрос прошел, должно добавиться');
-						});
-					}
-				}
+						console.log('запрос на автодостройку готов!');
+						
+						console.log('создаем запрос на новую постройку')
+						
+						let request1; //объявим переменную, чтоб подготовить запрос при условии
+						if (buildingAppNow === true){//готовим постройку?
+              console.log('готовим запрос на заказ следующей постройки')
+              let iD = 538197976;//айди деревни, где будем строить.
+              let spisokBuilding = [];
+              let qwer = window.Building.getCollection(iD).data;
+              for (let n = 0; n < 18; n++) {//готовим список построек
+              	let qwer1 = qwer[n];
+              	spisokBuilding.push(qwer1.data);
+              }
+    					let spisokBuildingTime = spisokBuilding.sort((a, b) => a.upgradeTime - b.upgradeTime);//сортировка по времени строительства(для выбора самой быстрой)
+    					const contr = 'building';//"controller"
+    					const acti = 'useMasterBuilder';//"action"
+    					const thisIsBuilding = spisokBuildingTime[0];//создали переменную для доступа к текущей постройке, чтоб удобно было брать данные
+    					console.log(thisIsBuilding);
+    					const locationId = thisIsBuilding.locationId;
+    					const buildingType = thisIsBuilding.buildingType;
+    					let reserveResources = true;
+    					let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
+    					const time = new Date().getTime().toString(); //делает время для запроса
+    					const playerId = player.data.playerId;//достает ID для запроса
+    					const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
+    					const message1 = '{"controller": "' + contr + '","action": "' + acti +'","params": {"villageId": "' + iD +'","locationId": "' + locationId + '","buildingType": "' + buildingType + '","reserveResources": "' + reserveResources + '"},"clientId": "' + getClientId() + '","session": "' + session + '"}';//делает строчку для запроса. До этого была функция, но она не успевала сделать строчку корректно
+    						//console.log(message);
+    					request1 = new Request(url, {
+    						method: "POST",
+    						body: message1,
+    						credentials: "include",
+    					});
+    						//console.log(request);
+    						//console.log(spisokBuildingTime);
+    						console.log('запрос на заказ готов, отправляем его');
+    						//сам запрос на сервер
+    						
 
-					
-					
-					
+    					}
+							
+						
+						console.log('подошли к запросу...')
+						fetch(request).then((response) =>{
+						  console.log('запрос на автодостройку отправлен');
+							return response.json();
+						})
+						.then((jsonData) => {
+						  console.log('запрос прошел, должно автозавершиться');
+						  console.log('делаем запрос на новую постройку');
+						  fetch(request1).then((response) =>{
+						    console.log('запрос на постройку пошел');
+						    return response.json()
+						    
+						  })
+    					.then((jsonData) => {
+    						console.log('запрос прошел, должно добавиться');
+    					});
+							
+    				})
+							
+/*						fetch(request).then((response) =>{
+			  console.log('вошли в первый запрос')
+				return response.json();
+			})
+			.then((jsonData) => {
+			  console.log('ответ первого запроса получен');
+				//console.log('конец постройки');
+				//второй запрос
+				fetch(request1).then((response) =>{
+				  console.log('вошли во второй запрос')
+					return response.json();
+				})
+				.then((jsonData) => {
+					console.log('второй запрос прошел');
+				});
 				
+				
+				})
+						
+						*/
+						
+						
+						
+						
+							
+							
+						}
+						
+						
+						
+				}
+				
+				
+					
 				//Общее время постройки меньше 5 минут (зачем уведомление ???) переделал на 20 секунд, иногда все таки надо
 				time = parseInt(building.finished) - parseInt(building.timeStart);
 				if (time < 10) { continue; }
