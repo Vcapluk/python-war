@@ -90,7 +90,7 @@ function Never_BuildingQueue() {
 			    if (buildingQueue.data.queues === undefined) { return; }
 	    		if (buildingQueue.data.freeSlots === undefined) {return; }
 	    		for (var i = 1; i < 2; i++) {
-	    			if (buildingQueue.data.freeSlots[1] === 1) {
+	    			if (buildingQueue.data.freeSlots[1] === 1) {    
 	    				let iD = villageNow;//айди деревни, где будем строить.
 	    				console.log('будем строить?');
         				let spisokBuilding = [];
@@ -122,125 +122,101 @@ function Never_BuildingQueue() {
     						credentials: "include",
     					});
     			
-    				console.log('запрос на стройку готов');
- 	 //  			console.log(village.villageId +'-'+i +'/'+i+'/'+'/'+'true')
-  	//  			console.log(village.villageId+'/'+'true')
-    			
- 	/*   			//Проверяем есть ли отправленное сообщение
-			  	storage = localStorage.getItem(village.villageId+'-'+i);
-		  		if (storage === buildingType+'/'+i+'/'+'/'+'true'){ 
-		  		  console.log('ахтунг, конец всему!');
-		  		  continue; 
-		  		  
-		  		}
-		  		//Запоминаем отправку сообщения
-		  		localStorage.setItem(village.villageId+'-'+i, buildingType+'/'+i+'/'+'/'+'true1');
-	*/			
-    			
-    			//console.log(request);
-    			//console.log(spisokBuildingTime);
-    			console.log('запрос на заказ готов, отправляем его');
-    			//сам запрос на сервер
-    			fetch(request1).then((response) =>{
-					  console.log('запрос на постройку пошел');
-					  return response.json()
-    			})
-    			.then((jsonData) => {
-    				//console.log('запрос прошел, должно добавиться');
-    				//document.location.reload(true);
-    			})
-    			
-    			
-    			
-      		console.log('добавим ресиков?')
-  	      console.log(resStartNow);
-  	      		//код отправки ресов
-  	      for (let z = 1; z < 2; z++) {
-        		if (resStartNow === true){
-        		  
-        		  console.log('зашли в ресики');
-        		  //подготовка первого запроса
-        			console.log(resStartNow)
-    	    		//let iD = 538197976;//айди деревни, где будем строить.
-        	    		//let iDvillageDonor = 538165211;//айди деревни, откуда пойдут ресурсы на отстройку
-        			const contr = 'trade';//"controller"
-    	    		const acti = 'checkTarget';//"action"
-    	    		const destVillageId = 538197979;//деревня куда везем ресы02. bbbbbbb
-        			const destVillageName = "08. зззззз"// "02. бббббб";//переделать на автоматическое выдергивание названия
-        			const sourceVillageId = 538165211;//деревня откуда везем ресы 02
-        			let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
-        			const time = new Date().getTime().toString(); //делает время для запроса
-        			const playerId = player.data.playerId;//достает ID для запроса
-        			const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
-        			let message = '{"controller": "' + contr + '","action": "' + acti + '","params": {"sourceVillageId": ' + sourceVillageId + ',"destVillageId": ' + destVillageId + ',"destVillageName": "' + destVillageName + '"},"session": "' + session + '"}';
-        			//console.log(message);
-        			const request = new Request(url, {
-        				method: "POST",
-        				body: message,
-        				credentials: "include",
-        			});
-        			//console.log(request);
-        			console.log('первый запрос готов');
-        			console.log(message);
+    			    	console.log('запрос на стройку готов');
+
+    		        	//console.log(request);
+    		        	//console.log(spisokBuildingTime);
+    		        	console.log('запрос на заказ готов, отправляем его');
+    		        	//сам запрос на сервер
+    		        	fetch(request1).then((response) =>{
+			        		console.log('запрос на постройку пошел');
+			        		return response.json()
+    			        })
+    		        	.then((jsonData) => {
+    			        	//console.log('запрос прошел, должно добавиться');
+    			           	//document.location.reload(true);
+    			       })
+                    
+                       console.log('добавим ресиков?');
+                        console.log(resStartNow);
+  	      	    	    //код отправки ресов
+  	                    for (let z = 1; z < 2; z++) {
+        	        	if (resStartNow === true){
+                            console.log('зашли в ресики');
+        	                //подготовка первого запроса
+        		        	console.log(resStartNow)
+    	    	        	//let iD = 538197976;//айди деревни, где будем строить.
+        	          		//let iDvillageDonor = 538165211;//айди деревни, откуда пойдут ресурсы на отстройку
+        		        	const contr = 'trade';//"controller"
+    	    	        	const acti = 'checkTarget';//"action"
+    	    	        	const destVillageId = 538197979;//деревня куда везем ресы02. bbbbbbb
+        		        	const destVillageName = "08. зззззз"// "02. бббббб";//переделать на автоматическое выдергивание названия
+        		        	const sourceVillageId = 538165211;//деревня откуда везем ресы 02
+        		        	let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
+        		        	const time = new Date().getTime().toString(); //делает время для запроса
+        		        	const playerId = player.data.playerId;//достает ID для запроса
+        		        	const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
+        		        	let message = '{"controller": "' + contr + '","action": "' + acti + '","params": {"sourceVillageId": ' + sourceVillageId + ',"destVillageId": ' + destVillageId + ',"destVillageName": "' + destVillageName + '"},"session": "' + session + '"}';
+        		        	//console.log(message);
+        		        	const request = new Request(url, {
+        		        		method: "POST",
+        		        		body: message,
+        		        		credentials: "include",
+        		        	});
+        		           	//console.log(request);
+        		        	console.log('первый запрос готов');
+        		        	console.log(message);
+                            
+        		        	//подготовка второго запроса
+        		        	const time1 = new Date().getTime().toString(); //делает время для запроса
+        		        	const contr1 = 'trade';//"controller"
+        		        	const acti1 = 'sendResources';//"action"
+        		        	const url1 = `https://ru1.kingdoms.com/api/?c=${contr1}&a=${acti1}&p${playerId}&t${time1}`;
+        		        	//достаем значения ресурсов...
+        		        	let res1 = thisIsBuilding.upgradeCosts[1];
+        		        	let res2 = thisIsBuilding.upgradeCosts[2];
+        		        	let res3 = thisIsBuilding.upgradeCosts[3];
+        		        	let res4 = thisIsBuilding.upgradeCosts[4];
+        		        	let message1 = '{"controller": "' + contr1 + '","action": "' + acti1 + '","params": {"sourceVillageId": ' + sourceVillageId + ',"resources": [0,' + res1 + ',' + res2 + ',' + res3 + ',' + res4 + '],"destVillageId": ' + destVillageId + ',"recurrences" : 1},"clientId": "' + getClientId() + '","session": "' + session + '"}';
+        		        	//console.log(message1);
+        		        	const request1 = new Request(url1, {
+        		        		method: "POST",
+        		        		body: message1,
+        		        		credentials: "include",
+        		        	});
+        		        	console.log('второй запрос готов');
+        		        	//console.log(request1);
+        		        	console.log(message1);
         			
-        			//подготовка второго запроса
-        			const time1 = new Date().getTime().toString(); //делает время для запроса
-        			const contr1 = 'trade';//"controller"
-        			const acti1 = 'sendResources';//"action"
-        			const url1 = `https://ru1.kingdoms.com/api/?c=${contr1}&a=${acti1}&p${playerId}&t${time1}`;
-        			//достаем значения ресурсов...
-        			let res1 = thisIsBuilding.upgradeCosts[1];
-        			let res2 = thisIsBuilding.upgradeCosts[2];
-        			let res3 = thisIsBuilding.upgradeCosts[3];
-        			let res4 = thisIsBuilding.upgradeCosts[4];
-        			let message1 = '{"controller": "' + contr1 + '","action": "' + acti1 + '","params": {"sourceVillageId": ' + sourceVillageId + ',"resources": [0,' + res1 + ',' + res2 + ',' + res3 + ',' + res4 + '],"destVillageId": ' + destVillageId + ',"recurrences" : 1},"clientId": "' + getClientId() + '","session": "' + session + '"}';
-        			//console.log(message1);
-        			const request1 = new Request(url1, {
-        				method: "POST",
-        				body: message1,
-        				credentials: "include",
-        			});
-        			console.log('второй запрос готов');
-        			//console.log(request1);
-        			console.log(message1);
-        			
-        			//Проверяем есть ли отправленное сообщение
-    			  	storage1 = localStorage.getItem(village.villageId+'+'+z);
-    			  	if (storage1 === buildingType+'/'+z+'/'+'/'+'true'){
-    			  	  console.log('ахтунг, конец всему!');
-    			  	  continue; 
-    			  	  
-    			  	}
-    		  		//Запоминаем отправку сообщения
-    		  		localStorage.setItem(village.villageId+'+'+z, buildingType+'/'+z+'/'+'/'+'true');
-        			
-        			
-        			fetch(request).then((response) =>{
-        			  console.log('вошли в первый запрос')
-        				return response.json();
-        			})
-        			.then((jsonData) => {
-        			  console.log('ответ первого запроса получен');
-        				//console.log('конец постройки');
-        				//второй запрос
-        				fetch(request1).then((response) =>{
-        				  console.log('вошли во второй запрос')
-        					return response.json();
-        				})
-        				.then((jsonData) => {
-        					console.log('второй запрос прошел')
-        				})
-    				  });
-    				}
-  	      }	
-  				console.log('закончили с ресиками')	
-  				
-    			
-    			
-    			
-	       			}				
+        		        	//Проверяем есть ли отправленное сообщение
+    			         	storage1 = localStorage.getItem(village.villageId+'+'+z);
+    			          	if (storage1 === buildingType+'/'+z+'/'+'/'+'true'){
+    			          	  console.log('ахтунг, конец всему!');
+    			          	  continue;
+    			          	}
+    		  	        	//Запоминаем отправку сообщения
+    		  	        	localStorage.setItem(village.villageId+'+'+z, buildingType+'/'+z+'/'+'/'+'true');
+                            fetch(request).then((response) =>{
+        			            console.log('вошли в первый запрос')
+        				        return response.json();
+        			        })
+        			        .then((jsonData) => {
+        			            console.log('ответ первого запроса получен');
+        			        	//console.log('конец постройки');
+        			        	//второй запрос
+        			        	fetch(request1).then((response) =>{
+        				            console.log('вошли во второй запрос')
+        				        	return response.json();
+        				        })
+        				        .then((jsonData) => {
+        				        	console.log('второй запрос прошел')
+        				        })
+    				        });
+    				    }
+  	                    }	
+  				        console.log('закончили с ресиками')	
+  					}				
 	      		}
-	    					
 	    	}
 	  	});
 	  
@@ -260,20 +236,19 @@ function Never_BuildingQueue() {
 			//Отсееваем мусор
 			if (buildingQueue.data === undefined) { return; }
 			if (buildingQueue.data.queues === undefined) { return; }
-      //Перебор слотов построек (из-за Рима)
-      for (var i = 1; i < 3; i++) {
-      	building = buildingQueue.data.queues[i][0];
-      	
-      	//Нет построек
-      	if (building === undefined) { continue; }
-      	  //Тип постройки (Резиденция/Дворец/Сокровищница/Скр.Сокровищница)
-      	  if (building.buildingType === '25') { continue; }
-      	  if (building.buildingType === '26') { continue; }
-      	  if (building.buildingType === '27') { continue; }
-      	  if (building.buildingType === '45') { continue; }
+            //Перебор слотов построек (из-за Рима)
+            for (var i = 1; i < 3; i++) {
+      	        building = buildingQueue.data.queues[i][0];
+              	//Нет построек
+              	if (building === undefined) { continue; }
+      	        //Тип постройки (Резиденция/Дворец/Сокровищница/Скр.Сокровищница)
+      	        if (building.buildingType === '25') { continue; }
+      	        if (building.buildingType === '26') { continue; }
+      	        if (building.buildingType === '27') { continue; }
+      	        if (building.buildingType === '45') { continue; }
 			    //Осталось больше 5 минут
 			  	time = parseInt(Date.now().toString().slice(0,10));
-				  if (building.finished > 299 + time) { continue; }
+				if (building.finished > 299 + time) { continue; }
 			    //console.log('старт отправки сообщения?')
 				
 		  		//блок кода для автозавершения постройки
@@ -295,6 +270,8 @@ function Never_BuildingQueue() {
 						  let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
 	  					const playerId = player.data.playerId;//достает ID для запроса
 		  				const time = new Date().getTime().toString(); //делает время для   запроса
+                        console.log(time);
+                        console.log(building.finished);
 	  					const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
 		  				const prise = 0;
 			  			const message = '{"controller": "' + contr + '","action": "' + acti +'","params": {"featureName":"finishNow","params": {"prise": ' + prise +',"queueType": "' + queueType + '","villageId": '+ villageId1 + '}},"clientId": "' + getClientId() + '","session": "' + session + '"}';//делает строчку для запроса. До этого была функция, но она не успевала сделать строчку корректно
