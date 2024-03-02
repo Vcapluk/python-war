@@ -6,7 +6,7 @@ var telegram_token = '1420192729:AAHNh54SzcwqX7mVp6bH97_RNECdsN2NnlQ';
 var telegram_chat  = '142824554';
 let finishNow = true;//false для автоматического завершения построек
 let buildingAppNow = true; //false для создания очереди построек...
-//let resStartNow = true;// для автоотправки ресов
+let villageNowFun = '538230742';//нужная нам деревенька, которую строим. тип данных строка
 
 var never_message = {
 	buildingQueue : true, //(true/false) - Отправлять сообщения о завершении постройки ??? 
@@ -19,7 +19,7 @@ var never_travian   = {}; //Общие данные
 var never_webSocket = 0;  //Счетчик timeOut для перезагрузки страницы
 
 //Запуск каждую 1 сек.
-var never_IntervalID = window.setInterval(Never_MainScript, 1000);
+var never_IntervalID = window.setInterval(Never_MainScript, 5000);
 
 
 /*----- Начало: Прослушка WebSocket -----*/
@@ -57,7 +57,9 @@ function Never_MainScript() {
     //Проверка загрузки страницы
     if (Never_Loading() != 'none') { return;}
     
-    
+  //if ( buildingAppNow === true ) BuildingNowCentr();  
+	
+	
 	//Проверка очереди постройки
 	if (never_message.buildingQueue) Never_BuildingQueue();
 }
@@ -76,13 +78,292 @@ function Never_Loading() {
 /*_____ Конец: Проверка загрузки на экране. _____*/
 
 
+
+/*----- BuildingNowCentrInfo(): информация о постройке -----*/
+
+function BuildingNowCentrInfo(qwer) {
+	console.log('зашли в инфу')
+	console.log(qwer);
+	console.log(qwer.data.buildingType)
+	console.log('закончили про инфру')
+}
+
+/*----- Конец: информация о постройке -----*/
+
+/*----- BuildingNowCentr(): Отправка запроса на постройку в центре деревни -----*/
+function BuildingNowCentr(thisIsBuilding,villageId,name, locationId0) {
+	
+	
+	console.log('Отправка запроса на постройку в центре деревни ЗАШЛИ');
+	console.log(thisIsBuilding);
+	
+	const contr = 'building';//"controller"
+	const acti = 'upgrade';//"action"
+	//console.log(thisIsBuilding);
+	const iD = villageId;//айди деревни, где будем строить.
+	const locationId = locationId0;// thisIsBuilding.locationId;
+	const buildingType = thisIsBuilding.buildingType;
+	const session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
+	const time = new Date().getTime().toString(); //делает время для запроса
+	const playerId = player.data.playerId;//достает ID для запроса
+	const host = window.location.hostname;
+	const url = `https://${host}/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
+	const message = '{"controller": "' + contr + '","action": "' + acti +'","params": {"villageId": ' + iD +',"locationId": ' + locationId + ',"buildingType": ' + buildingType + '},"clientId": "' + getClientId() + '","session": "' + session + '"}';//делает строчку для запроса. До этого была функция, но она не успевала сделать строчку корректно
+	//console.log(message);
+	//const message1 = '{"controller": "' + contr + '","action": "' + acti +'","params": {"villageId": ' + iD +',"locationId": ' + locationId + ',"buildingType": ' + buildingType + '},"clientId": "' + getClientId() + '","session": "' + session + '"}';//делает строчку для запроса. До этого была функция, но она не успевала сделать строчку корректно
+	//console.log(message);
+	request = new Request(url, {
+		method: "POST",
+		body: message,
+		credentials: "include",
+	});
+	console.log('запрос на стройку готов');
+	console.log(request);
+	//console.log(spisokBuildingTime);
+	console.log('запрос на заказ готов, отправляем его');
+	//сам запрос на сервер
+	fetch(request).then((response) =>{
+		console.log('запрос на постройку пошел');
+		return response.json()
+	})
+	.then((jsonData) => {
+		//console.log('запрос прошел, должно добавиться');
+		//document.location.reload(true);
+	})
+	let resStartNow = false;
+	console.log('добавим ресиков?');
+  console.log(resStartNow);
+  
+  
+  //код отправки ресов
+  if (resStartNow === true){
+  	console.log('зашли в ресики');
+    //подготовка первого запроса
+    console.log(resStartNow)
+    //let iD = 538197976;//айди деревни, где будем строить.
+    //let iDvillageDonor = 538165211;//айди деревни, откуда пойдут ресурсы на отстройку
+    const contr0 = 'trade';//"controller"
+    const acti0 = 'checkTarget';//"action"
+    const destVillageId = villageId;//деревня куда везем ресы
+    const destVillageName = name;//деревня куда везем ресы
+    const sourceVillageId = 538132443;//деревня откуда везем ресы 02
+    let session0 = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
+    const time0 = new Date().getTime().toString(); //делает время для запроса
+    const playerId = player.data.playerId;//достает ID для запроса
+    const host = window.location.hostname;
+    const url = `https://${host}/api/?c=${contr0}&a=${acti0}&p${playerId}&t${time0}`;
+    let message = '{"controller": "' + contr0 + '","action": "' + acti0 + '","params": {"sourceVillageId": ' + sourceVillageId + ',"destVillageId": ' + destVillageId + ',"destVillageName": "' + destVillageName + '"},"session": "' + session0 + '"}';
+    //console.log(message);
+    const request0 = new Request(url, {
+    	method: "POST",
+      body: message,
+      credentials: "include",
+    });
+    //console.log(request);
+    console.log('первый запрос готов');
+    console.log(message);
+           		
+    //подготовка второго запроса
+    const time1 = new Date().getTime().toString(); //делает время для запроса
+    const contr1 = 'trade';//"controller"
+    const acti1 = 'sendResources';//"action"
+    const url1 = `https://${host}/api/?c=${contr1}&a=${acti1}&p${playerId}&t${time1}`;
+    //достаем значения ресурсов...
+    let res1 = thisIsBuilding.upgradeCosts[1];
+    let res2 = thisIsBuilding.upgradeCosts[2];
+    let res3 = thisIsBuilding.upgradeCosts[3];
+    let res4 = thisIsBuilding.upgradeCosts[4];
+    let message1 = '{"controller": "' + contr1 + '","action": "' + acti1 + '","params": {"sourceVillageId": ' + sourceVillageId + ',"resources": [0,' + res1 + ',' + res2 + ',' + res3 + ',' + res4 + '],"destVillageId": ' + destVillageId + ',"recurrences" : 1},"clientId": "' + getClientId() + '","session": "' + session + '"}';
+    //console.log(message1);
+    const request1 = new Request(url1, {
+    	method: "POST",
+    	body: message1,
+    	credentials: "include",
+    });
+    console.log('второй запрос готов');
+    //console.log(request1);
+    console.log(message1);
+    fetch(request0).then((response) =>{
+    	console.log('вошли в первый запрос')
+    	return response.json();
+    })
+    .then((jsonData) => {
+    	console.log('ответ первого запроса получен')
+      //console.log('конец постройки');
+      //второй запрос
+      fetch(request1).then((response) =>{
+       	console.log('вошли во второй запрос')
+        return response.json()
+      })
+      .then((jsonData) => {
+      	console.log('второй запрос прошел')
+      })
+    })
+  }
+  
+  console.log('закончили с ресиками')
+  
+}
+/*_____ Конец: Отправка запроса на постройку в центре деревни. _____*/
+
+
+
+/*----- BuildingCheckLevel(): Перебор уровней -----*/
+
+function BuildingCheckLevel(spisok, buildingTypeF, level, villageId, name, locationId) {
+	
+	//console.log(buildingTypeF);
+	if (villageId === '538197978'){//потом можно удалить
+		for (let n = 0; n < spisok.length; n++) {
+		//перебираем весь список
+		let qwer = spisok[n];
+		//console.log('зашли в перебор');
+		//console.log(qwer);
+		//console.log(qwer1);
+		if(qwer.buildingType === buildingTypeF) {//ищем
+			console.log('нашли ' + never_building[buildingTypeF] +' , проверяем уровень')
+			if(qwer.lvl<level){//если уровень меньше 5,
+				console.log(never_building[buildingTypeF] + ' меньше ' + level + ' уровня');
+				//BuildingNowCentrInfo(qwer);
+				//console.log('запрос на постройку');
+				BuildingNowCentr(qwer,villageId,name, locationId);
+				
+			}else{ 
+				
+				console.log('НЕ НАШЛИ СЛОТА С ПОСТРОЙКОЙ!!!!')
+				//BuildingNowCentr(qwer,villageId,name,locationId);
+				
+			}
+			//console.log(never_building[buildingTypeF] + ' больше ' + level + ' уровня');
+		}
+		//console.log('НЕ НАШЛИ СЛОТА С ПОСТРОЙКОЙ!!!!')
+	}
+	}
+}
+
+/*----- BuildingCheckLevel(): Отправка запроса на постройку в центре деревни -----*/
+
+
 /*----- Never_BuildingQueue(): Проверка очереди построек. -----*/
 function Never_BuildingQueue() {
 	//Отлов ошибок/исключений
 	try {
+		
+		//блок кода для атопостройки всех деревень. А надо нам такое?
+		window.player.data.villages.forEach(function(village){
+			buildingQueue = BuildingQueue.get(village.villageId);
+			if (buildingQueue.data === undefined) { return; }
+			if (buildingQueue.data.queues === undefined) { return; }
+			if (buildingQueue.data.freeSlots === undefined) {return; }
+			if (buildingQueue.data.freeSlots[1] === 1) {//слот свободен, надо заказать
+				console.log('слот свободен, что бы заказать???')
+				console.log(village.name)
+				let villageId = village.villageId;
+				let name = village.name;
+				let qwer = window.Building.getCollection(village.villageId).data;
+				let spisokBuildingFull = [];
+				//let qwer = window.Building.getCollection(iD).data;
+				for (let n = 0; n < 40; n++) {//готовим список построек
+					let qwer1 = qwer[n];
+					spisokBuildingFull.push(qwer1.data);
+				}
+				
+				BuildingCheckLevel(spisokBuildingFull, 15, 2, villageId, name,27);
+				BuildingCheckLevel(spisokBuildingFull, 10, 2, villageId, name,23);
+				BuildingCheckLevel(spisokBuildingFull, 11, 2, villageId, name,20);
+				BuildingCheckLevel(spisokBuildingFull, 15, 5, villageId, name,27);
+				BuildingCheckLevel(spisokBuildingFull, 10, 4, villageId, name,23);
+				BuildingCheckLevel(spisokBuildingFull, 11, 4, villageId, name,20);
+				BuildingCheckLevel(spisokBuildingFull, 15, 8, villageId, name,27);
+				BuildingCheckLevel(spisokBuildingFull, 10, 6, villageId, name,23);
+				BuildingCheckLevel(spisokBuildingFull, 11, 6, villageId, name,20);
+				BuildingCheckLevel(spisokBuildingFull, 1, 2, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 2, 2, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 3, 2, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 4, 2, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 15, 10, villageId, name,27);
+				BuildingCheckLevel(spisokBuildingFull, 10, 8, villageId, name,23);
+				BuildingCheckLevel(spisokBuildingFull, 11, 8, villageId, name,20);
+				BuildingCheckLevel(spisokBuildingFull, 15, 12, villageId, name,27);
+				//BuildingCheckLevel(spisokBuildingFull, 11, 2, villageId, name);
+				BuildingCheckLevel(spisokBuildingFull, 1, 3, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 2, 3, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 3, 3, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 4, 3, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 17, 1, villageId, name,35);
+				BuildingCheckLevel(spisokBuildingFull, 18, 1, villageId, name,28);
+				BuildingCheckLevel(spisokBuildingFull, 16, 1, villageId, name,32);
+				BuildingCheckLevel(spisokBuildingFull, 19, 3, villageId, name,29);
+				BuildingCheckLevel(spisokBuildingFull, 22, 5, villageId, name,26);
+				BuildingCheckLevel(spisokBuildingFull, 13, 3, villageId, name,25);
+				BuildingCheckLevel(spisokBuildingFull, 20,1 , villageId, name,30);
+				BuildingCheckLevel(spisokBuildingFull, 17, 3, villageId, name,35);
+				BuildingCheckLevel(spisokBuildingFull, 16, 3, villageId, name,32);
+				BuildingCheckLevel(spisokBuildingFull, 20, 2, villageId, name,30);
+				//BuildingCheckLevel(spisokBuildingFull, 27, 1, villageId, name);
+				BuildingCheckLevel(spisokBuildingFull, 25, 10, villageId, name,38);
+				BuildingCheckLevel(spisokBuildingFull, 33, 3, villageId, name,33);
+				BuildingCheckLevel(spisokBuildingFull, 23, 3, villageId, name,24);
+				BuildingCheckLevel(spisokBuildingFull, 15, 15, villageId, name,27);
+				BuildingCheckLevel(spisokBuildingFull, 10, 12, villageId, name,23);
+				BuildingCheckLevel(spisokBuildingFull, 11, 10, villageId, name,20);
+				BuildingCheckLevel(spisokBuildingFull, 15, 20, villageId, name,27);
+				BuildingCheckLevel(spisokBuildingFull, 1, 4, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 2, 4, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 3, 4, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 4, 4, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 1, 5, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 2, 5, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 3, 5, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 4, 6, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 8, 1, villageId, name,19);
+				BuildingCheckLevel(spisokBuildingFull, 1, 6, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 2, 6, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 3, 6, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 4, 7, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 8, 2, villageId, name,19);
+				BuildingCheckLevel(spisokBuildingFull, 1, 7, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 2, 7, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 3, 7, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 4, 8, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 8, 3, villageId, name,19);
+				BuildingCheckLevel(spisokBuildingFull, 1, 8, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 2, 8, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 3, 8, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 4, 9, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 11, 12, villageId, name,20);
+				BuildingCheckLevel(spisokBuildingFull, 8, 5, villageId, name,19);
+				BuildingCheckLevel(spisokBuildingFull, 4, 10, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 9, 5, villageId, name,37);
+				BuildingCheckLevel(spisokBuildingFull, 1, 9, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 2, 9, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 3, 9, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 1, 10, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 5, 5, villageId, name,21);
+				BuildingCheckLevel(spisokBuildingFull, 2, 10, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 6, 5, villageId, name,22);
+				BuildingCheckLevel(spisokBuildingFull, 3, 10, villageId, name,0);
+				BuildingCheckLevel(spisokBuildingFull, 7, 5, villageId, name,36);
+				BuildingCheckLevel(spisokBuildingFull, 17, 20, villageId, name,35);
+				BuildingCheckLevel(spisokBuildingFull, 20, 10, villageId, name,30);
+				BuildingCheckLevel(spisokBuildingFull, 28, 10, villageId, name,40);
+				
+			
+			
+			
+			
+			
+			
+			//сделаем функцию для перебора. в функцию надо передать buildingType, требуемый уровень, и список тоже передать...
+			
+		}
+			
+	})
+		
+		
 		//блок заказа постройки
 		let villageNow = '538197979';//нужная нам деревенька. тип данных строка
-		let resStartNow = true;
+		let resStartNow0 = true;
 		window.player.data.villages.forEach(function(village){
 	    	if(village.villageId === villageNow){
 	 			buildingQueue = BuildingQueue.get(village.villageId);
@@ -138,13 +419,13 @@ function Never_BuildingQueue() {
     			       })
                     
                        console.log('добавим ресиков?');
-                        console.log(resStartNow);
+                        console.log(resStartNow0);
   	      	    	    //код отправки ресов
   	                    for (let z = 1; z < 2; z++) {
-        	        	if (resStartNow === true){
+        	        	if (resStartNow0 === true){
                             console.log('зашли в ресики');
         	                //подготовка первого запроса
-        		        	console.log(resStartNow)
+        		        	console.log(resStartNow0)
     	    	        	//let iD = 538197976;//айди деревни, где будем строить.
         	          		//let iDvillageDonor = 538165211;//айди деревни, откуда пойдут ресурсы на отстройку
         		        	const contr = 'trade';//"controller"
@@ -188,7 +469,7 @@ function Never_BuildingQueue() {
         		        	//console.log(request1);
         		        	console.log(message1);
         			
-        		        	//Проверяем есть ли отправленное сообщение
+  /*      		        	//Проверяем есть ли отправленное сообщение
     			         	storage1 = localStorage.getItem(village.villageId+'+'+z);
     			          	if (storage1 === buildingType+'/'+z+'/'+'/'+'true'){
     			          	  console.log('ахтунг, конец всему!');
@@ -196,6 +477,7 @@ function Never_BuildingQueue() {
     			          	}
     		  	        	//Запоминаем отправку сообщения
     		  	        	localStorage.setItem(village.villageId+'+'+z, buildingType+'/'+z+'/'+'/'+'true');
+  */  		  	        	
                             fetch(request).then((response) =>{
         			            console.log('вошли в первый запрос')
         				        return response.json();
@@ -220,8 +502,8 @@ function Never_BuildingQueue() {
 	    	}
 	  	});
 	  
-		//Перебор деревень
-	    window.player.data.villages.forEach(function(village) {
+		//Перебор деревень для автозавершения
+	  window.player.data.villages.forEach(function(village) {
             //Временные переменные
             var buildingQueue; //Информация по деревни
             var time;          //Расчет времени
@@ -471,7 +753,7 @@ function Never_Player() {
 
 
 //Разные табличные данные
-const never_building  = {
+const never_building = {
 	1:  'Лесопилка',
 	2:  'Глиняный карьер',
 	3:  'Железный рудник',
@@ -521,7 +803,7 @@ const never_building  = {
 	47: 'ID = 47',
 	48: 'ID = 48',
 	49: 'ID = 49'
-};
+}
 
 
 const never_movement = {
