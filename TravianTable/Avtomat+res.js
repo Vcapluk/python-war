@@ -91,7 +91,7 @@ function BuildingNowCentrInfo(qwer) {
 /*----- Конец: информация о постройке -----*/
 
 /*----- BuildingNowCentr(): Отправка запроса на постройку в центре деревни -----*/
-function BuildingNowCentr(thisIsBuilding,villageId,name, locationId0,buildingTypeF) {
+function BuildingNowCentr(thisIsBuilding, villageId, name, locationId0, buildingTypeF) {
 	
 	
 	console.log('Отправка запроса на постройку в центре деревни ЗАШЛИ');
@@ -101,7 +101,22 @@ function BuildingNowCentr(thisIsBuilding,villageId,name, locationId0,buildingTyp
 	const acti = 'upgrade';//"action"
 	//console.log(thisIsBuilding);
 	const iD = villageId;//айди деревни, где будем строить.
-	const locationId = locationId0;// thisIsBuilding.locationId;
+	let locationId = locationId0;
+/*	if (locationId0 === 0){
+	  let spisokBuilding = [];
+    let qwer = window.Building.getCollection(iD).data;
+    for (let n = 0; n < 18; n++) {//готовим список построек рсурсных(если рсики, то нам нужны самык быстрые)
+      let qwer1 = qwer[n];
+      if (qwer1.data.buildingType === buildingTypeF) { 
+        spisokBuilding.push(qwer1.data);
+      }
+    }
+		let spisokBuildingTime = spisokBuilding.sort((a, b) => a.upgradeTime - b.upgradeTime);//сортировка по времени строительства(для выбора самой быстрой)
+    thisIsBuilding = spisokBuildingTime[0];
+	  locationId = thisIsBuilding.locationId
+	}else{
+	  locationId = locationId0;
+	}// thisIsBuilding.locationId;*/
 	const buildingType = buildingTypeF;
 	const session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
 	const time = new Date().getTime().toString(); //делает время для запроса
@@ -109,9 +124,6 @@ function BuildingNowCentr(thisIsBuilding,villageId,name, locationId0,buildingTyp
 	const host = window.location.hostname;
 	const url = `https://${host}/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
 	const message = '{"controller": "' + contr + '","action": "' + acti +'","params": {"villageId": ' + iD +',"locationId": ' + locationId + ',"buildingType": ' + buildingType + '},"clientId": "' + getClientId() + '","session": "' + session + '"}';//делает строчку для запроса. До этого была функция, но она не успевала сделать строчку корректно
-	//console.log(message);
-	//const message1 = '{"controller": "' + contr + '","action": "' + acti +'","params": {"villageId": ' + iD +',"locationId": ' + locationId + ',"buildingType": ' + buildingType + '},"clientId": "' + getClientId() + '","session": "' + session + '"}';//делает строчку для запроса. До этого была функция, но она не успевала сделать строчку корректно
-	//console.log(message);
 	request = new Request(url, {
 		method: "POST",
 		body: message,
@@ -140,9 +152,7 @@ function BuildingNowCentr(thisIsBuilding,villageId,name, locationId0,buildingTyp
   	console.log('зашли в ресики');
     //подготовка первого запроса
     console.log(resStartNow)
-    //let iD = 538197976;//айди деревни, где будем строить.
-    //let iDvillageDonor = 538165211;//айди деревни, откуда пойдут ресурсы на отстройку
-    const contr0 = 'trade';//"controller"
+        const contr0 = 'trade';//"controller"
     const acti0 = 'checkTarget';//"action"
     const destVillageId = villageId;//деревня куда везем ресы
     const destVillageName = name;//деревня куда везем ресы
@@ -210,21 +220,30 @@ function BuildingNowCentr(thisIsBuilding,villageId,name, locationId0,buildingTyp
 
 /*----- BuildingCheckLevel(): Перебор уровней -----*/
 
-function BuildingCheckLevel(spisok, buildingTypeF, level, villageId, name, locationId,status) {
+function BuildingCheckLevel(spisok, buildingTypeF, level, villageId, name, locationId0,status) {
   console.log('Вызов функции произошел, статус код: ' + status)
+  console.log(buildingTypeF)
 	if (status === false){
 	  //console.log(buildingTypeF);
 	  if (villageId === '538197978'){//потом можно удалить
-		  console.log(spisok.length)
-		  for (let n = 0; n < spisok.length; n++) {
-		    
-		  	//перебираем весь список
-  			let qwer = spisok[n];
-  			console.log('зашли в перебор');
-  			console.log(qwer.buildingType)
-		  	if(qwer.buildingType === buildingTypeF) {//ищем
-		  		console.log('нашли ' + never_building[buildingTypeF] +' , проверяем уровень')
-			  	if(qwer.lvl<level){//если уровень меньше 5,
+		  
+		  console.log(spisok)
+		  //let locationId;
+		  
+		  if(locationId0===0){
+		    let spisokBuilding = [];
+		    for (let n = 0; n < spisok.length; n++) {
+		      let qwer = spisok[n];
+  			  //готовим список построек рсурсных(если рсики, то нам нужны самык быстрые)
+          if (qwer.buildingType === buildingTypeF) { 
+            spisokBuilding.push(qwer);
+          }
+		    }
+        let spisokBuildingTime = spisokBuilding.sort((a, b) => a.upgradeTime - b.upgradeTime);//сортировка по времени строительства(для выбора самой быстрой)
+        qwer = spisokBuildingTime[0];
+      	let locationId = qwer.locationId
+        console.log('нашли ' + never_building[buildingTypeF] +' , проверяем уровень')
+			  if(qwer.lvl<level){//если уровень меньше 5,
 			  		console.log(never_building[buildingTypeF] + ' меньше ' + level + ' уровня');
 				  	//BuildingNowCentrInfo(qwer);
 				  	//console.log('запрос на постройку');
@@ -234,17 +253,40 @@ function BuildingCheckLevel(spisok, buildingTypeF, level, villageId, name, locat
 				  	status = true
 				  	console.log(status)
 				  	console.log('статус поменяли, больше функцию не вызываем!!!')
-		        return
+		        return status
 			  	}
-			    console.log(never_building[buildingTypeF] + ' больше ' + level + ' уровня');
+			  console.log(never_building[buildingTypeF] + ' больше ' + level + ' уровня');
 			    return status
-		  	}
+		  }else{
+		    for (let n = 0; n < spisok.length; n++) {
+		      let qwer = spisok[n];
+  			  //готовим список построек рсурсных(если рсики, то нам нужны самык быстрые)
+          console.log('locationId0 = 0')
+          console.log(qwer);
+          console.log(qwer.buildingType)
+          console.log(buildingTypeF);
+      	    if(qwer.buildingType === buildingTypeF) {//ищем
+		  		    console.log('нашли ' + never_building[buildingTypeF] +' , проверяем уровень')
+			  	    if(qwer.lvl<level){//если уровень меньше 5,
+			  		    console.log(never_building[buildingTypeF] + ' меньше ' + level + ' уровня');
+				  	    //BuildingNowCentrInfo(qwer);
+				  	    //console.log('запрос на постройку');
+				  	    BuildingNowCentr(qwer,villageId,name,locationId0,buildingTypeF);
+				  	    console.log('заказываем!')
+				  	    console.log(status)
+				  	    status = true
+				  	    console.log(status)
+				  	    console.log('статус поменяли, больше функцию не вызываем!!!')
+		            return status
+			  	    }
+			        console.log(never_building[buildingTypeF] + ' больше ' + level + ' уровня');
+			        return status
+		  	    }
+		    }
 		  }
 		  
-		  
-		  
 		  console.log('Слот с '+ never_building[buildingTypeF] + '   не нашли совсем')
-	    //BuildingNowCentr(qwer,villageId,name,locationId,buildingTypeF)
+	    BuildingNowCentr(qwer,villageId,name,locationId0,buildingTypeF);
 	    console.log('заказываем постройку в новый слот!')
 	    console.log(status)
 	    status = true
@@ -286,6 +328,7 @@ function Never_BuildingQueue() {
 				console.log(spisokBuildingFull)
 				let status = false;
 				
+				
 				status = BuildingCheckLevel(spisokBuildingFull, 15, 1, villageId, name,27,status);
 				status = BuildingCheckLevel(spisokBuildingFull, 15, 2, villageId, name,27,status);
 				status = BuildingCheckLevel(spisokBuildingFull, 10, 1, villageId, name,23,status);
@@ -298,14 +341,14 @@ function Never_BuildingQueue() {
 				status = BuildingCheckLevel(spisokBuildingFull, 15, 8, villageId, name,27,status);
 		  	status = BuildingCheckLevel(spisokBuildingFull, 10, 6, villageId, name,23,status);
 				status = BuildingCheckLevel(spisokBuildingFull, 11, 6, villageId, name,20,status);
-				status = BuildingCheckLevel(spisokBuildingFull, 1, 2, villageId, name,0);
-				status = BuildingCheckLevel(spisokBuildingFull, 2, 2, villageId, name,0);
-			  status = BuildingCheckLevel(spisokBuildingFull, 3, 2, villageId, name,0);
-				status = BuildingCheckLevel(spisokBuildingFull, 4, 2, villageId, name,0);
-				status = BuildingCheckLevel(spisokBuildingFull, 15, 10, villageId, name,27);
-				status = BuildingCheckLevel(spisokBuildingFull, 10, 8, villageId, name,23);
-				status = BuildingCheckLevel(spisokBuildingFull, 11, 8, villageId, name,20);
-				status = BuildingCheckLevel(spisokBuildingFull, 15, 12, villageId, name,27);
+				status = BuildingCheckLevel(spisokBuildingFull, 1, 2, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull, 2, 2, villageId, name,0,status);
+			  status = BuildingCheckLevel(spisokBuildingFull, 3, 2, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull, 4, 2, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull, 15, 10, villageId, name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull, 10, 8, villageId, name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull, 11, 8, villageId, name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull, 15, 12, villageId, name,27,status);
 				
 			}
 		/*	spisokBuildingNeed = [
