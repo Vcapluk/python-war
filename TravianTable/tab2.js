@@ -30,82 +30,6 @@ function Never_MainScript() {
 		newElem.innerHTML = '<span class = "text"> &#8801 </span>'//название кнопки на экране
 		userArea.appendChild(newElem);//добавляет в конец списка элемент, который описали выше.
 		
-		//код отправки ресов
-	/*	if (resStartNow === true){
-		  
-		  //подготовка первого запроса
-			console.log(resStartNow)
-			//let iD = 538197976;//айди деревни, где будем строить.
-			//let iDvillageDonor = 538099676;//айди деревни, откуда пойдут ресурсы на отстройку
-			const contr = 'trade';//"controller"
-			const acti = 'checkTarget';//"action"
-			const destVillageId = 538165211;//деревня куда везем ресы02. bbbbbbb
-			const destVillageName = "02. бббббб";//переделать на автоматическое выдергивание названия
-			const sourceVillageId = 538132443;//деревня откуда везем ресы 01.aaaaaa
-			let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки, зачем они нужны?
-			const time = new Date().getTime().toString(); //делает время для запроса
-			const playerId = player.data.playerId;//достает ID для запроса
-			const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
-			let message = '{"controller": "' + contr + '","action": "' + acti + '","params": {"sourceVillageId": ' + sourceVillageId + ',"destVillageId": ' + destVillageId + ',"destVillageName": "' + destVillageName + '"},"session": "' + session + '"}';
-			//console.log(message);
-			const request = new Request(url, {
-				method: "POST",
-				body: message,
-				credentials: "include",
-			});
-			//console.log(request);
-			console.log('первый запрос готов');
-			
-			//подготовка второго запроса
-			const time1 = new Date().getTime().toString(); //делает время для запроса
-			const contr1 = 'trade';//"controller"
-			const acti1 = 'sendResources';//"action"
-			const url1 = `https://ru1.kingdoms.com/api/?c=${contr1}&a=${acti1}&p${playerId}&t${time1}`;
-			//достаем значения ресурсов...
-			let res1 = 1;//thisIsBuilding.upgradeCosts[1];
-			let res2 = 1;//thisIsBuilding.upgradeCosts[2];
-			let res3 = 1;//thisIsBuilding.upgradeCosts[3];
-			let res4 = 1;//thisIsBuilding.upgradeCosts[4];
-			let message1 = '{"controller": "' + contr1 + '","action": "' + acti1 + '","params": {"sourceVillageId": ' + sourceVillageId + ',"resources": [0,' + res1 + ',' + res2 + ',' + res3 + ',' + res4 + '],"destVillageId": ' + destVillageId + ',"recurrences" : 1},"clientId": "' + getClientId() + '","session": "' + session + '"}';
-			//console.log(message1);
-			const request1 = new Request(url1, {
-				method: "POST",
-				body: message1,
-				credentials: "include",
-			});
-			console.log('второй запрос готов');
-			console.log(request1);
-			
-			
-			fetch(request).then((response) =>{
-			  console.log('вошли в первый запрос')
-				return response.json();
-			})
-			.then((jsonData) => {
-			  console.log('ответ первого запроса получен');
-				//console.log('конец постройки');
-				//второй запрос
-				fetch(request1).then((response) =>{
-				  console.log('вошли во второй запрос')
-					return response.json();
-				})
-				.then((jsonData) => {
-					console.log('второй запрос прошел');
-				});
-				
-				
-				});
-						
-						
-						
-						
-
-							
-							
-					}
-					
-					*/
-		
 		//для вкладки с постройками
 		const never_building  = {
 			0:  '---------------',
@@ -277,7 +201,7 @@ function Never_MainScript() {
 		let coord1 = 538132443; //536887296;// ID нашей деревни 
 		let coord0 = 536887296; //[0/0 для всего мира]
 		let coordz = 60; //условный радиус(половина стороны квадрата) [60 - если для всего мира]
-		let coordz1 = 25;//радиус поиска вокруг нужной дерки
+		let coordz1 = 20;//радиус поиска вокруг нужной дерки
 		let coord1x = window.Village.get(coord1).data.coordinates.x;
 		let coord1y = window.Village.get(coord1).data.coordinates.y;
 		
@@ -384,15 +308,31 @@ function Never_MainScript() {
 					
 					let units = [];//объявим список для добавления
 					let unitsTotal = 0;
+					let expaTotal = 0;
+					
+		
+					
 					for (let n = 1; n < 11; n++){//проверка наличия каждого зверя в оазисе
 						qwer = window.MapDetails.get(spisokIDD[i].ID).data.troops.units[n];
 						if (qwer !== undefined) {
 							units[n] = Number(qwer);//если зверь есть, то добавим его, запишем числом
 							unitsTotal += units[n];
+							if (n<5){
+								expaTotal += units[n]
+							} else {
+								if (n<7) {
+									expaTotal += units[n]*1.5
+								}else{
+									expaTotal += units[n]*2
+								}
+							}
 						} else {
 							units[n] = " ";//если зверя нет, то ставим 0
 						}
 					}
+					
+					
+					
 					spisokOasisUnitsPr.push({
 						ID,
 		            	coordx,
@@ -400,6 +340,7 @@ function Never_MainScript() {
 		            	dist,
 		            	units,
 		            	unitsTotal,
+		            	expaTotal,
 		            	name,
 		            	bonus,
 		        	});
@@ -411,11 +352,11 @@ function Never_MainScript() {
 		spisokOasisUnits = spisokOasisUnitsPr.sort((a, b) => b.unitsTotal - a.unitsTotal);//сортировка по количеству
 		
 		let countVillageInTableOasis = '';//переменная для добавления в HTML 
-		countVillageInTableOasis = '<thead><tr><td>Оазис</td>																					<td>Дист</td>																				<td>Всего</td>																					<td>Тип</td>																				<td><i class="unitSmall nature unitType1"></i></td>												<td><i class="unitSmall nature unitType2"></i></td>											<td><i class="unitSmall nature unitType3"></i></td>												<td><i class="unitSmall nature unitType4"></i></td>											<td><i class="unitSmall nature unitType5"></i></td>												<td><i class="unitSmall nature unitType6"></i></td>											<td><i class="unitSmall nature unitType7"></i></td>												<td><i class="unitSmall nature unitType8"></i></td>											<td><i class="unitSmall nature unitType9"></i></td>												<td><i class="unitSmall nature unitType10"></i></td>										</tr></thead>';//переменная для добавления в HTML заголовка
+		countVillageInTableOasis = '<thead><tr><td>Оазис</td>																									<td>Дист</td>																														<td>Всего</td>																														<td> Экспа </td>																												<td>Тип</td>																									<td><i class="unitSmall nature unitType1"></i></td>												<td><i class="unitSmall nature unitType2"></i></td>											<td><i class="unitSmall nature unitType3"></i></td>												<td><i class="unitSmall nature unitType4"></i></td>											<td><i class="unitSmall nature unitType5"></i></td>												<td><i class="unitSmall nature unitType6"></i></td>											<td><i class="unitSmall nature unitType7"></i></td>												<td><i class="unitSmall nature unitType8"></i></td>											<td><i class="unitSmall nature unitType9"></i></td>												<td><i class="unitSmall nature unitType10"></i></td>										</tr></thead>';//переменная для добавления в HTML заголовка
 	
 		
 		for (let i = 0; i < spisokOasisUnits.length; i++) {
-			countVillageInTableOasis += '<tr><td><a href="https://ru1.kingdoms.com/#/page:map/villId:'+ coord1 + '/subtab:Outgoing/cellId:' + spisokOasisUnits[i].ID + '/window:mapCellDetails">('+ spisokOasisUnits[i].coordx + '|' +spisokOasisUnits[i].coordy +')</a></td>							<td>' + spisokOasisUnits[i].dist +'</td>													<td>' + spisokOasisUnits[i].unitsTotal +'</td>											<td>' + spisokOasisUnits[i].bonus +'</td>													<td>' + spisokOasisUnits[i].units[1] +'</td>											<td>' + spisokOasisUnits[i].units[2] +'</td>												<td>' + spisokOasisUnits[i].units[3] +'</td>											<td>' + spisokOasisUnits[i].units[4] +'</td>												<td>' + spisokOasisUnits[i].units[5] +'</td>											<td>' + spisokOasisUnits[i].units[6] +'</td>												<td>' + spisokOasisUnits[i].units[7] +'</td>											<td>' + spisokOasisUnits[i].units[8] +'</td>												<td>' + spisokOasisUnits[i].units[9] +'</td>											<td>' + spisokOasisUnits[i].units[10] +'</td>												</tr>'//записывает строчку для каждого оазиса
+			countVillageInTableOasis += '<tr><td><a href="https://ru1.kingdoms.com/#/page:map/villId:'+ coord1 + '/subtab:Outgoing/cellId:' + spisokOasisUnits[i].ID + '/window:mapCellDetails">('+ spisokOasisUnits[i].coordx + '|' +spisokOasisUnits[i].coordy +')</a></td>				<td>' + spisokOasisUnits[i].dist +'</td>																<td>' + spisokOasisUnits[i].unitsTotal +'</td>													<td>' + spisokOasisUnits[i].expaTotal +'</td>													<td>' + spisokOasisUnits[i].bonus +'</td>																<td>' + spisokOasisUnits[i].units[1] +'</td>													<td>' + spisokOasisUnits[i].units[2] +'</td>														<td>' + spisokOasisUnits[i].units[3] +'</td>													<td>' + spisokOasisUnits[i].units[4] +'</td>														<td>' + spisokOasisUnits[i].units[5] +'</td>													<td>' + spisokOasisUnits[i].units[6] +'</td>														<td>' + spisokOasisUnits[i].units[7] +'</td>													<td>' + spisokOasisUnits[i].units[8] +'</td>														<td>' + spisokOasisUnits[i].units[9] +'</td>													<td>' + spisokOasisUnits[i].units[10] +'</td>												</tr>'//записывает строчку для каждого оазиса
 		}
 		
 		
