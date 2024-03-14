@@ -442,37 +442,21 @@ function Never_BuildingQueue() {
 			buildingQueue = BuildingQueue.get(village.villageId);
 
 			//Отсееваем мусор
-			if (buildingQueue.data === undefined) {
-				return;
-			}
-			if (buildingQueue.data.queues === undefined) {
-				return;
-			}
+			if (buildingQueue.data === undefined) {	return;	}
+			if (buildingQueue.data.queues === undefined) {	return;	}
 			//Перебор слотов построек (из-за Рима)
 			for (var i = 1; i < 3; i++) {
 				building = buildingQueue.data.queues[i][0];
 				//Нет построек
-				if (building === undefined) {
-					continue;
-				}
+				if (building === undefined) {	continue;	}
 				//Тип постройки (Резиденция/Дворец/Сокровищница/Скр.Сокровищница)
-				if (building.buildingType === '25') {
-					continue;
-				}
-				if (building.buildingType === '26') {
-					continue;
-				}
-				if (building.buildingType === '27') {
-					continue;
-				}
-				if (building.buildingType === '45') {
-					continue;
-				}
+				if (building.buildingType === '25') {	continue;	}
+				if (building.buildingType === '26') {	continue;	}
+				if (building.buildingType === '27') {	continue;	}
+				if (building.buildingType === '45') {	continue;	}
 				//Осталось больше 5 минут
 				time = parseInt(Date.now().toString().slice(0, 10));
-				if (building.finished > 299 + time) {
-					continue;
-				}
+				if (building.finished > 299 + time) {	continue;	}
 				//console.log('старт отправки сообщения?')
 
 				//блок кода для автозавершения постройки
@@ -549,33 +533,12 @@ function Never_BuildingQueue() {
 
 				//Проверяем есть ли отправленное сообщение
 				storage = localStorage.getItem(village.villageId + '-' + i);
-				if (
-					storage ===
-					building.buildingType +
-						'/' +
-						i +
-						'/' +
-						building.timeStart +
-						'/' +
-						'true'
-				) {
-					continue;
-				}
+				if (storage ===	building.buildingType +	'/' +	i +	'/' +	building.timeStart +'/' +	'true') { continue;	}
 				//Запоминаем отправку сообщения
-				localStorage.setItem(
-					village.villageId + '-' + i,
-					building.buildingType +
-						'/' +
-						i +
-						'/' +
-						building.timeStart +
-						'/' +
-						'true'
-				);
+				localStorage.setItem(	village.villageId + '-' + i,building.buildingType +'/' +i +'/' +building.timeStart +	'/' +	'true');
 				//Отправляем в Telegram
 				type = never_building[building.buildingType];
-				letter =
-					'\ud83c\udfd7 ' + village.name + ', постройка "' + type + '" .';
+				letter ='\ud83c\udfd7 ' + village.name + ', постройка "' + type + '" .';
 				Never_Telegram(letter);
 			}
 		});
