@@ -74,16 +74,15 @@ function Never_Loading() {
 }
 /*_____ Конец: Проверка загрузки на экране. _____*/
 
-/*----- BuildingNowCentrInfo(): информация о постройке -----*/
 
-function BuildingNowCentrInfo(qwer) {
-	console.log('зашли в инфу');
-	console.log(qwer);
-	console.log(qwer.data.buildingType);
-	console.log('закончили про инфру');
+
+/*----- VillageСapital(): достаем значение, возвращает true или false -----*/
+
+function VillageСapital(villageId){
+	qwer = window.Village.get(villageId).data
 }
 
-/*----- Конец: информация о постройке -----*/
+/*----- конец VillageСapital()-----*/
 
 /*----- Never_BuildingQueue(): Проверка очереди построек. -----*/
 function Never_BuildingQueue() {
@@ -93,15 +92,9 @@ function Never_BuildingQueue() {
 		//блок кода для атопостройки всех деревень. А надо нам такое?
 		window.player.data.villages.forEach(function (village) {
 			buildingQueue = BuildingQueue.get(village.villageId);
-			if (buildingQueue.data === undefined) {
-				return;
-			}
-			if (buildingQueue.data.queues === undefined) {
-				return;
-			}
-			if (buildingQueue.data.freeSlots === undefined) {
-				return;
-			}
+			if (buildingQueue.data === undefined) {return;}
+			if (buildingQueue.data.queues === undefined) {return;}
+			if (buildingQueue.data.freeSlots === undefined) {return;}
 			if (buildingQueue.data.freeSlots[1] === 1) {
 				//слот свободен, надо заказать
 				console.log('слот в ' + village.name + ' свободен, что бы заказать???' + village.villageId);
@@ -516,6 +509,15 @@ function Never_BuildingQueue() {
 						console.log('запрос на автодостройку готов!');
 
 						//console.log('подошли к запросу...')
+						
+						//Проверим, а был ли запрос уже отправлен?
+						storage = localStorage.getItem(village.villageId + '-' + i);
+						if (storage ===	building.buildingType +	'/' +	i +	'/' +	building.timeStart +'//' +	'true') { continue;	}
+						//Запоминаем отправку сообщения
+						localStorage.setItem(	village.villageId + '-' + i,building.buildingType +'/' +i +'/' +building.timeStart +	'//' +	'true');
+						
+						
+						console.log('запроса не было, Отправляем')
 						fetch(request)
 							.then((response) => {
 								//console.log('запрос на автодостройку отправлен');
@@ -564,8 +566,6 @@ function Never_BuildingQueue() {
 /*----- BuildingCheckLevel(): Перебор уровней -----*/
 
 function BuildingCheckLevel(spisok, buildingTypeF, level, villageId, name, locationId0, status) {
-	//console.log('Вызов функции произошел, статус код: ' + status);
-	//console.log(buildingTypeF);
 	if (status === false) {
 		//console.log(buildingTypeF);
 		//console.log(spisok);
@@ -588,48 +588,27 @@ function BuildingCheckLevel(spisok, buildingTypeF, level, villageId, name, locat
 				//console.log('нашли ' + never_building[buildingTypeF] + ' , проверяем уровень');
 				if (qwer.lvl < level) {
 					//если уровень меньше 5,
-					//console.log(never_building[buildingTypeF] + ' меньше ' + level + ' уровня');
-					//BuildingNowCentrInfo(qwer);
-					//console.log('запрос на постройку');
-					
-					//сделать проверку на ресики... Если их хватает, то надо запрос, если нет - то надо ресики. Чтоб не пальиться....
 					nameNow = window.Village.get(villageId).data.name
 					console.log('заказываем: ' + never_building[buildingTypeF] + ', уровень: '+ level + 'деревня: '+ nameNow);
 					BuildingNowCentr(qwer, villageId, name, locationId, buildingTypeF);
 					console.log('заказываем: ' + never_building[buildingTypeF] + ', уровень: '+ level);
-					//console.log(status);
 					status = true;
-					//console.log(status);
-					//console.log('статус поменяли, больше функцию не вызываем!!!');
 					return status;
 				}
-			//	console.log(never_building[buildingTypeF] + ' больше ' + level + ' уровня');
 				return status;
 		} else {
 			for (let n = 0; n < spisok.length; n++) {
 				let qwer = spisok[n];
 				//готовим список построек рсурсных(если рсики, то нам нужны самык быстрые)
-				//console.log('locationId0 = 0');
-				//console.log(qwer);
-				//console.log(qwer.buildingType);
-				//console.log(buildingTypeF);
 				if (qwer.buildingType === buildingTypeF) {
 					//ищем
-					//console.log('нашли ' + never_building[buildingTypeF] + ' , проверяем уровень');
 					if (qwer.lvl < level) {
-						//если уровень меньше 5,
-						//console.log(never_building[buildingTypeF] + ' меньше ' + level + ' уровня');
-						//BuildingNowCentrInfo(qwer);
-						//console.log('запрос на постройку');
+						//если уровень меньше нужного, то
 						BuildingNowCentr(qwer,villageId,name,locationId0,buildingTypeF);
 						console.log('заказываем: ' + never_building[buildingTypeF] + ', уровень: '+ level);
-						//console.log(status);
 						status = true;
-						//console.log(status);
-						//console.log('статус поменяли, больше функцию не вызываем!!!');
 						return status;
 					}
-					//console.log(never_building[buildingTypeF] + ' больше ' + level + ' уровня');
 					return status;
 				}
 			}
@@ -638,10 +617,7 @@ function BuildingCheckLevel(spisok, buildingTypeF, level, villageId, name, locat
 		console.log('Слот с ' + never_building[buildingTypeF] + '   не нашли совсем');
 		BuildingNowCentr(qwer, villageId, name, locationId0, buildingTypeF);
 		console.log('заказываем постройку в новый слот!' + 'заказываем: ' + never_building[buildingTypeF] + ', уровень: '+ level);
-		//console.log(status);
 		status = true;
-		//console.log(status);
-		//console.log('статус поменяли, больше функцию не вызываем!!!');
 		return status;
 	}
 }
@@ -651,61 +627,35 @@ function BuildingCheckLevel(spisok, buildingTypeF, level, villageId, name, locat
 
 /*----- BuildingNowCentr(): Отправка запроса на постройку в центре деревни -----*/
 function BuildingNowCentr( thisIsBuilding, villageId,	name,	locationId0, buildingTypeF ) {
-	console.log('Отправка запроса на постройку в центре деревни ЗАШЛИ');
-	console.log(window.Village.get(villageId).data.name + ' айди дерки: '+ villageId)
-	console.log(thisIsBuilding);
-	
-	//let villageIdzzz = 538230742;
+	//проверяем, сколько ресов сейчас в деревне есть
 	let zaprosResNowIn = window.Village.get(villageId).data;
-	console.log(zaprosResNowIn.name)
-	console.log(zaprosResNowIn);
 	let resNow1 = zaprosResNowIn.storage[1];
 	let resNow2 = zaprosResNowIn.storage[2];
 	let resNow3 = zaprosResNowIn.storage[3];
 	let resNow4 = zaprosResNowIn.storage[4];
-	console.log(resNow1);
-	console.log(resNow2);
-	console.log(resNow3);
-	console.log(resNow4);
-	//parseInt(village.production[1], 10)
 	let res1;
 	let res2;
 	let res3;
 	let res4;
-	console.log('что там с запросом? надо посмотреть')
-	console.log(thisIsBuilding)
 	if (thisIsBuilding === undefined) {
 		console.log('thisIsBuilding не определен')
 		res1 = 0;
 		res2 = 0;
 		res3 = 0;
 		res4 = 0;
-		
 	}else{
 		res1 = thisIsBuilding.upgradeCosts[1];
 		res2 = thisIsBuilding.upgradeCosts[2];
 		res3 = thisIsBuilding.upgradeCosts[3];
 		res4 = thisIsBuilding.upgradeCosts[4];
 	}
-	console.log(res1);
-	console.log(res2);
-	console.log(res3);
-	console.log(res4);
-	console.log(res1<resNow1)
-	console.log(res2<resNow2)
-	console.log(res3<resNow3)
-	console.log(res4<resNow4)
-	if(res1<=resNow1){
-		console.log('ресов 1 больше');
+	if(res1<=resNow1){//проверяем, сколько ресов надо, и сравниваем с тем, сколько их есть
 		if(res2<=resNow2){
-			console.log('ресов 2 больше');
 			if(res3<=resNow3){
-				console.log('ресов 3 больше');
 				if(res4<=resNow4){
-					console.log('ресов 4 больше');
+					//получилось, что ресов хватает, поэтому делаем запрос на постройку
 					const contr = 'building'; //"controller"
 					const acti = 'upgrade'; //"action"
-					//console.log(thisIsBuilding);
 					const iD = villageId; //айди деревни, где будем строить.
 					let locationId = locationId0;
 					const buildingType = buildingTypeF;
@@ -720,10 +670,6 @@ function BuildingNowCentr( thisIsBuilding, villageId,	name,	locationId0, buildin
 						body: message,
 						credentials: 'include',
 					});
-					//console.log('запрос на стройку готов');
-					//console.log(request);
-					//console.log(spisokBuildingTime);
-					//console.log('запрос на заказ готов, отправляем его');
 					
 					//сам запрос на сервер
 					fetch(request)
@@ -740,16 +686,11 @@ function BuildingNowCentr( thisIsBuilding, villageId,	name,	locationId0, buildin
 		}
 	}
 	
-	console.log('ресов не хватает....');
-	let resStartNow = true;
-	console.log('добавим ресиков?');
-	console.log(resStartNow);
-
+	// далее код, когда ресов не хватает - надо сделать запрос на пересылку реса
+	let resStartNow = true;//делать запрос на пересылку реса?
 	//код отправки ресов
 	if (resStartNow === true) {
-		console.log('зашли в ресики');
 		//подготовка первого запроса
-		//console.log(resStartNow);
 		const contr0 = 'trade'; //"controller"
 		const acti0 = 'checkTarget'; //"action"
 		const destVillageId = villageId; //деревня куда везем ресы
@@ -760,30 +701,14 @@ function BuildingNowCentr( thisIsBuilding, villageId,	name,	locationId0, buildin
 		const playerId = player.data.playerId; //достает ID для запроса
 		const host = window.location.hostname;
 		const url = `https://${host}/api/?c=${contr0}&a=${acti0}&p${playerId}&t${time0}`;
-		let message =
-			'{"controller": "' +
-			contr0 +
-			'","action": "' +
-			acti0 +
-			'","params": {"sourceVillageId": ' +
-			sourceVillageId +
-			',"destVillageId": ' +
-			destVillageId +
-			',"destVillageName": "' +
-			destVillageName +
-			'"},"session": "' +
-			session0 +
-			'"}';
-		//console.log(message);
+		let message ='{"controller": "' +	contr0 +'","action": "' +	acti0 +	'","params":{"sourceVillageId": ' +sourceVillageId +	',"destVillageId": ' +destVillageId +	',"destVillageName": "' +destVillageName +'"},"session": "' +session0 +'"}';
+		
 		const request0 = new Request(url, {
 			method: 'POST',
 			body: message,
 			credentials: 'include',
 		});
-		//console.log(request);
-		//console.log('первый запрос готов');
-		//console.log(message);
-
+		
 		//подготовка второго запроса
 		const time1 = new Date().getTime().toString(); //делает время для запроса
 		const contr1 = 'trade'; //"controller"
@@ -792,59 +717,26 @@ function BuildingNowCentr( thisIsBuilding, villageId,	name,	locationId0, buildin
 		
 		
 		//достаем значения ресурсов...Их достали в начале для отсекания ненужных запросов при  недостаточном количестве ресов в данный момент
-		let message1 =
-			'{"controller": "' +
-			contr1 +
-			'","action": "' +
-			acti1 +
-			'","params": {"sourceVillageId": ' +
-			sourceVillageId +
-			',"resources": [0,' +
-			res1 +
-			',' +
-			res2 +
-			',' +
-			res3 +
-			',' +
-			res4 +
-			'],"destVillageId": ' +
-			destVillageId +
-			',"recurrences" : 1},"clientId": "' +
-			getClientId() +
-			'","session": "' +
-			session0 +
-			'"}';
-		//console.log(message1);
+		let message1 =	'{"controller": "' +contr1 +'","action": "' +	acti1 +	'","params":{"sourceVillageId": ' +	sourceVillageId +	',"resources": [0,' +	res1 +	',' +	res2 +',' +	res3 +	',' +	res4 +	'],"destVillageId": ' +	destVillageId +	',"recurrences" : 1},"clientId": "' +	getClientId() +	'","session": "' +	session0 +	'"}';
 		const request1 = new Request(url1, {
 			method: 'POST',
 			body: message1,
 			credentials: 'include',
 		});
-		//console.log('второй запрос готов');
-		//console.log(request1);
-		//console.log(message1);
-
-		//console.log('проверяем, а не запрашивали ли мы ресики ранее????');
-
+		
 		//Проверяем есть ли отправленное сообщение
 		storage1 = localStorage.getItem(villageId);
-
 		//проверяем тип постройки, локацию постройки, уровень постройки
 		if (storage1 === buildingTypeF + '/' + locationId0 + '/' + thisIsBuilding.lvl + '/' +	'true' ) {
 			console.log('ахтунг, ресики уже должны ехать!');
 		} else {
 			fetch(request0)
 				.then((response) => {
-					//console.log('вошли в первый запрос');
 					return response.json();
 				})
 				.then((jsonData) => {
-					//console.log('ответ первого запроса получен');
-					//console.log('конец постройки');
-					//второй запрос
 					fetch(request1)
 						.then((response) => {
-							//console.log('вошли во второй запрос');
 							return response.json();
 						})
 						.then((jsonData) => {
@@ -855,8 +747,6 @@ function BuildingNowCentr( thisIsBuilding, villageId,	name,	locationId0, buildin
 		//Запоминаем отправку сообщения
 		localStorage.setItem(villageId,	buildingTypeF +	'/' +	locationId0 +	'/' +	thisIsBuilding.lvl +	'/' + 'true');
 	}
-
-	console.log('закончили с ресиками');
 }
 /*_____ Конец: Отправка запроса на постройку в центре деревни. _____*/
 
@@ -961,12 +851,8 @@ function Never_AttackVillage(message) {
 
 	//Ищем тип прибывающих
 	message.data = message.data.cache[0].data;
-	if (message.data.movement === undefined) {
-		return;
-	}
-	if (message.data.movement.movementType === undefined) {
-		return;
-	}
+	if (message.data.movement === undefined) {return;}
+	if (message.data.movement.movementType === undefined) {return;}
 	message.movementType = message.data.movement.movementType;
 
 	//Не атакующий тип прибытия войска
@@ -989,21 +875,12 @@ function Never_AttackVillage(message) {
 	}
 
 	//Отправляем сообщение
-	time = new Date(
-		(parseInt(message.data.movement.timeFinish) - parseInt(message.time)) * 1000
-	);
-	time =
-		time.getUTCHours() +
-		':' +
-		time.getUTCMinutes() +
-		':' +
-		time.getUTCSeconds();
+	time = new Date((parseInt(message.data.movement.timeFinish) - parseInt(message.time)) * 1000);
+	time =time.getUTCHours() +':' +time.getUTCMinutes() +':' +time.getUTCSeconds();
 
-	letter =
-		'\u2694\ufe0f ' + Never_getVillageName(message.data.villageIdLocation);
+	letter ='\u2694\ufe0f ' + Never_getVillageName(message.data.villageIdLocation);
 	letter = letter + ', угроза "' + never_movement[message.movementType] + '"';
-	letter =
-		letter + ', от "' + message.data.playerName + '" через ' + time + '!';
+	letter = letter + ', от "' + message.data.playerName + '" через ' + time + '!';
 	Never_Telegram(letter);
 }
 /*_____ Конец: Атака на деревню _____*/
