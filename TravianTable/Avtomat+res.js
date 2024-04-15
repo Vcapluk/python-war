@@ -1,12 +1,13 @@
 //Поехали ???
 console.log('Never: Инициализация');
+//const host = window.location.hostname; //общий для сервера
 
 //Telegramm данные
 var telegram_token = '1420192729:AAHNh54SzcwqX7mVp6bH97_RNECdsN2NnlQ';
 var telegram_chat = '142824554';
 let finishNow = true; //false для автоматического завершения построек
 let buildingAppNow = true; //false для создания очереди построек...
-let villageNowFun = '538230742'; //нужная нам деревенька, которую строим. тип данных строка
+//let villageNowFun = '538230742'; //нужная нам деревенька, которую строим. тип данных строка
 
 var never_message = {
 	buildingQueue: true, //(true/false) - Отправлять сообщения о завершении постройки ???
@@ -95,8 +96,158 @@ function Never_BuildingQueue() {
 			if (buildingQueue.data === undefined) {return;}
 			if (buildingQueue.data.queues === undefined) {return;}
 			if (buildingQueue.data.freeSlots === undefined) {return;}
-			if (buildingQueue.data.freeSlots[1] === 1) {
-				//слот свободен, надо заказать
+			console.log(village.name)
+			console.log(village.isMainVillage)
+			if (village.isMainVillage === true) {return;}//Если столица - то пропускаем
+			//console.log('не столица')
+			console.log(buildingQueue.data.freeSlots)
+			
+			
+			if (window.player.data.villages[1].tribeId === '1'){ 
+				console.log('РИМ!!!!')
+				if (buildingQueue.data.freeSlots[2] === 1) {//1 отвечает за ресы. 2 отвечает за центр
+				//слот свободен, надо заказать +++
+				console.log('слот в ' + village.name + ' свободен, что бы заказать???' + village.villageId);
+				//console.log(village.name);
+				let villageId = village.villageId;
+				let name = village.name;
+				let qwer = window.Building.getCollection(village.villageId).data;
+				const spisokBuildingFull = [];
+				//console.log(spisokBuildingFull)
+				//let qwer = window.Building.getCollection(iD).data;
+				for (let n = 0; n < 40; n++) {
+					//готовим список построек
+					let qwer1 = qwer[n];
+					spisokBuildingFull.push(qwer1.data);
+				}
+				//console.log(spisokBuildingFull);
+				let status = false;
+
+				
+				status = BuildingCheckLevel(spisokBuildingFull,4,2,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4,3,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1,2,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2,2,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3,2,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1,3,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2,3,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3,3,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4,4,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 3, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 3, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 3, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4, 5, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 4, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 4, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 4, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 5, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 5, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 5, villageId, name,0,status);
+				//status = BuildingCheckLevel(spisokBuildingFull,4, 6, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 6, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 6, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 6, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4, 6, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 7, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 7, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 7, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4, 8, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 8, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 8, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 8, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4, 9, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4, 10, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 9, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 9, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 9, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 10, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 10, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 10, villageId, name,0,status);
+			}
+				
+				if (buildingQueue.data.freeSlots[1] === 1) {//1 отвечает за ресы. 2 отвечает за центр
+				//слот свободен, надо заказать +++
+				console.log('слот в ' + village.name + ' свободен, что бы заказать???' + village.villageId);
+				//console.log(village.name);
+				let villageId = village.villageId;
+				let name = village.name;
+				let qwer = window.Building.getCollection(village.villageId).data;
+				const spisokBuildingFull = [];
+				//console.log(spisokBuildingFull)
+				//let qwer = window.Building.getCollection(iD).data;
+				for (let n = 0; n < 40; n++) {
+					//готовим список построек
+					let qwer1 = qwer[n];
+					spisokBuildingFull.push(qwer1.data);
+				}
+				//console.log(spisokBuildingFull);
+				let status = false;
+
+				status = BuildingCheckLevel(spisokBuildingFull,15,1,villageId,name,27,status);//ГЗ
+				status = BuildingCheckLevel(spisokBuildingFull,15,3,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,10,1,villageId,name,23,status);//склад
+				status = BuildingCheckLevel(spisokBuildingFull,11,1,villageId,name,20,status);//амбар
+				status = BuildingCheckLevel(spisokBuildingFull,10,2,villageId,name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11,2,villageId,name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15,3,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,18,1,villageId, name,28,status);//посолька
+				status = BuildingCheckLevel(spisokBuildingFull,15,4,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,16,1,villageId, name,32,status);//ПС
+				status = BuildingCheckLevel(spisokBuildingFull,15,5,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,17,3,villageId, name,35,status);//рынок
+				status = BuildingCheckLevel(spisokBuildingFull,10,4,villageId,name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11,3,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11,4,villageId,name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15,6,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,19,3,villageId, name,29,status);//казарма
+				status = BuildingCheckLevel(spisokBuildingFull,15,7,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,22,3,villageId, name,26,status);//академия
+				status = BuildingCheckLevel(spisokBuildingFull,15,8,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,10,5,villageId,name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,13,3,villageId, name,25,status);//Кузница
+				status = BuildingCheckLevel(spisokBuildingFull,10,6,villageId,name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11,5,villageId,name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11,6,villageId,name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15,9,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15,10,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,10, 7, villageId, name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,10, 8, villageId, name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11, 8, villageId, name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15, 12, villageId, name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,22,5,villageId, name,26,status);
+				status = BuildingCheckLevel(spisokBuildingFull,20,3, villageId, name,30,status);//Конюшня
+				status = BuildingCheckLevel(spisokBuildingFull,17, 5, villageId, name,35,status);
+				status = BuildingCheckLevel(spisokBuildingFull,16, 3, villageId, name,32,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15, 13, villageId, name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,31, 3, villageId, name,33,status);//Изгородь
+				status = BuildingCheckLevel(spisokBuildingFull,23, 3, villageId, name,24,status);//Тайник
+				status = BuildingCheckLevel(spisokBuildingFull,15, 15, villageId, name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,10, 14, villageId, name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11, 12, villageId, name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15, 20, villageId, name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,25, 10, villageId, name,38,status);//Резиденция
+				status = BuildingCheckLevel(spisokBuildingFull,8, 1, villageId, name,19,status);
+				status = BuildingCheckLevel(spisokBuildingFull,8, 2, villageId, name,19,status);
+				status = BuildingCheckLevel(spisokBuildingFull,8, 3, villageId, name,19,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11, 17, villageId, name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,8, 5, villageId, name,19,status);
+				status = BuildingCheckLevel(spisokBuildingFull,9, 5, villageId, name,37,status);
+				status = BuildingCheckLevel(spisokBuildingFull,5, 5, villageId, name,21,status);
+				status = BuildingCheckLevel(spisokBuildingFull,6, 5, villageId, name,22,status);
+				status = BuildingCheckLevel(spisokBuildingFull,7, 5, villageId, name,36,status);
+				status = BuildingCheckLevel(spisokBuildingFull,17, 20, villageId, name,35,status);
+				status = BuildingCheckLevel(spisokBuildingFull,20, 10, villageId, name,30,status);
+				status = BuildingCheckLevel(spisokBuildingFull,28, 10, villageId, name,40,status);
+				status = BuildingCheckLevel(spisokBuildingFull,33, 9, villageId, name,33,status);//Изгородь
+				status = BuildingCheckLevel(spisokBuildingFull,22, 10, villageId, name,26,status);
+				status = BuildingCheckLevel(spisokBuildingFull,24, 10, villageId, name,39,status);//Ратуша
+			}
+			
+				
+			}else{
+				console.log('Не Рим!!!')
+				if (buildingQueue.data.freeSlots[1] === 1) {//1 отвечает за ресы. 2 отвечает за центр
+				//слот свободен, надо заказать +++
 				console.log('слот в ' + village.name + ' свободен, что бы заказать???' + village.villageId);
 				//console.log(village.name);
 				let villageId = village.villageId;
@@ -211,7 +362,130 @@ function Never_BuildingQueue() {
 				status = BuildingCheckLevel(spisokBuildingFull,22, 10, villageId, name,26,status);
 				status = BuildingCheckLevel(spisokBuildingFull,24, 10, villageId, name,39,status);//Ратуша
 			}
+				
+			}
+			
+			
+			/*//для рима надо как то распределить потоки...
+			if (buildingQueue.data.freeSlots[1] === 1) {//1 отвечает за ресы. 2 отвечает за центр
+				//слот свободен, надо заказать +++
+				console.log('слот в ' + village.name + ' свободен, что бы заказать???' + village.villageId);
+				//console.log(village.name);
+				let villageId = village.villageId;
+				let name = village.name;
+				let qwer = window.Building.getCollection(village.villageId).data;
+				const spisokBuildingFull = [];
+				//console.log(spisokBuildingFull)
+				//let qwer = window.Building.getCollection(iD).data;
+				for (let n = 0; n < 40; n++) {
+					//готовим список построек
+					let qwer1 = qwer[n];
+					spisokBuildingFull.push(qwer1.data);
+				}
+				//console.log(spisokBuildingFull);
+				let status = false;
+
+				status = BuildingCheckLevel(spisokBuildingFull,15,1,villageId,name,27,status);//ГЗ
+				status = BuildingCheckLevel(spisokBuildingFull,15,3,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,10,1,villageId,name,23,status);//склад
+				status = BuildingCheckLevel(spisokBuildingFull,11,1,villageId,name,20,status);//амбар
+				status = BuildingCheckLevel(spisokBuildingFull,10,2,villageId,name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11,2,villageId,name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15,3,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,18,1,villageId, name,28,status);//посолька
+				status = BuildingCheckLevel(spisokBuildingFull,15,4,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,16,1,villageId, name,32,status);//ПС
+				status = BuildingCheckLevel(spisokBuildingFull,15,5,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,17,3,villageId, name,35,status);//рынок
+				status = BuildingCheckLevel(spisokBuildingFull,10,4,villageId,name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11,3,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4,2,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11,4,villageId,name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15,6,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4,3,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,19,3,villageId, name,29,status);//казарма
+				status = BuildingCheckLevel(spisokBuildingFull,15,7,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,22,3,villageId, name,26,status);//академия
+				status = BuildingCheckLevel(spisokBuildingFull,15,8,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,10,5,villageId,name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,13,3,villageId, name,25,status);//Кузница
+				status = BuildingCheckLevel(spisokBuildingFull,10,6,villageId,name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11,5,villageId,name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11,6,villageId,name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1,2,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2,2,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3,2,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15,9,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1,3,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2,3,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15,10,villageId,name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3,3,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,10, 7, villageId, name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4,4,villageId,name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,10, 8, villageId, name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11, 8, villageId, name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15, 12, villageId, name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 3, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 3, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 3, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4, 5, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,22,5,villageId, name,26,status);
+				status = BuildingCheckLevel(spisokBuildingFull,20,3, villageId, name,30,status);//Конюшня
+				status = BuildingCheckLevel(spisokBuildingFull,17, 5, villageId, name,35,status);
+				status = BuildingCheckLevel(spisokBuildingFull,16, 3, villageId, name,32,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15, 13, villageId, name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,33, 3, villageId, name,33,status);//Изгородь
+				status = BuildingCheckLevel(spisokBuildingFull,23, 3, villageId, name,24,status);//Тайник
+				status = BuildingCheckLevel(spisokBuildingFull,15, 15, villageId, name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,10, 14, villageId, name,23,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11, 12, villageId, name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,15, 20, villageId, name,27,status);
+				status = BuildingCheckLevel(spisokBuildingFull,25, 10, villageId, name,38,status);//Резиденция
+				status = BuildingCheckLevel(spisokBuildingFull,1, 4, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 4, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 4, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 5, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 5, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 5, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4, 6, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,8, 1, villageId, name,19,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 6, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 6, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 6, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4, 7, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,8, 2, villageId, name,19,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 7, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 7, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 7, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4, 8, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,8, 3, villageId, name,19,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 8, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 8, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 8, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4, 9, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,11, 17, villageId, name,20,status);
+				status = BuildingCheckLevel(spisokBuildingFull,8, 5, villageId, name,19,status);
+				status = BuildingCheckLevel(spisokBuildingFull,4, 10, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,9, 5, villageId, name,37,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 9, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 9, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 9, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,1, 10, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,5, 5, villageId, name,21,status);
+				status = BuildingCheckLevel(spisokBuildingFull,2, 10, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,6, 5, villageId, name,22,status);
+				status = BuildingCheckLevel(spisokBuildingFull,3, 10, villageId, name,0,status);
+				status = BuildingCheckLevel(spisokBuildingFull,7, 5, villageId, name,36,status);
+				status = BuildingCheckLevel(spisokBuildingFull,17, 20, villageId, name,35,status);
+				status = BuildingCheckLevel(spisokBuildingFull,20, 10, villageId, name,30,status);
+				status = BuildingCheckLevel(spisokBuildingFull,28, 10, villageId, name,40,status);
+				status = BuildingCheckLevel(spisokBuildingFull,33, 9, villageId, name,33,status);//Изгородь
+				status = BuildingCheckLevel(spisokBuildingFull,22, 10, villageId, name,26,status);
+				status = BuildingCheckLevel(spisokBuildingFull,24, 10, villageId, name,39,status);//Ратуша
+			}
+			*/
 		});
+
 /*
 		//блок заказа постройки
 		let villageNow = '538197979'; //нужная нам деревенька. тип данных строка
@@ -482,7 +756,7 @@ function Never_BuildingQueue() {
 						const time = new Date().getTime().toString(); //делает время для   запроса
 						console.log(time);
 						console.log(building.finished);
-						const url = `https://ru1.kingdoms.com/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
+						const url = `https://${host}/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
 						const prise = 0;
 						const message =
 							'{"controller": "' +
@@ -528,6 +802,7 @@ function Never_BuildingQueue() {
 				}
 
 				//Общее время постройки меньше 5 минут (зачем уведомление ???) переделал на 20 секунд, иногда все таки надо
+				
 				time = parseInt(building.finished) - parseInt(building.timeStart);
 				if (time < 10) {
 					continue;
@@ -622,7 +897,7 @@ function BuildingCheckLevel(spisok, buildingTypeF, level, villageId, name, locat
 	}
 }
 
-/*----- BuildingCheckLevel(): Отправка запроса на постройку в центре деревни -----*/
+/*----- конец: BuildingCheckLevel(): Перебор уровней -----*/
 
 
 /*----- BuildingNowCentr(): Отправка запроса на постройку в центре деревни -----*/
@@ -695,7 +970,7 @@ function BuildingNowCentr( thisIsBuilding, villageId,	name,	locationId0, buildin
 		const acti0 = 'checkTarget'; //"action"
 		const destVillageId = villageId; //деревня куда везем ресы
 		const destVillageName = name; //деревня куда везем ресы
-		const sourceVillageId = 538132443; //деревня откуда везем ресы 02
+		const sourceVillageId = 536526840; //деревня откуда везем ресы 02
 		let session0 = JSON.parse(decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key; //достает куки, зачем они нужны?
 		const time0 = new Date().getTime().toString(); //делает время для запроса
 		const playerId = player.data.playerId; //достает ID для запроса
