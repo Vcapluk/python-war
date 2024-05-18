@@ -4,8 +4,7 @@ console.log("start ЧВР + Оазисы");
 var never_IntervalID = window.setInterval(Never_MainScript, 1000);
 
 let asdfgh = [];//для того, чтоб работал JSON запрос на ЕК и возвращал значения для добавления в табличку
-let resStartNow = true;
-const host = window.location.hostname;//достает название сервак
+let resStartNow = false;
 
 /*----- Never_MainScript(): Главный скрипт. -----*/
 function Never_MainScript() {
@@ -30,6 +29,8 @@ function Never_MainScript() {
 		newElem.setAttribute('onclick', 'buttonOpen()'); // добавляет атрибут со значением
 		newElem.innerHTML = '<span class = "text"> &#8801 </span>'//название кнопки на экране
 		userArea.appendChild(newElem);//добавляет в конец списка элемент, который описали выше.
+		
+
 		
 		//для вкладки с постройками
 		const never_building  = {
@@ -114,7 +115,7 @@ function Never_MainScript() {
 			let name1 = window.Village.get(village.villageId).data.name;
 			let zagolovokTable = '<tr>				<td>тип постройки</td>																																				<td>Уровень</td>																																<td><i class="unit_wood_small_illu"></i></td>																									<td><i class="unit_clay_small_illu"></i></td>																									<td><i class="unit_iron_small_illu"></i></td>																									<td><i class="unit_crop_small_illu"></i></td>																									<td><i class="symbol_clock_small_flat_black duration"></i></td>																<td><i class="symbol_clock_small_flat_black duration"></i>/нас</td>														</tr>';
 
-			countVillageInTableBuilding1111 += '<details><summary><a href="https://'+ host + '/#/page:village/villId:'+ xx + '">' + x + '</a></summary><p>';
+			countVillageInTableBuilding1111 += '<details><summary><a href="https://dynastyx2.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></summary><p>';
 			countVillageInTableBuilding1111 += '<details><summary>--Ресурсы</a></summary><p><table>';
 			countVillageInTableBuilding1111 += zagolovokTable;
 			for (let n = 0; n < 18; n++) {
@@ -156,6 +157,25 @@ function Never_MainScript() {
 
 		//конец вкладки постройки
 		
+		// для вкладки с палатками
+		let healingTab = '<td>Деревня</td><td>вместимость палатки</td>';// строка для таблицы
+		
+		window.player.data.villages.forEach(village => {
+			let x = village.name;
+			let xx = village.villageId;
+			qwer = window.Building.getCollection(village.villageId).data;
+			let name1 = window.Village.get(village.villageId).data.name;
+			let healing = window.Village.get(village.villageId).data.healingTentCapacity;
+			healingTab += '<tr><td>' + name1 + '</td><td>' + healing + '</td></tr>'
+		
+		
+		});
+		
+		//healingTentCapacity
+
+		
+		
+		
 		
 		//для вкладки ЧВР
 		let countVillageInTable = '';//переменная для добавления в HTML выработки ресурсов деревень
@@ -174,7 +194,7 @@ function Never_MainScript() {
 			let x2 = parseInt(village.production[2], 10);//ищет выработку глины
 			let x3 = parseInt(village.production[3], 10);//ищет выработку железа
 			let x4 = parseInt(village.production[4], 10);//ищет выработку кропа
-			countVillageInTable += '<tr><td><a href="https://'+host+'/#/page:village/villId:'+ xx + '">' + x + '</a></td>																		<td>' + x1 +'</td>																			<td>' + x2 +'</td>																		<td>' + x3 +'</td>																			<td>' + x4 +'</td>																		</tr>'//записывает строчку для каждой деревни
+			countVillageInTable += '<tr><td><a href="https://dynastyx2.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></td>																		<td>' + x1 +'</td>																			<td>' + x2 +'</td>																		<td>' + x3 +'</td>																			<td>' + x4 +'</td>																		</tr>'//записывает строчку для каждой деревни
 			sumCHVR += x1 + x2 + x3 + x4;//считает выработку ЧВР для каждой деревни
 			sumCHVRRes += x1 + x2 + x3;//считает выработку РЕСУРСОВ ВСЕХ для каждой деревни
 			sumRes1 += x1;//всего дерева
@@ -199,10 +219,10 @@ function Never_MainScript() {
 		let spisokOasisUnitsPr = [];// промежуточный список для сортировки записей
 		let spisokIDFull = [];//полный список
 		let spisokIDNull = [];//список ID вокруг нужной дерки
-		let coord1 = 538132443; //536887296;// ID нашей деревни 
+		let coord1 = 537935870; //536887296;// ID нашей деревни 
 		let coord0 = 536887296; //[0/0 для всего мира]
 		let coordz = 60; //условный радиус(половина стороны квадрата) [60 - если для всего мира]
-		let coordz1 = 20;//радиус поиска вокруг нужной дерки
+		let coordz1 = 10;//радиус поиска вокруг нужной дерки
 		let coord1x = window.Village.get(coord1).data.coordinates.x;
 		let coord1y = window.Village.get(coord1).data.coordinates.y;
 		
@@ -309,31 +329,15 @@ function Never_MainScript() {
 					
 					let units = [];//объявим список для добавления
 					let unitsTotal = 0;
-					let expaTotal = 0;
-					
-		
-					
 					for (let n = 1; n < 11; n++){//проверка наличия каждого зверя в оазисе
 						qwer = window.MapDetails.get(spisokIDD[i].ID).data.troops.units[n];
 						if (qwer !== undefined) {
 							units[n] = Number(qwer);//если зверь есть, то добавим его, запишем числом
 							unitsTotal += units[n];
-							if (n<5){
-								expaTotal += units[n]
-							} else {
-								if (n<7) {
-									expaTotal += units[n]*1.5
-								}else{
-									expaTotal += units[n]*2
-								}
-							}
 						} else {
 							units[n] = " ";//если зверя нет, то ставим 0
 						}
 					}
-					
-					
-					
 					spisokOasisUnitsPr.push({
 						ID,
 		            	coordx,
@@ -341,7 +345,6 @@ function Never_MainScript() {
 		            	dist,
 		            	units,
 		            	unitsTotal,
-		            	expaTotal,
 		            	name,
 		            	bonus,
 		        	});
@@ -350,14 +353,14 @@ function Never_MainScript() {
 		}
 			
 		//spisokOasisUnits = spisokOasisUnitsPr.sort((a, b) => a.dist - b.dist);//сортировка по расстоянию
-		spisokOasisUnits = spisokOasisUnitsPr.sort((a, b) => b.expaTotal - a.expaTotal);//сортировка по количеству
+		spisokOasisUnits = spisokOasisUnitsPr.sort((a, b) => b.unitsTotal - a.unitsTotal);//сортировка по количеству
 		
 		let countVillageInTableOasis = '';//переменная для добавления в HTML 
-		countVillageInTableOasis = '<thead><tr><td>Оазис</td>																									<td>Дист</td>																														<td>Всего</td>																														<td> Экспа </td>																												<td>Тип</td>																									<td><i class="unitSmall nature unitType1"></i></td>												<td><i class="unitSmall nature unitType2"></i></td>											<td><i class="unitSmall nature unitType3"></i></td>												<td><i class="unitSmall nature unitType4"></i></td>											<td><i class="unitSmall nature unitType5"></i></td>												<td><i class="unitSmall nature unitType6"></i></td>											<td><i class="unitSmall nature unitType7"></i></td>												<td><i class="unitSmall nature unitType8"></i></td>											<td><i class="unitSmall nature unitType9"></i></td>												<td><i class="unitSmall nature unitType10"></i></td>										</tr></thead>';//переменная для добавления в HTML заголовка
+		countVillageInTableOasis = '<thead><tr><td>Оазис</td>																					<td>Дист</td>																				<td>Всего</td>																					<td>Тип</td>																				<td><i class="unitSmall nature unitType1"></i></td>												<td><i class="unitSmall nature unitType2"></i></td>											<td><i class="unitSmall nature unitType3"></i></td>												<td><i class="unitSmall nature unitType4"></i></td>											<td><i class="unitSmall nature unitType5"></i></td>												<td><i class="unitSmall nature unitType6"></i></td>											<td><i class="unitSmall nature unitType7"></i></td>												<td><i class="unitSmall nature unitType8"></i></td>											<td><i class="unitSmall nature unitType9"></i></td>												<td><i class="unitSmall nature unitType10"></i></td>										</tr></thead>';//переменная для добавления в HTML заголовка
 	
 		
 		for (let i = 0; i < spisokOasisUnits.length; i++) {
-			countVillageInTableOasis += '<tr><td><a href="https://'+host+'/#/page:map/villId:'+ coord1 + '/subtab:Outgoing/cellId:' + spisokOasisUnits[i].ID + '/window:mapCellDetails">('+ spisokOasisUnits[i].coordx + '|' +spisokOasisUnits[i].coordy +')</a></td>				<td>' + spisokOasisUnits[i].dist +'</td>																<td>' + spisokOasisUnits[i].unitsTotal +'</td>													<td>' + spisokOasisUnits[i].expaTotal +'</td>													<td>' + spisokOasisUnits[i].bonus +'</td>																<td>' + spisokOasisUnits[i].units[1] +'</td>													<td>' + spisokOasisUnits[i].units[2] +'</td>														<td>' + spisokOasisUnits[i].units[3] +'</td>													<td>' + spisokOasisUnits[i].units[4] +'</td>														<td>' + spisokOasisUnits[i].units[5] +'</td>													<td>' + spisokOasisUnits[i].units[6] +'</td>														<td>' + spisokOasisUnits[i].units[7] +'</td>													<td>' + spisokOasisUnits[i].units[8] +'</td>														<td>' + spisokOasisUnits[i].units[9] +'</td>													<td>' + spisokOasisUnits[i].units[10] +'</td>												</tr>'//записывает строчку для каждого оазиса
+			countVillageInTableOasis += '<tr><td><a href="https://dynastyx2.kingdoms.com/#/page:map/villId:'+ coord1 + '/subtab:Outgoing/cellId:' + spisokOasisUnits[i].ID + '/window:mapCellDetails">('+ spisokOasisUnits[i].coordx + '|' +spisokOasisUnits[i].coordy +')</a></td>							<td>' + spisokOasisUnits[i].dist +'</td>													<td>' + spisokOasisUnits[i].unitsTotal +'</td>											<td>' + spisokOasisUnits[i].bonus +'</td>													<td>' + spisokOasisUnits[i].units[1] +'</td>											<td>' + spisokOasisUnits[i].units[2] +'</td>												<td>' + spisokOasisUnits[i].units[3] +'</td>											<td>' + spisokOasisUnits[i].units[4] +'</td>												<td>' + spisokOasisUnits[i].units[5] +'</td>											<td>' + spisokOasisUnits[i].units[6] +'</td>												<td>' + spisokOasisUnits[i].units[7] +'</td>											<td>' + spisokOasisUnits[i].units[8] +'</td>												<td>' + spisokOasisUnits[i].units[9] +'</td>											<td>' + spisokOasisUnits[i].units[10] +'</td>												</tr>'//записывает строчку для каждого оазиса
 		}
 		
 		
@@ -371,7 +374,8 @@ function Never_MainScript() {
 		let session = JSON.parse(decodeURIComponent(document.cookie.split(';').find(cookie => cookie.trim().startsWith('t5SessionKey=')).split('=')[1])).key;//достает куки
 		const playerId = player.data.playerId;//достает ID для запроса
 		const time = new Date().getTime().toString(); //делает время для запроса
-		const url = 'https://'+host+'/api/?c=${contr}&a=${acti}&p${playerId}&t${time}';
+		const host = window.location.hostname;
+		const url = `https://${host}/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
 		const message = '{"controller":"' + contr + '","action":"' + acti +'","params":{"villageId":"'+ villageId1 + '"},"clientId":"' + getClientId() + '","session":"' + session + '"}';//делает строчку для запроса. До этого была функция, но она не успевала сделать строчку корректно
 		const request = new Request(url, {
 			method: "POST",
@@ -395,27 +399,14 @@ function Never_MainScript() {
 		//обработка для добавления в таблицу
 		let countVillageInTableEK = '';//переменная для добавления в HTML выработки ЕК деревень
 		let sumEKZ = 0;//переменная для подсчета добываемого ЕК
-		countVillageInTableEK += '<tr><td>Деревня</td><td>ЕК/День</td><td>Ратуша</td></tr>';
+		countVillageInTableEK += '<tr><td>Деревня</td><td>ЕК/День</td></tr>';
 		
 		window.player.data.villages.forEach(village => {
 			//let zaprosEK;
-			qwer = window.Building.getCollection(village.villageId).data;
-			//console.log('в переборе ЕК')
-			//console.log(qwer)
-			let ratusha = '---'
-			for (let n = 0; n < 40; n++) {//готовим список построек
-				let qwer1 = qwer[n];
-				//console.log(qwer1)
-				if(qwer1.data.buildingType === 24 ){
-				  ratusha = qwer1.data.lvl;
-				}
-			}
-			
-			
 			let x = village.name;
 			let x1 = parseInt(village.culturePointProduction, 10);//ищет выработку ЕК
 			let x2 = parseInt(village.culturePoints, 10);
-			countVillageInTableEK += '<tr><td>'+ x +'</td><td>' + x1 +'</td><td>' + ratusha +'</td></tr>'//записывает строчку для каждой деревни
+			countVillageInTableEK += '<tr><td>'+ x +'</td><td>' + x1 +'</td></tr>'//записывает строчку для каждой деревни
 			sumEKZ += x1;//всего ЕК
 		});
 		
@@ -466,8 +457,9 @@ function Never_MainScript() {
 		str +=				'</table>'
 		
 		str +=			'</li>';
-		str +=			 '<li class="tab-content__item js-tab-content" data-tab="4">Здесь контент про Палатки. хз как к ним подступиться...'
-		str +=			'</li>';
+		str +=			 '<li class="tab-content__item js-tab-content" data-tab="4">Здесь контент про Палатки<table>'
+		str +=        healingTab;
+		str +=			'</table></li>';
 		str +=			 '<li class="tab-content__item js-tab-content" data-tab="5">Здесь контент про Деревни'
 		str += countVillageInTableBuilding1111;
 		str +=			'</li>';
