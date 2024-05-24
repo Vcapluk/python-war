@@ -113,9 +113,9 @@ function Never_MainScript() {
 			let xx = village.villageId;
 			qwer = window.Building.getCollection(village.villageId).data;
 			let name1 = window.Village.get(village.villageId).data.name;
-			let zagolovokTable = '<tr>				<td>тип постройки</td>																																				<td>Уровень</td>																																<td><i class="unit_wood_small_illu"></i></td>																									<td><i class="unit_clay_small_illu"></i></td>																									<td><i class="unit_iron_small_illu"></i></td>																									<td><i class="unit_crop_small_illu"></i></td>																									<td><i class="symbol_clock_small_flat_black duration"></i></td>																<td><i class="symbol_clock_small_flat_black duration"></i>/нас</td>														</tr>';
+			let zagolovokTable = '<tr>				<td>тип постройки</td>																																				<td>Уровень</td>																																<td><i class="unit_wood_small_illu"></i></td>																									<td><i class="unit_clay_small_illu"></i></td>																									<td><i class="unit_iron_small_illu"></i></td>																									<td><i class="unit_crop_small_illu"></i></td>																									<td><i class="symbol_clock_small_flat_black duration"></i></td>																<td><i class="symbol_clock_small_flat_black duration"></i>/нас</td>														<td>рес/нас</td>																																				</tr>';
 
-			countVillageInTableBuilding1111 += '<details><summary><a href="https://dynastyx2.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></summary><p>';
+			countVillageInTableBuilding1111 += '<details><summary><a href="https://bbash2.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></summary><p>';
 			countVillageInTableBuilding1111 += '<details><summary>--Ресурсы</a></summary><p><table>';
 			countVillageInTableBuilding1111 += zagolovokTable;
 			for (let n = 0; n < 18; n++) {
@@ -127,7 +127,7 @@ function Never_MainScript() {
 					if (lvlNow === true) {
 						countVillageInTableBuilding1111 += '<tr>																										<td>' + never_building[qwer1.data.buildingType] +'</td>																	<td>Максимум</td>';
 					} else {
-					  countVillageInTableBuilding1111 += '<tr>																								<td>' + never_building[qwer1.data.buildingType] +'</td>																<td>' + qwer1.data.lvl +'</td>																												<td>' + qwer1.data.upgradeCosts[1] +'</td>																							<td>' + qwer1.data.upgradeCosts[2] +'</td>																							<td>' + qwer1.data.upgradeCosts[3] +'</td>																						<td>' + qwer1.data.upgradeCosts[4] +'</td>																							<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>																		<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>						</tr>';;
+					  countVillageInTableBuilding1111 += '<tr>																								<td>' + never_building[qwer1.data.buildingType] +'</td>																<td>' + qwer1.data.lvl +'</td>																												<td>' + qwer1.data.upgradeCosts[1] +'</td>																							<td>' + qwer1.data.upgradeCosts[2] +'</td>																							<td>' + qwer1.data.upgradeCosts[3] +'</td>																						<td>' + qwer1.data.upgradeCosts[4] +'</td>																							<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>																		<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>				<td>' + (qwer1.data.upgradeCosts[1] +qwer1.data.upgradeCosts[2] +qwer1.data.upgradeCosts[3] +qwer1.data.upgradeCosts[4])/qwer1.data.upgradeSupplyUsage +'</td>						</tr>';
 					}
 				}
 			}
@@ -147,7 +147,7 @@ function Never_MainScript() {
 					if (lvlNow === true) {
 						countVillageInTableBuilding1111 += '<tr>																								<td>' + never_building[qwer1.data.buildingType] +'</td>																	<td>Максимум</td>';
 					} else {
-					  countVillageInTableBuilding1111 += '<tr>																									<td>' + never_building[qwer1.data.buildingType] +'</td>																	<td>' + qwer1.data.lvl +'</td>																													<td>' + qwer1.data.upgradeCosts[1] +'</td>																						<td>' + qwer1.data.upgradeCosts[2] +'</td>																						<td>' + qwer1.data.upgradeCosts[3] +'</td>																						<td>' + qwer1.data.upgradeCosts[4] +'</td>																							<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>																			<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>			</tr>';;
+					  countVillageInTableBuilding1111 += '<tr>																									<td>' + never_building[qwer1.data.buildingType] +'</td>																	<td>' + qwer1.data.lvl +'</td>																													<td>' + qwer1.data.upgradeCosts[1] +'</td>																						<td>' + qwer1.data.upgradeCosts[2] +'</td>																						<td>' + qwer1.data.upgradeCosts[3] +'</td>																						<td>' + qwer1.data.upgradeCosts[4] +'</td>																							<td>' + localTimeZ(qwer1.data.upgradeTime) +'</td>																			<td>' + localTimeZ(qwer1.data.upgradeTime/qwer1.data.upgradeSupplyUsage) +'</td>				<td>' + (qwer1.data.upgradeCosts[1] +qwer1.data.upgradeCosts[2] +qwer1.data.upgradeCosts[3] +qwer1.data.upgradeCosts[4])/qwer1.data.upgradeSupplyUsage +'</td>			</tr>';;
 					}
 				}
 			}
@@ -157,7 +157,7 @@ function Never_MainScript() {
 
 		//конец вкладки постройки
 		
-		// для вкладки с палатками
+		// для вкладки с палатками  4 вкладка
 		let healingTab = '<td>Деревня</td><td>вместимость палатки</td>';// строка для таблицы
 		
 		window.player.data.villages.forEach(village => {
@@ -177,7 +177,7 @@ function Never_MainScript() {
 		
 		
 		
-		//для вкладки ЧВР
+		//для вкладки ЧВР 1 вкладка
 		let countVillageInTable = '';//переменная для добавления в HTML выработки ресурсов деревень
 		let sumCHVR = 0;//переменная для подсчета ЧВР
 		let sumCHVRRes = 0;//переменная для подсчета сундука ресурсов
@@ -194,7 +194,7 @@ function Never_MainScript() {
 			let x2 = parseInt(village.production[2], 10);//ищет выработку глины
 			let x3 = parseInt(village.production[3], 10);//ищет выработку железа
 			let x4 = parseInt(village.production[4], 10);//ищет выработку кропа
-			countVillageInTable += '<tr><td><a href="https://dynastyx2.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></td>																		<td>' + x1 +'</td>																			<td>' + x2 +'</td>																		<td>' + x3 +'</td>																			<td>' + x4 +'</td>																		</tr>'//записывает строчку для каждой деревни
+			countVillageInTable += '<tr><td><a href="https://bbash2.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></td>																		<td>' + x1 +'</td>																			<td>' + x2 +'</td>																		<td>' + x3 +'</td>																			<td>' + x4 +'</td>																		</tr>'//записывает строчку для каждой деревни
 			sumCHVR += x1 + x2 + x3 + x4;//считает выработку ЧВР для каждой деревни
 			sumCHVRRes += x1 + x2 + x3;//считает выработку РЕСУРСОВ ВСЕХ для каждой деревни
 			sumRes1 += x1;//всего дерева
@@ -208,7 +208,7 @@ function Never_MainScript() {
 	
 	
 	
-		// делаем список для оазисов
+		// делаем список для оазисов 3 вкладка
 		
 		/*---- расчеты для оазисов! ----*/
 	
@@ -219,7 +219,7 @@ function Never_MainScript() {
 		let spisokOasisUnitsPr = [];// промежуточный список для сортировки записей
 		let spisokIDFull = [];//полный список
 		let spisokIDNull = [];//список ID вокруг нужной дерки
-		let coord1 = 537935870; //536887296;// ID нашей деревни 
+		let coord1 = Number(window.player.data.villages[0].villageId);// ID нашей столицы
 		let coord0 = 536887296; //[0/0 для всего мира]
 		let coordz = 60; //условный радиус(половина стороны квадрата) [60 - если для всего мира]
 		let coordz1 = 10;//радиус поиска вокруг нужной дерки
@@ -360,12 +360,12 @@ function Never_MainScript() {
 	
 		
 		for (let i = 0; i < spisokOasisUnits.length; i++) {
-			countVillageInTableOasis += '<tr><td><a href="https://dynastyx2.kingdoms.com/#/page:map/villId:'+ coord1 + '/subtab:Outgoing/cellId:' + spisokOasisUnits[i].ID + '/window:mapCellDetails">('+ spisokOasisUnits[i].coordx + '|' +spisokOasisUnits[i].coordy +')</a></td>							<td>' + spisokOasisUnits[i].dist +'</td>													<td>' + spisokOasisUnits[i].unitsTotal +'</td>											<td>' + spisokOasisUnits[i].bonus +'</td>													<td>' + spisokOasisUnits[i].units[1] +'</td>											<td>' + spisokOasisUnits[i].units[2] +'</td>												<td>' + spisokOasisUnits[i].units[3] +'</td>											<td>' + spisokOasisUnits[i].units[4] +'</td>												<td>' + spisokOasisUnits[i].units[5] +'</td>											<td>' + spisokOasisUnits[i].units[6] +'</td>												<td>' + spisokOasisUnits[i].units[7] +'</td>											<td>' + spisokOasisUnits[i].units[8] +'</td>												<td>' + spisokOasisUnits[i].units[9] +'</td>											<td>' + spisokOasisUnits[i].units[10] +'</td>												</tr>'//записывает строчку для каждого оазиса
+			countVillageInTableOasis += '<tr><td><a href="https://bbash2.kingdoms.com/#/page:map/villId:'+ coord1 + '/subtab:Outgoing/cellId:' + spisokOasisUnits[i].ID + '/window:mapCellDetails">('+ spisokOasisUnits[i].coordx + '|' +spisokOasisUnits[i].coordy +')</a></td>							<td>' + spisokOasisUnits[i].dist +'</td>													<td>' + spisokOasisUnits[i].unitsTotal +'</td>											<td>' + spisokOasisUnits[i].bonus +'</td>													<td>' + spisokOasisUnits[i].units[1] +'</td>											<td>' + spisokOasisUnits[i].units[2] +'</td>												<td>' + spisokOasisUnits[i].units[3] +'</td>											<td>' + spisokOasisUnits[i].units[4] +'</td>												<td>' + spisokOasisUnits[i].units[5] +'</td>											<td>' + spisokOasisUnits[i].units[6] +'</td>												<td>' + spisokOasisUnits[i].units[7] +'</td>											<td>' + spisokOasisUnits[i].units[8] +'</td>												<td>' + spisokOasisUnits[i].units[9] +'</td>											<td>' + spisokOasisUnits[i].units[10] +'</td>												</tr>'//записывает строчку для каждого оазиса
 		}
 		
 		
 		
-		//делаем вкладку с ЕК
+		//делаем вкладку с ЕК 2 вкладка
 		
 		// запрос на ЕК
 		const contr = 'building';//"controller"
@@ -425,6 +425,160 @@ function Never_MainScript() {
 		};
 		
 		
+		//стартовые действия 6 вкладка
+		startOperation = '<ol><li class = "tabs done"> 5 воинов </li></ol>'
+		startOperation += '<ol><li class = "tabs"> Амбар </li></ol>'
+		startOperation += '<tr><td> Склад </td></tr>'
+		startOperation += '<tr><td> Фермы 1 </td></tr>'
+		startOperation += '<tr><td> Все фермы 2 </td></tr>'
+		startOperation += '<tr><td> Казарма 3 </td></tr>'
+		startOperation += '<tr><td> Тайник </td></tr>'
+		startOperation += '<tr><td> Посолька + Оаз </td></tr>'
+		startOperation += '<tr><td> Амбар 3 </td></tr>'
+		startOperation += '<tr><td> Склад3 </td></tr>'
+		startOperation += '<tr><td> Все фермы 3 </td></tr>'
+		startOperation += '<tr><td> Рынок + NPC </td></tr>'
+		startOperation += '<tr><td> Ресы по одному на 1 </td></tr>'
+		startOperation += '<tr><td> Карьеры на 1 </td></tr>'
+		startOperation += '<tr><td> Лесопилки на 1 </td></tr>'
+		startOperation += '<tr><td> Железо на 1 </td></tr>'
+		startOperation += '<tr><td> Ресы по одному на 2 </td></tr>'
+		startOperation += '<tr><td> Все ресы на 2 </td></tr>'
+		startOperation += '<tr><td> Ферма 5 </td></tr>'
+		startOperation += '<tr><td> Ресы по одному на 5 </td></tr>'
+		startOperation += '<tr><td> Склад 5 </td></tr>'
+		startOperation += '<tr><td> Амбар 5 </td></tr>'
+		startOperation += '<tr><td> ГЗ 5 </td></tr>'
+		startOperation += '<tr><td> Резиденция 1 </td></tr>'
+		startOperation += '<tr><td> Все ресы 3 </td></tr>'
+		startOperation += '<tr><td> Все фермы 5 </td></tr>'
+		startOperation += '<tr><td> Одна лесопилка на 4 </td></tr>'
+		startOperation += '<tr><td> Одна лесопилка на 5 </td></tr>'
+		startOperation += '<tr><td> Одна глина на 4 </td></tr>'
+		startOperation += '<tr><td> ТРИ железки на 4 </td></tr>'
+		startOperation += '<tr><td> ГЗ 10 </td></tr>'
+		startOperation += '<tr><td> Резиденция 5 </td></tr>'
+		startOperation += '<tr><td> ЗАКАЗЫВАЕМ ПОСЕЛЕНЦЕВ!!! </td></tr>'
+		startOperation += '<tr><td> Склад 6 </td></tr>'
+		startOperation += '<tr><td> Академия 10 </td></tr>'
+		startOperation += '<tr><td> Мастерская 1 </td></tr>'
+		startOperation += '<tr><td> СНОСИМ Мастерская 1 </td></tr>'
+		startOperation += '<tr><td> Ратуша 1 </td></tr>'
+		startOperation += '<tr><td> Амбар 8 (9500кропа на праздник) </td></tr>'
+		
+		
+		
+		//селектор 7 для наса 500
+		
+		const vc_building_cel  = {
+			0:  '0',
+			1:  '7',
+			2:  '7',
+			3:  '7',
+			4:  '8',
+			5:  '3',
+			6:  '3',
+			7:  '3',
+			8:  '5',
+			9:  '3',
+			10: '12',
+			11: '13',
+			//12: 0,//'ID = 12',
+			13: '10',//'Кузница',
+			14: '0',//'Арена',
+			15: '14',//'Главное здание',
+			16: '7',//'Пункт сбора',
+			17: '12',//'Рынок',
+			18: '6',//'Посольство',
+			19: '10',//'Казарма',
+			20: '10',//'Конюшня',
+			21: '7',//'Мастерская',
+			22: '10',//'Академя',
+			23: '1',//'Тайник',
+			24: '1',//'Ратуша',
+			25: '0',//'Резиденция',
+			26: '3',//'Дворец',
+			27: '4',//'Сокровищница',
+			28: '0',//'Торговая палата',
+			29: '0',//'Большая казарма',
+			30: '0',//'Большая конюшня',
+			31: '0',//'Городская стена',
+			32: '0',//'Земляной вал',
+			33: '0',//'Изгородь',
+			34: '12',//'Каменотес',
+			35: '0',//'Пивоварня',
+			36: '13',//'Капканщик',
+			37: '0',//'Таверна',
+			38: '0',//'Большой склад',
+			39: '0',//'Большой амбар',
+			40: '0',//'Чудо Света',
+			41: '0',//'Водопой',
+			42: '0',//'Ров',
+			43: '0',//'Стена (Натары)',
+			44: '0',//'Дом полководца',
+			45: '0',//'Скрытая сокровищница',
+			46: '4',//'Целебный шатёр',
+			47: 'ID = 47',
+			48: 'ID = 48',
+			49: 'ID = 49'
+		};
+		
+	
+		let nas500 = '';
+		window.player.data.villages.forEach(village => {
+			
+			//qwer = window.Building.getCollection(village.villageId).data;
+			let population = window.Village.get(village.villageId).data.population;
+			let deltapopulation = 500 - population;
+			nas500 += '<tr><td>Население:</td><td>' + population + '</td><td>Осталось наса добить:</td><td>' + deltapopulation + '</td></tr>'
+			nas500 += '<tr><td>наименование</td><td>уровень сейчас</td><td>Стоит</td><td>Нас</td></tr>';
+			let isMainVillage = window.Village.get(village.villageId).data.isMainVillage;
+			let spisok500 = [];
+			if (isMainVillage===true){
+				let qwer = window.Building.getCollection(village.villageId).data;
+				for (let n = 0; n < qwer.length; n++) { 
+					
+					let qwer1 = qwer[n];
+					//console.log(qwer1.data)
+					let buildingType = qwer1.data.buildingType;
+					if (buildingType !== 0) {
+						let name = never_building[buildingType];
+						let lvl = qwer1.data.lvl;
+						let nas = qwer1.data.upgradeSupplyUsage;
+						let cel = vc_building_cel[buildingType];
+						let gotovo;
+						if (lvl<cel){
+							gotovo = 'Строим!!!'
+						}else{
+							gotovo = 'ок'
+						}
+						//console.log(cel);
+						let money = Math.floor((qwer1.data.upgradeCosts[1] +qwer1.data.upgradeCosts[2] +qwer1.data.upgradeCosts[3] +qwer1.data.upgradeCosts[4])/qwer1.data.upgradeSupplyUsage);
+						spisok500.push({
+							name,
+							lvl,
+							cel,
+							money,
+							gotovo,
+							nas
+						})
+						//nas500 += '<tr><td>'+name+'</td><td>'+lvl+'</td><td>'+cel+'</td><td>'+gotovo+'</td></tr>'
+					}
+				}
+			}
+			
+			spisok500money = spisok500.sort((a, b) => a.money - b.money)
+			//console.log(spisok500);
+			for (let n = 0; n < spisok500money.length; n++) { 
+				let qwer = spisok500money[n];
+				//console.log(qwer.lvl);
+				nas500 += '<tr><td>'+qwer.name+'</td><td>'+qwer.lvl+'</td><td>'+qwer.money+'</td><td> + '+qwer.nas+'</td></tr>'
+				
+			}
+			return;
+		})
+		
+		
 		
 		const dialog = document.createElement('dialog');//записано будет в селектор "dialog"
 		str = '';
@@ -438,6 +592,8 @@ function Never_MainScript() {
 		str +=			'<li class="tab-header__item js-tab-trigger" data-tab="3">Оазисы</li>';
 		str +=			'<li class="tab-header__item js-tab-trigger" data-tab="4">Палатки</li>';
 		str +=			'<li class="tab-header__item js-tab-trigger" data-tab="5">Постройки</li>';
+		str +=			'<li class="tab-header__item js-tab-trigger" data-tab="6">Старт</li>';
+		str +=			'<li class="tab-header__item js-tab-trigger" data-tab="7">Нас 500</li>';
 		str +=			'<span><button id="close222" class="innerText">Х</button></span>';
 		str +=		'</ul>';
 		str += '<!--  Контейнер с блоками, которые содержат контент вкладок   -->';
@@ -463,6 +619,12 @@ function Never_MainScript() {
 		str +=			 '<li class="tab-content__item js-tab-content" data-tab="5">Здесь контент про Деревни'
 		str += countVillageInTableBuilding1111;
 		str +=			'</li>';
+		str +=			 '<li class="tab-content__item js-tab-content" data-tab="6">Здесь порядок старта<table>'
+		str += startOperation;
+		str += '</table></li>';
+		str +=			 '<li class="tab-content__item js-tab-content" data-tab="7">Строения для наса 500<table>'
+		str += nas500;
+		str += '</table></li>';
 		str +=		'</ul>';
 		str += '</div>';
 		str += '';
@@ -492,6 +654,17 @@ function Never_MainScript() {
 	      content.classList.add('active');
 	   });
 	});
+	
+	//пробуем вставить функцию для обработки стартового списка...
+	//хз как оно работает, взял у Алисы
+	/*
+	$(function() {
+ $('ol').each(function() {
+ $(this).find('tabs').click(function() {
+ $(this).toggleClass('done');
+ });
+ });
+});*/
 	   		
 		}
 	
