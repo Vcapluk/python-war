@@ -33,3 +33,6 @@ checkbutton7.grid(row=4, column=7, padx=1, pady=1)
 root.mainloop()
 
 #c:/Users/Владимир/ProgramsVC/python-war/mnemo/alisa.py
+#C:/Users/Владимир/AppData/Local/Programs/Python/Python313/python.exe
+
+# & C:/Users/Владимир/AppData/Local/Programs/Python/Python313/python.exe c:/Users/Владимир/ProgramsVC/python-war/mnemo/alisa.py
