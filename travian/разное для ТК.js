@@ -1,5 +1,5 @@
-РАЗОБРАТЬСЯ!!!
-"Торговый путь в деревню {{villageId,villageName|villageLink}}";  
+//РАЗОБРАТЬСЯ!!!
+//"Торговый путь в деревню {{villageId,villageName|villageLink}}";  
 
 
 

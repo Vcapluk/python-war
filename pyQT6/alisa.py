@@ -2,6 +2,8 @@ import sys
 from PyQt6 import QtWidgets, QtCore
 from PyQt6.QtCore import Qt
 
+
+
 class MyTable(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()

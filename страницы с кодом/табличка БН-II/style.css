@@ -1,0 +1,90 @@
+#NeverovButton {
+	width: 50px;
+	padding: initial;
+	padding: 0 10px;
+	color: rgba(79, 224, 11, 0.534);
+}
+
+.td {
+    background-color: white;
+	border: 2px solid black;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    border-right-width: 10px;
+    border-left-width: 10px;
+
+}
+
+dialog {
+	position: relative;
+	overflow: auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 200px;
+	min-height: calc(400px);
+	max-height: calc(100% - 320px);
+	width: 780px;
+	z-index: 100;
+	background-color: white;
+	border: 2px solid black;
+	}
+	
+#close222 {
+	content : inherit;
+  cursor: pointer;
+  position: relative;
+  padding: 10px;
+  color: white;
+
+}
+
+.tabs {
+   width: 100%;
+   max-width: 800px;
+}
+
+/* Стили для списка вкладок */
+.tab-header {
+   list-style: none;
+   padding-left: 0;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin: 0;
+}
+
+/* Стили для вкладки */
+.tab-header__item {
+   padding: 5px 10px;
+   margin-right: 5px;
+   cursor: pointer;
+   border: 1px solid #ddd;
+}
+
+/* Стили для активной вкладки */
+.tab-header__item.active {
+   color: red;
+   border-bottom: none;
+   position: relative;
+   background-color: #fff;
+}
+
+/* Стиль для списка контейнеров с содержимым вкладок */
+.tab-content {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+}
+
+/* Стили для контейнера с содержимым вкладки. По умолчанию скрыт. */
+.tab-content__item {
+   display: none;
+   padding: 20px;
+   border: 1px solid #ddd;
+   margin-top: -2px;
+}
+
+/* Стили для активного контейнера вкладки */
+.tab-content__item.active {
+   display: block;
+}
