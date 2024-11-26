@@ -1,6 +1,8 @@
 //let spisokBNII_1 = 'БН-II'
 //export let spisok = spisok1
 
+https://habr.com/ru/companies/timeweb/articles/653703/
+
 let spisok1 = [
 
     {terra: 'БН-II',sekcia: 'Секция №1', yach:'БН-1', ya: true,  zn: true, pz: true, zametki:'ТН'},

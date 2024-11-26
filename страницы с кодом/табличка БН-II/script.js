@@ -1,4 +1,10 @@
+let mydata = JSON.parse(data1.JSON);
+alert(mydata[0].ya);
+alert(mydata[0].yach);
+alert(mydata[1].yach);
+alert(mydata[2].yach);
 
+let lakdfj = JSON.parse()
 let spisokBNII_1 = 'БН-II'
 let spisok = [
 
@@ -29,12 +35,14 @@ let spisok = [
 
 ]
 
-spisok1 = data.txt
+//spisok1 = data.txt
 
 //console.log(spisok)
 //import spisok from data
 //console.log(data)
 //let spisokBNII_1 = 'БН-II'
+
+
 
 function newtable(spisok){
     console.log(spisok)
