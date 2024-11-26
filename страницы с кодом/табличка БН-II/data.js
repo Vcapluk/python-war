@@ -1,0 +1,32 @@
+//let spisokBNII_1 = 'БН-II'
+//export let spisok = spisok1
+
+let spisok1 = [
+
+    {terra: 'БН-II',sekcia: 'Секция №1', yach:'БН-1', ya: true,  zn: true, pz: true, zametki:'ТН'},
+    {terra: 'БН-II',sekcia: 'Секция №1', yach:'БН-2', ya: true, zn: true, pz: false, zametki:'Ввод'},
+    {terra: 'БН-II',sekcia: 'Секция №2', yach:'БН-3', ya: true, zn: false, pz: true, zametki:'масло ф.А'},
+    {terra: 'БН-II',sekcia: 'Секция №2', yach:'БН-4', ya: true, zn: false, pz: false, zametki:'Блокировка'},
+    {terra: 'БН-II',sekcia: 'Секция №3', yach:'БН-5', ya: false, zn: true, pz: true, zametki:''},
+    {terra: 'БН-II',sekcia: 'Секция №3', yach:'БН-6', ya: false, zn: true, pz: false, zametki:''},
+    {terra: 'БН-II',sekcia: 'Секция №4', yach:'БН-7', ya: false, zn: false, pz: true, zametki:''},
+    {terra: 'БН-II',sekcia: 'Секция №4', yach:'БН-8', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'Золоотвал №2',sekcia: '-', yach:'ВЛ-1', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'Золоотвал №2',sekcia: '-', yach:'ВЛ-2', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'Золоотвал №2',sekcia: '-', yach:'ВЛ-3', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'Золоотвал №2',sekcia: '-', yach:'ВЛ-4', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'Золоотвал №2',sekcia: '-', yach:'ВЛ-5', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'Золоотвал №2',sekcia: '-', yach:'ВЛ-6', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'Золоотвал №2',sekcia: '-', yach:'ВЛ-7', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'Золоотвал №2',sekcia: '-', yach:'ВЛ-8', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'ВЛ-1',sekcia: '-', yach:'ЛР-1', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'ВЛ-2',sekcia: '-', yach:'ЛР-2', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'ВЛ-3',sekcia: '-', yach:'ЛР-3', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'ВЛ-4',sekcia: '-', yach:'ЛР-4', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'ВЛ-1',sekcia: '-', yach:'ЛР-5', ya: false, zn: true, pz: false, zametki:''},
+    {terra: 'ВЛ-2',sekcia: '-', yach:'ЛР-6', ya: false, zn: true, pz: false, zametki:''},
+    {terra: 'ВЛ-3',sekcia: '-', yach:'ЛР-7', ya: false, zn: false, pz: false, zametki:''},
+    {terra: 'ВЛ-4',sekcia: '-', yach:'ЛР-8', ya: false, zn: false, pz: false, zametki:''},
+
+]
+

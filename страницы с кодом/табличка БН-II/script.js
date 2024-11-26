@@ -1,147 +1,6 @@
 
-{
-    "playerId": 1636,
-    "name": "Володька Царь",
-    "tribeId": 3,
-    "kingdomId": 0,
-    "kingdomTag": "",
-    "kingdomRole": 0,
-    "isKing": false,
-    "kingId": 0,
-    "kingstatus": 0,
-    "villages": [
-        {
-            "villageId": "536264685",
-            "playerId": "1636",
-            "name": "New village",
-            "tribeId": "3",
-            "belongsToKing": "0",
-            "belongsToKingdom": 0,
-            "type": "1",
-            "population": "9",
-            "coordinates": {
-                "x": "-19",
-                "y": "-19"
-            },
-            "isMainVillage": true,
-            "isTown": false,
-            "treasuresUsable": "0",
-            "treasures": "0",
-            "protectionGranted": "0",
-            "tributeCollectorPlayerId": 0,
-            "realTributePercent": 0.2,
-            "supplyBuildings": "9",
-            "supplyTroops": "9",
-            "production": {
-                "1": "20",
-                "2": "20",
-                "3": "20",
-                "4": "17"
-            },
-            "storage": {
-                "1": 561.5611111111177,
-                "2": 564.5611111111177,
-                "3": 577.5611111111177,
-                "4": 626.4702777777811
-            },
-            "treasury": {
-                "1": "0",
-                "2": "0",
-                "3": "0",
-                "4": 0
-            },
-            "storageCapacity": {
-                "1": "800",
-                "2": "800",
-                "3": "800",
-                "4": "800"
-            },
-            "usedControlPoints": "0",
-            "availableControlPoints": "0",
-            "culturePoints": 0.027766203703702443,
-            "celebrationType": "0",
-            "celebrationEnd": "0",
-            "culturePointProduction": "12",
-            "treasureResourceBonus": "0",
-            "acceptance": 100,
-            "acceptanceProduction": "0.01666",
-            "healingTentCapacity": "0",
-            "tributes": {
-                "1": 0,
-                "2": 0,
-                "3": 0,
-                "4": 0
-            },
-            "tributesCapacity": "800",
-            "tributeTreasures": 1,
-            "tributeProduction": 12,
-            "tributeProductionWithCrop": 15,
-            "tributeProductionDetail": {
-                "1": 4,
-                "2": 4,
-                "3": 4,
-                "4": 0
-            },
-            "tributeTime": "0",
-            "tributesRequiredToFetch": 160,
-            "estimatedWarehouseLevel": 0,
-            "allowTributeCollection": "1",
-            "tributesDisabledReason": ""
-        }
-    ],
-    "population": 9,
-    "active": 1,
-    "prestige": 11383,
-    "level": 12,
-    "stars": {
-        "goldBadge": 1,
-        "bronze": 0,
-        "silver": 0,
-        "gold": 0
-    },
-    "nextLevelPrestige": 20000,
-    "hasNoobProtection": true,
-    "filterInformation": false,
-    "signupTime": 1732464879,
-    "vacationState": 0,
-    "uiLimitations": 0,
-    "gold": 40,
-    "silver": 0,
-    "deletionTime": 0,
-    "coronationDuration": 0,
-    "brewCelebration": 0,
-    "uiStatus": -1,
-    "hintStatus": 0,
-    "spawnedOnMap": 1732465024,
-    "isActivated": 1,
-    "isInstant": 0,
-    "productionBonusTime": 0,
-    "cropProductionBonusTime": 0,
-    "premiumFeatureAutoExtendFlags": 0,
-    "plusAccountTime": 0,
-    "limitedPremiumFeatureFlags": 0,
-    "lastPaymentTime": 0,
-    "isPunished": false,
-    "limitationFlags": 0,
-    "limitation": 0,
-    "isBannedFromMessaging": false,
-    "bannedFromMessaging": 0,
-    "questVersion": 2,
-    "nextDailyQuestTime": 1732508081,
-    "dailyQuestsExchanged": 0,
-    "avatarIdentifier": 6972875,
-    "vacationStateStart": 0,
-    "vacationStateEnd": 0,
-    "usedVacationDays": 0,
-    "halloweenBoostTime": 0,
-    "mayhemBoostTime": 0,
-    "fealtyPoints": 0,
-    "lastFealtyProduction": 0,
-    "fealtyProductionBonusTime": 0
-}
-
 let spisokBNII_1 = 'БН-II'
-let spisokBNII = [
+let spisok = [
 
     {terra: 'БН-II',sekcia: 'Секция №1', yach:'БН-1', ya: true,  zn: true, pz: true, zametki:'ТН'},
     {terra: 'БН-II',sekcia: 'Секция №1', yach:'БН-2', ya: true, zn: true, pz: false, zametki:'Ввод'},
@@ -170,51 +29,130 @@ let spisokBNII = [
 
 ]
 
-let tableSpisokBNII = ''
+spisok1 = data.txt
 
-for (let n = 0; n < spisokBNII.length; n++) {
-    let qwer = spisokBNII[n]
-    let yaqwer = qwer.ya
-    if (qwer.ya === true){
-        yaqwer = '<input type="checkbox" checked name="' + qwer.yach + 'ya"/>'
-        qwer.ya = yaqwer
-    }else{
-        qwer.ya = '<input type="checkbox" name="' + qwer.yach + 'ya"/>'
+//console.log(spisok)
+//import spisok from data
+//console.log(data)
+//let spisokBNII_1 = 'БН-II'
+
+function newtable(spisok){
+    console.log(spisok)
+    let tableSpisokBNII = ''
+    let spisokBNII = spisok
+    console.log(spisokBNII)
+    console.log("списокБН переписали из списка")
+    for (let n = 0; n < spisokBNII.length; n++) {
+        let qwer = spisokBNII[n]
+        //console.log(qwer)
+        let yaqwer = qwer.ya
+        if (qwer.ya === true){
+            yaqwer = '<input type="checkbox" checked name="' + qwer.yach + 'ya"/>'
+            qwer.ya = yaqwer
+        }else{
+            qwer.ya = '<input type="checkbox" name="' + qwer.yach + 'ya"/>'
+        }
+        let znqwer = qwer.zn
+        if (qwer.zn === true){
+            znqwer = '<input type="checkbox" checked name="' + qwer.yach + 'zn"/>'
+            qwer.zn = znqwer
+        }else{
+            qwer.zn = '<input type="checkbox" name="' + qwer.yach + 'zn"/>'
+        }
+        let pzqwer = qwer.pz
+        if (qwer.pz === true){
+            pzqwer = '<input type="checkbox" checked name="' + qwer.yach + 'pz"/>'
+            qwer.pz = pzqwer
+        }else{
+            qwer.pz = '<input type="checkbox" name="' + qwer.yach + 'pz"/>'
+        }
+        tableSpisokBNII += '<tr><td>'+qwer.terra+'</td><td>'+qwer.sekcia+'</td><td>'+qwer.yach+'</td><td>'+qwer.ya+'</td><td>'+qwer.zn+'</td><td>'+qwer.pz+'</td><td>'+qwer.zametki+'</td></tr>'
+
+
     }
-    let znqwer = qwer.zn
-    if (qwer.zn === true){
-        znqwer = '<input type="checkbox" checked name="' + qwer.yach + 'zn"/>'
-        qwer.zn = znqwer
-    }else{
-        qwer.zn = '<input type="checkbox" name="' + qwer.yach + 'zn"/>'
-    }
-    let pzqwer = qwer.pz
-    if (qwer.pz === true){
-        pzqwer = '<input type="checkbox" checked name="' + qwer.yach + 'pz"/>'
-        qwer.pz = pzqwer
-    }else{
-        qwer.pz = '<input type="checkbox" name="' + qwer.yach + 'pz"/>'
-    }
-    tableSpisokBNII += '<tr><td>'+qwer.terra+'</td><td>'+qwer.sekcia+'</td><td>'+qwer.yach+'</td><td>'+qwer.ya+'</td><td>'+qwer.zn+'</td><td>'+qwer.pz+'</td><td>'+qwer.zametki+'</td></tr>'
+
+    const div = document.createElement('div');
+
+    str = '';
+    str += '<li>' + spisokBNII_1 + '<table>'
+    str += '<tr><td>Размещение</td><td>Секция</td><td>Ячейка</td><td>Полжение</td><td>ЗН</td><td>ПЗ</td><td>Заметки</td></tr>'
+    str += tableSpisokBNII
+    str += '</table></li>'
+
+    div.innerHTML = str;//содержимое селектора диалог
+    console.log("придали ей содержимое");
+    document.body.appendChild(div);//занесли селектор диалог в конец HTML кода.
 
 
 }
 
-const div = document.createElement('div');
 
-str = '';
-str += '<li>' + spisokBNII_1 + '<table>'
-str += '<tr><td>Размещение</td><td>Секция</td><td>Ячейка</td><td>Полжение</td><td>ЗН</td><td>ПЗ</td><td>Заметки</td></tr>'
-str += tableSpisokBNII
-str += '</table></li>'
+
+newtable(spisok)
+
 
 
 //создаем контроль клика...
+document.body.addEventListener("click", function(event) {
+    if (event.target.nodeName == "checkbox")
+        //let qw = event.target.name
+        console.log(event.target)
+        console.log(event.target.name);
+        poisk(event)
+        //qwer = event.target.name
+        //last2 = qwer.slice(-2)
+        //console.log(last2)
 
+        
+});
 
+// как оно должно работать? при клике нам выдает адрес строки и идентификатор чекбокса. 
+// сначала нам надо разделить идентификатор строки и идентификатор чекбокса. 
+// потом по строке ищем запись. в записи ищем чекбокс
+// если чекбокс нажат - то записываем отжать, если пустой - надо записать нажать.
+// если успешно - надо создать лог и записать его...
+function poisk(qwerty) {
+    let chb = qwerty.target.name
+    console.log('поиск сработал!')
+    let last_2 = chb.slice(-2)
+    let yacheika = chb.slice(0, -2)
+    //console.log(last_2)
+    //console.log(yacheika)
+    //console.log(spisok)
+    //console.log(spisok.length)
+    for (let i = 0; i < spisok.length; i++) {
+        //console.log(i)
+        let qwer = spisok[i]
+        if (spisok[i].yach === yacheika) {
+            console.log(qwer)
+            let per = 'checked'
+            if (last_2 === 'ya'){
+                console.log('ячейка')
+                let textya = qwer.ya
+                //console.log(text)
+                if (textya.includes(per)){
+                    spisok[i].ya = '<input type="checkbox" name="' + qwer.yach + 'ya"/>'
+                    console.log('убрали чек')
+                }else{
+                    spisok[i].ya = '<input type="checkbox" checked name="' + qwer.yach + 'ya"/>'
+                    console.log('добавили чек')
+                }
 
+            }else{
+                if(last_2 === 'zn'){
+                    console.log('ЗН')
+                }else{
+                    if (last_2 === 'pz'){
+                        console.log('ПЗ')
+                    }else{
+                        console.log('ОШИБКА!!! Нет Такого чекбокса')
+                    }
+                }   
+            
 
+            
+            }
+        }
+    }
+}
 
-div.innerHTML = str;//содержимое селектора диалог
-console.log("придали ей содержимое");
-document.body.appendChild(div);//занесли селектор диалог в конец HTML кода.
