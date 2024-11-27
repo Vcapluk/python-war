@@ -1,10 +1,3 @@
-let mydata = JSON.parse(data1.JSON);
-alert(mydata[0].ya);
-alert(mydata[0].yach);
-alert(mydata[1].yach);
-alert(mydata[2].yach);
-
-let lakdfj = JSON.parse()
 let spisokBNII_1 = 'БН-II'
 let spisok = [
 
@@ -34,14 +27,6 @@ let spisok = [
     {terra: 'ВЛ-4',sekcia: '-', yach:'ЛР-8', ya: false, zn: false, pz: false, zametki:''},
 
 ]
-
-//spisok1 = data.txt
-
-//console.log(spisok)
-//import spisok from data
-//console.log(data)
-//let spisokBNII_1 = 'БН-II'
-
 
 
 function newtable(spisok){
@@ -98,6 +83,7 @@ function newtable(spisok){
 
 newtable(spisok)
 
+//addYachNow(spisok)
 
 
 //создаем контроль клика...
@@ -149,9 +135,30 @@ function poisk(qwerty) {
             }else{
                 if(last_2 === 'zn'){
                     console.log('ЗН')
+                    let textzn = qwer.zn
+                    //console.log(text)
+                    if (textzn.includes(per)){
+                        spisok[i].zn = '<input type="checkbox" name="' + qwer.yach + 'zn"/>'
+                        console.log('убрали чек')
+                    }else{
+                        spisok[i].zn = '<input type="checkbox" checked name="' + qwer.yach + 'zn"/>'
+                        console.log('добавили чек')
+                    }
+                
                 }else{
                     if (last_2 === 'pz'){
                         console.log('ПЗ')
+                        let textpz = qwer.pz
+                        //console.log(text)
+                        if (textpz.includes(per)){
+                            spisok[i].pz = '<input type="checkbox" name="' + qwer.yach + 'pz"/>'
+                            console.log('убрали чек')
+                        }else{
+                            spisok[i].pz = '<input type="checkbox" checked name="' + qwer.yach + 'pz"/>'
+                            console.log('добавили чек')
+                        }
+
+
                     }else{
                         console.log('ОШИБКА!!! Нет Такого чекбокса')
                     }

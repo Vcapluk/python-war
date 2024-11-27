@@ -111,3 +111,6 @@ print('конец...')
 '''
 
 root.mainloop()
+
+
+'''& C:/Users/Владимир/AppData/Local/Programs/Python/Python313/python.exe c:/Users/Владимир/ProgramsVC/python-war/Untitled-1.py'''

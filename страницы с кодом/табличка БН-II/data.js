@@ -1,7 +1,7 @@
 //let spisokBNII_1 = 'БН-II'
 //export let spisok = spisok1
 
-https://habr.com/ru/companies/timeweb/articles/653703/
+//https://habr.com/ru/companies/timeweb/articles/653703/
 
 let spisok1 = [
 
