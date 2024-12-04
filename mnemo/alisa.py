@@ -9,7 +9,7 @@ root.withdraw() # hide the root window
 n = 9 # количество чекбоксов
 row = n // 2 # количество строк
 col = n # количество столбцов
-
+print(n)
 checkbutton1 = Checkbutton(root, text='Чекбокс')
 checkbutton1.grid(row=1, column=1, padx=1, pady=1)
 checkbutton2 = Checkbutton(root, text='Чекбокс')
