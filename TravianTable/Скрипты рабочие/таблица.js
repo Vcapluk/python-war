@@ -109,13 +109,14 @@ function Never_MainScript() {
 		let countVillageInTableBuilding1111 = '';//пустая строка для добавления в таблицу
 		
 		window.player.data.villages.forEach(village => {
+		  const host = window.location.hostname;
 			let x = village.name;
 			let xx = village.villageId;
 			qwer = window.Building.getCollection(village.villageId).data;
 			let name1 = window.Village.get(village.villageId).data.name;
 			let zagolovokTable = '<tr>				<td>тип постройки</td>																																				<td>Уровень</td>																																<td><i class="unit_wood_small_illu"></i></td>																									<td><i class="unit_clay_small_illu"></i></td>																									<td><i class="unit_iron_small_illu"></i></td>																									<td><i class="unit_crop_small_illu"></i></td>																									<td><i class="symbol_clock_small_flat_black duration"></i></td>																<td><i class="symbol_clock_small_flat_black duration"></i>/нас</td>														<td>рес/нас</td>																																				</tr>';
 
-			countVillageInTableBuilding1111 += '<details><summary><a href="https://bbash2.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></summary><p>';
+			countVillageInTableBuilding1111 += '<details><summary><a href="https://' + host + '/#/page:village/villId:'+ xx + '">' + x + '</a></summary><p>';
 			countVillageInTableBuilding1111 += '<details><summary>--Ресурсы</a></summary><p><table>';
 			countVillageInTableBuilding1111 += zagolovokTable;
 			for (let n = 0; n < 18; n++) {
@@ -188,13 +189,14 @@ function Never_MainScript() {
 		
 		countVillageInTable +='<td>Деревня</td>																			<td><i class="unit_wood_small_illu"></i></td>												<td><i class="unit_clay_small_illu"></i></td>													<td><i class="unit_iron_small_illu"></i></td>												<td><i class="unit_crop_small_illu"></i></td>';
 		window.player.data.villages.forEach(village => {
+		  const host = window.location.hostname;
 			let x = village.name;
 			let xx = village.villageId;
 			let x1 = parseInt(village.production[1], 10);//ищет выработку дерева
 			let x2 = parseInt(village.production[2], 10);//ищет выработку глины
 			let x3 = parseInt(village.production[3], 10);//ищет выработку железа
 			let x4 = parseInt(village.production[4], 10);//ищет выработку кропа
-			countVillageInTable += '<tr><td><a href="https://bbash2.kingdoms.com/#/page:village/villId:'+ xx + '">' + x + '</a></td>																		<td>' + x1 +'</td>																			<td>' + x2 +'</td>																		<td>' + x3 +'</td>																			<td>' + x4 +'</td>																		</tr>'//записывает строчку для каждой деревни
+			countVillageInTable += '<tr><td><a href="https://' + host + '/#/page:village/villId:'+ xx + '">' + x + '</a></td>																		<td>' + x1 +'</td>																			<td>' + x2 +'</td>																		<td>' + x3 +'</td>																			<td>' + x4 +'</td>																		</tr>'//записывает строчку для каждой деревни
 			sumCHVR += x1 + x2 + x3 + x4;//считает выработку ЧВР для каждой деревни
 			sumCHVRRes += x1 + x2 + x3;//считает выработку РЕСУРСОВ ВСЕХ для каждой деревни
 			sumRes1 += x1;//всего дерева
@@ -360,7 +362,8 @@ function Never_MainScript() {
 	
 		
 		for (let i = 0; i < spisokOasisUnits.length; i++) {
-			countVillageInTableOasis += '<tr><td><a href="https://bbash2.kingdoms.com/#/page:map/villId:'+ coord1 + '/subtab:Outgoing/cellId:' + spisokOasisUnits[i].ID + '/window:mapCellDetails">('+ spisokOasisUnits[i].coordx + '|' +spisokOasisUnits[i].coordy +')</a></td>							<td>' + spisokOasisUnits[i].dist +'</td>													<td>' + spisokOasisUnits[i].unitsTotal +'</td>											<td>' + spisokOasisUnits[i].bonus +'</td>													<td>' + spisokOasisUnits[i].units[1] +'</td>											<td>' + spisokOasisUnits[i].units[2] +'</td>												<td>' + spisokOasisUnits[i].units[3] +'</td>											<td>' + spisokOasisUnits[i].units[4] +'</td>												<td>' + spisokOasisUnits[i].units[5] +'</td>											<td>' + spisokOasisUnits[i].units[6] +'</td>												<td>' + spisokOasisUnits[i].units[7] +'</td>											<td>' + spisokOasisUnits[i].units[8] +'</td>												<td>' + spisokOasisUnits[i].units[9] +'</td>											<td>' + spisokOasisUnits[i].units[10] +'</td>												</tr>'//записывает строчку для каждого оазиса
+		  const host = window.location.hostname;
+			countVillageInTableOasis += '<tr><td><a href="https://' +  host + 'bbash2.kingdoms.com/#/page:map/villId:'+ coord1 + '/subtab:Outgoing/cellId:' + spisokOasisUnits[i].ID + '/window:mapCellDetails">('+ spisokOasisUnits[i].coordx + '|' +spisokOasisUnits[i].coordy +')</a></td>							<td>' + spisokOasisUnits[i].dist +'</td>													<td>' + spisokOasisUnits[i].unitsTotal +'</td>											<td>' + spisokOasisUnits[i].bonus +'</td>													<td>' + spisokOasisUnits[i].units[1] +'</td>											<td>' + spisokOasisUnits[i].units[2] +'</td>												<td>' + spisokOasisUnits[i].units[3] +'</td>											<td>' + spisokOasisUnits[i].units[4] +'</td>												<td>' + spisokOasisUnits[i].units[5] +'</td>											<td>' + spisokOasisUnits[i].units[6] +'</td>												<td>' + spisokOasisUnits[i].units[7] +'</td>											<td>' + spisokOasisUnits[i].units[8] +'</td>												<td>' + spisokOasisUnits[i].units[9] +'</td>											<td>' + spisokOasisUnits[i].units[10] +'</td>												</tr>'//записывает строчку для каждого оазиса
 		}
 		
 		
@@ -426,11 +429,21 @@ function Never_MainScript() {
 		
 		
 		//стартовые действия 6 вкладка
-		startOperation = '<ol><li class = "tabs done"> 5 воинов </li></ol>'
-		startOperation += '<ol><li class = "tabs"> Амбар </li></ol>'
-		startOperation += '<tr><td> Склад </td></tr>'
+		startOperation =  '<tr><td> 5 воинов </td></tr>'
+		startOperation += '<tr><td> Все войска с герой в ДАЛЬНЕЕ логово </td></tr>'
+		startOperation += '<tr><td> Продать 1 ценность </td></tr>'
+		startOperation += '<tr><td> Амбар1 </td></tr>'
+		startOperation += '<tr><td> Склад1 </td></tr>'
 		startOperation += '<tr><td> Фермы 1 </td></tr>'
 		startOperation += '<tr><td> Все фермы 2 </td></tr>'
+		startOperation += '<tr><td> Продать оставшуюся ценность </td></tr>'
+		startOperation += '<tr><td> - Выставить и отменить предложение на рынке </td></tr>'
+		startOperation += '<tr><td> Геру качаем в ресы </td></tr>'
+		startOperation += '<tr><td> полечить Геру мазью после 2 прикла </td></tr>'
+		startOperation += '<tr><td> ставка на аукционе </td></tr>'
+		startOperation += '<tr><td> поймать животное в клетку </td></tr>'
+		startOperation += '<tr><td> Использовать сундуки после 4 лвл геры с правильным переключением ресов </td></tr>'
+		
 		startOperation += '<tr><td> Казарма 3 </td></tr>'
 		startOperation += '<tr><td> Тайник </td></tr>'
 		startOperation += '<tr><td> Посолька + Оаз </td></tr>'
@@ -439,32 +452,26 @@ function Never_MainScript() {
 		startOperation += '<tr><td> Все фермы 3 </td></tr>'
 		startOperation += '<tr><td> Рынок + NPC </td></tr>'
 		startOperation += '<tr><td> Ресы по одному на 1 </td></tr>'
-		startOperation += '<tr><td> Карьеры на 1 </td></tr>'
-		startOperation += '<tr><td> Лесопилки на 1 </td></tr>'
-		startOperation += '<tr><td> Железо на 1 </td></tr>'
 		startOperation += '<tr><td> Ресы по одному на 2 </td></tr>'
 		startOperation += '<tr><td> Все ресы на 2 </td></tr>'
-		startOperation += '<tr><td> Ферма 5 </td></tr>'
-		startOperation += '<tr><td> Ресы по одному на 5 </td></tr>'
 		startOperation += '<tr><td> Склад 5 </td></tr>'
 		startOperation += '<tr><td> Амбар 5 </td></tr>'
 		startOperation += '<tr><td> ГЗ 5 </td></tr>'
 		startOperation += '<tr><td> Резиденция 1 </td></tr>'
-		startOperation += '<tr><td> Все ресы 3 </td></tr>'
-		startOperation += '<tr><td> Все фермы 5 </td></tr>'
-		startOperation += '<tr><td> Одна лесопилка на 4 </td></tr>'
-		startOperation += '<tr><td> Одна лесопилка на 5 </td></tr>'
-		startOperation += '<tr><td> Одна глина на 4 </td></tr>'
-		startOperation += '<tr><td> ТРИ железки на 4 </td></tr>'
-		startOperation += '<tr><td> ГЗ 10 </td></tr>'
 		startOperation += '<tr><td> Резиденция 5 </td></tr>'
 		startOperation += '<tr><td> ЗАКАЗЫВАЕМ ПОСЕЛЕНЦЕВ!!! </td></tr>'
+		startOperation += '<tr><td> Поставить на снос резу после появления 3 поселенца </td></tr>'
+		startOperation += '<tr><td> ГЗ 10 </td></tr>'
+		startOperation += '<tr><td> Разбираем резу, чтоб все влезло </td></tr>'
+		startOperation += '<tr><td> Академия 5 </td></tr>'
 		startOperation += '<tr><td> Склад 6 </td></tr>'
 		startOperation += '<tr><td> Академия 10 </td></tr>'
 		startOperation += '<tr><td> Мастерская 1 </td></tr>'
-		startOperation += '<tr><td> СНОСИМ Мастерская 1 </td></tr>'
 		startOperation += '<tr><td> Ратуша 1 </td></tr>'
-		startOperation += '<tr><td> Амбар 8 (9500кропа на праздник) </td></tr>'
+		startOperation += '<tr><td> Разорать академию, мастерскую, (можно стену, тайник, казарму) </td></tr>'
+		startOperation += '<tr><td> Амбар 7 </td></tr>'
+		startOperation += '<tr><td> Копим ресы и запускаем праздник </td></tr>'
+		
 		
 		
 		
@@ -525,7 +532,13 @@ function Never_MainScript() {
 		
 	
 		let nas500 = '';
+		
+		window.Troops.forEach
+		
 		window.player.data.villages.forEach(village => {
+		  console.log('начинаем баловство')
+		  let asdfgghhh = window.Troops.getUnitValue;
+		  console.log(asdfgghhh);
 			
 			//qwer = window.Building.getCollection(village.villageId).data;
 			let population = window.Village.get(village.villageId).data.population;

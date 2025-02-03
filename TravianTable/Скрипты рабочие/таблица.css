@@ -1,7 +1,7 @@
 #NeverovButton {
-	width: 30px;
+	width: 50px;
 	padding: initial;
-	padding: 0 5px;
+	padding: 0 10px;
 	color: rgba(79, 224, 11, 0.534);
 }
 
@@ -11,10 +11,10 @@ dialog {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 200px;
-	min-height: calc(300px);
-	max-height: calc(100% - 210px);
-	width: 500px;
-	z-index: 1060;
+	min-height: calc(400px);
+	max-height: calc(100% - 320px);
+	width: 780px;
+	z-index: 100;
 	background-color: white;
 	border: 2px solid black;
 	}
@@ -30,7 +30,7 @@ dialog {
 
 .tabs {
    width: 100%;
-   max-width: 500px;
+   max-width: 800px;
 }
 
 /* Стили для списка вкладок */
@@ -45,7 +45,7 @@ dialog {
 
 /* Стили для вкладки */
 .tab-header__item {
-   padding: 10px 14px;
+   padding: 5px 10px;
    margin-right: 5px;
    cursor: pointer;
    border: 1px solid #ddd;
@@ -71,8 +71,7 @@ dialog {
    display: none;
    padding: 20px;
    border: 1px solid #ddd;
-   margin-top: -1px;
-   text-align : center;
+   margin-top: -2px;
 }
 
 /* Стили для активного контейнера вкладки */

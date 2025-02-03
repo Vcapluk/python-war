@@ -11,7 +11,7 @@ let buildingAppNow = true; //false для создания очереди пос
 
 var never_message = {
 	buildingQueue: true, //(true/false) - Отправлять сообщения о завершении постройки ???
-	attackVillage: true, //(true/false) - Отправлять сообщения о наличие атаки ???
+	attackVillage: false, //(true/false) - Отправлять сообщения о наличие атаки ???
 };
 
 //Разное
@@ -19,7 +19,7 @@ var never_travian = {}; //Общие данные
 var never_webSocket = 0; //Счетчик timeOut для перезагрузки страницы
 
 //Запуск каждую 1 сек.
-var never_IntervalID = window.setInterval(Never_MainScript, 5000);
+var never_IntervalID = window.setInterval(Never_MainScript, 3500);
 
 /*----- Начало: Прослушка WebSocket -----*/
 (function () {
@@ -486,214 +486,6 @@ function Never_BuildingQueue() {
 			*/
 		});
 
-/*
-		//блок заказа постройки
-		let villageNow = '538197979'; //нужная нам деревенька. тип данных строка
-		let resStartNow0 = true;
-		window.player.data.villages.forEach(function (village) {
-			if (village.villageId === villageNow) {
-				buildingQueue = BuildingQueue.get(village.villageId);
-				if (buildingQueue.data === undefined) {
-					return;
-				}
-				if (buildingQueue.data.queues === undefined) {
-					return;
-				}
-				if (buildingQueue.data.freeSlots === undefined) {
-					return;
-				}
-				for (var i = 1; i < 2; i++) {
-					if (buildingQueue.data.freeSlots[1] === 1) {
-						let iD = villageNow; //айди деревни, где будем строить.
-						console.log('будем строить?');
-						let spisokBuilding = [];
-						let qwer = window.Building.getCollection(iD).data;
-						for (let n = 0; n < 18; n++) {
-							//готовим список построек
-							let qwer1 = qwer[n];
-							spisokBuilding.push(qwer1.data);
-						}
-						let spisokBuildingTime = spisokBuilding.sort(
-							(a, b) => a.upgradeTime - b.upgradeTime
-						); //сортировка по времени строительства(для выбора самой быстрой)
-						const contr = 'building'; //"controller"
-						const acti = 'upgrade'; //"action"
-						const thisIsBuilding = spisokBuildingTime[0]; //создали переменную для доступа к текущей постройке, чтоб удобно было брать данные
-						//console.log(thisIsBuilding);
-						const locationId = thisIsBuilding.locationId;
-						const buildingType = thisIsBuilding.buildingType;
-						let reserveResources = true;
-						let session = JSON.parse(
-							decodeURIComponent(
-								document.cookie
-									.split(';')
-									.find((cookie) => cookie.trim().startsWith('t5SessionKey='))
-									.split('=')[1]
-							)
-						).key; //достает куки, зачем они нужны?
-						const time = new Date().getTime().toString(); //делает время для запроса
-						const playerId = player.data.playerId; //достает ID для запроса
-						const host = window.location.hostname;
-						const url = `https://${host}/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
-						const message1 =
-							'{"controller": "' +
-							contr +
-							'","action": "' +
-							acti +
-							'","params": {"villageId": ' +
-							iD +
-							',"locationId": ' +
-							locationId +
-							',"buildingType": ' +
-							buildingType +
-							'},"clientId": "' +
-							getClientId() +
-							'","session": "' +
-							session +
-							'"}'; //делает строчку для запроса. До этого была функция, но она не успевала сделать строчку корректно
-
-						request1 = new Request(url, {
-							method: 'POST',
-							body: message1,
-							credentials: 'include',
-						});
-
-						console.log('запрос на стройку готов');
-
-						//console.log(request);
-						//console.log(spisokBuildingTime);
-						console.log('запрос на заказ готов, отправляем его');
-						//сам запрос на сервер
-						fetch(request1)
-							.then((response) => {
-								console.log('запрос на постройку пошел');
-								return response.json();
-							})
-							.then((jsonData) => {
-								//console.log('запрос прошел, должно добавиться');
-								//document.location.reload(true);
-							});
-
-						console.log('добавим ресиков?');
-						console.log(resStartNow0);
-						//код отправки ресов
-						for (let z = 1; z < 2; z++) {
-							if (resStartNow0 === true) {
-								console.log('зашли в ресики');
-								//подготовка первого запроса
-								console.log(resStartNow0);
-								//let iD = 538197976;//айди деревни, где будем строить.
-								//let iDvillageDonor = 538165211;//айди деревни, откуда пойдут ресурсы на отстройку
-								const contr = 'trade'; //"controller"
-								const acti = 'checkTarget'; //"action"
-								const destVillageId = 538197979; //деревня куда везем ресы02. bbbbbbb
-								const destVillageName = '08. зззззз'; // "02. бббббб";//переделать на автоматическое выдергивание названия
-								const sourceVillageId = 538165211; //деревня откуда везем ресы 02
-								let session = JSON.parse(
-									decodeURIComponent(
-										document.cookie
-											.split(';')
-											.find((cookie) =>
-												cookie.trim().startsWith('t5SessionKey=')
-											)
-											.split('=')[1]
-									)
-								).key; //достает куки, зачем они нужны?
-								const time = new Date().getTime().toString(); //делает время для запроса
-								const playerId = player.data.playerId; //достает ID для запроса
-								const url = `https://${host}/api/?c=${contr}&a=${acti}&p${playerId}&t${time}`;
-								let message =
-									'{"controller": "' +
-									contr +
-									'","action": "' +
-									acti +
-									'","params": {"sourceVillageId": ' +
-									sourceVillageId +
-									',"destVillageId": ' +
-									destVillageId +
-									',"destVillageName": "' +
-									destVillageName +
-									'"},"session": "' +
-									session +
-									'"}';
-								//console.log(message);
-								const request = new Request(url, {
-									method: 'POST',
-									body: message,
-									credentials: 'include',
-								});
-								//console.log(request);
-								console.log('первый запрос готов');
-								console.log(message);
-
-								//подготовка второго запроса
-								const time1 = new Date().getTime().toString(); //делает время для запроса
-								const contr1 = 'trade'; //"controller"
-								const acti1 = 'sendResources'; //"action"
-								const url1 = `https://${host}/api/?c=${contr1}&a=${acti1}&p${playerId}&t${time1}`;
-								//достаем значения ресурсов...
-								let res1 = thisIsBuilding.upgradeCosts[1];
-								let res2 = thisIsBuilding.upgradeCosts[2];
-								let res3 = thisIsBuilding.upgradeCosts[3];
-								let res4 = thisIsBuilding.upgradeCosts[4];
-								let message1 =
-									'{"controller": "' +
-									contr1 +
-									'","action": "' +
-									acti1 +
-									'","params": {"sourceVillageId": ' +
-									sourceVillageId +
-									',"resources": [0,' +
-									res1 +
-									',' +
-									res2 +
-									',' +
-									res3 +
-									',' +
-									res4 +
-									'],"destVillageId": ' +
-									destVillageId +
-									',"recurrences" : 1},"clientId": "' +
-									getClientId() +
-									'","session": "' +
-									session +
-									'"}';
-								//console.log(message1);
-								const request1 = new Request(url1, {
-									method: 'POST',
-									body: message1,
-									credentials: 'include',
-								});
-								console.log('второй запрос готов');
-								//console.log(request1);
-								console.log(message1);
-								
-								fetch(request).then((response) => {
-										console.log('вошли в первый запрос');
-										return response.json();
-									})
-									.then((jsonData) => {
-										console.log('ответ первого запроса получен');
-										//console.log('конец постройки');
-										//второй запрос
-										fetch(request1)
-											.then((response) => {
-												console.log('вошли во второй запрос');
-												return response.json();
-											})
-											.then((jsonData) => {
-												console.log('второй запрос прошел');
-											});
-									});
-							}
-						}
-						console.log('закончили с ресиками');
-					}
-				}
-			}
-		});
-*/
-
 
 		//Перебор деревень для автозавершения
 		window.player.data.villages.forEach(function (village) {
@@ -793,7 +585,7 @@ function Never_BuildingQueue() {
 						
 						console.log('запроса не было, Отправляем')
 						fetch(request)
-							.then((response) => {
+  						.then((response) => {
 								//console.log('запрос на автодостройку отправлен');
 								return response.json();
 							})
@@ -816,7 +608,7 @@ function Never_BuildingQueue() {
 				//Отправляем в Telegram
 				type = never_building[building.buildingType];
 				letter ='\ud83c\udfd7 ' + village.name + ', постройка "' + type + '" .';
-				Never_Telegram(letter);
+			//	Never_Telegram(letter);
 			}
 		});
 
@@ -1156,7 +948,7 @@ function Never_AttackVillage(message) {
 	letter ='\u2694\ufe0f ' + Never_getVillageName(message.data.villageIdLocation);
 	letter = letter + ', угроза "' + never_movement[message.movementType] + '"';
 	letter = letter + ', от "' + message.data.playerName + '" через ' + time + '!';
-	Never_Telegram(letter);
+	//Never_Telegram(letter);
 }
 /*_____ Конец: Атака на деревню _____*/
 
